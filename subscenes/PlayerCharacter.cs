@@ -23,7 +23,8 @@ public partial class PlayerCharacter : CharacterBody2D
 		grounded,
 		airborn,
 		clinging,
-		teleporting
+		teleporting,
+		crouching
 	}
 	public playerStates PlayerState = playerStates.grounded;
 	private Vector2 finalVelocity;
@@ -31,6 +32,10 @@ public partial class PlayerCharacter : CharacterBody2D
 	private Vector2 Stop = new Vector2(0,0);
 
 	private AnimatedSprite2D sprite_2d;
+	private CollisionShape2D StandingCollision;
+	private CollisionShape2D CrouchingCollision;
+	private ShapeCast2D ShapeCast;
+
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -39,6 +44,10 @@ public partial class PlayerCharacter : CharacterBody2D
 	{
 		base._Ready();
 		sprite_2d = GetNode<AnimatedSprite2D>($"Sprite2D");
+		StandingCollision = GetNode<CollisionShape2D>($"CollisionShapeStanding");
+		CrouchingCollision = GetNode<CollisionShape2D>($"CollisionShapeCrouching");
+		ShapeCast = GetNode<ShapeCast2D>("ShapeCast2D");
+
  	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -58,7 +67,9 @@ public partial class PlayerCharacter : CharacterBody2D
 			case playerStates.teleporting:
 				doTeleportingPhysics(ref finalVelocity, delta);
 			break;
-
+			case playerStates.crouching:
+				doCrouchingPhysics(ref finalVelocity, delta);
+			break;
 			default:
 			break;
 		}	
@@ -117,17 +128,103 @@ public partial class PlayerCharacter : CharacterBody2D
 		{
 			incomingVelocity.X = Mathf.MoveToward(Velocity.X, 0, Deceleration);
 		}
+
+		if(Input.IsActionJustPressed("crouch"))
+		{
+
+			GD.Print("entering CROUCHED State");
+			StandingCollision.Disabled = true;
+			CrouchingCollision.Disabled = false;
+			PlayerState = playerStates.crouching;	
+		}
 		if(incomingVelocity.X != 0.0f)
 			sprite_2d.Animation = "running";
 		else
 			sprite_2d.Animation = "default";
 			
 	}
+	private void doCrouchingPhysics(ref Vector2 incomingVelocity, double incomingDelta)
+	{
+		//add gravity
+		incomingVelocity.Y += gravity * (float)incomingDelta;
+		//if touching ground, refresh cyote timer, if not, decrease it
+		cyoteTimer = IsOnFloor() ? CyoteTime : -incomingDelta; 
+				
+		if(cyoteTimer == 0.0d)
+		{
+			teleportAvailiable = true;
+			doubleJumpAvailiable = true;
+			StandingCollision.Disabled = false;
+			CrouchingCollision.Disabled = true;
+			PlayerState = playerStates.airborn;
+			GD.Print("entering Airborn State");
+			return;
+		}
+
+		if (Input.IsActionJustPressed("jump"))
+		{
+			doubleJumpAvailiable = true;
+			teleportAvailiable = true;
+			StandingCollision.Disabled = false;
+			CrouchingCollision.Disabled = true;
+			PlayerState = playerStates.airborn;
+			incomingVelocity.Y = JumpVelocity*1.5f;
+			cyoteTimer = 0.0d;
+			GD.Print("SUPER JUMP");
+			return;
+
+		}
+
+		if (Input.IsActionJustPressed("teleport"))
+		{
+			teleportAvailiable = false;
+			doubleJumpAvailiable = true;
+
+			StandingCollision.Disabled = false;
+			CrouchingCollision.Disabled = true;
+
+			PlayerState = playerStates.teleporting;
+			teleportTimer = teleportTimerReset;
+			GD.Print("entering Teleporting State");
+			return;
+		}
+
+		// Get the input direction and handle the movement/deceleration.
+		direction = Input.GetVector("left", "right", "up", "down");
+		if (direction != Vector2.Zero)
+		{
+			//add the currently input dirrection to our  velocity
+			incomingVelocity.X = Mathf.MoveToward(Velocity.X, direction.X * (Speed / 2.0f) , Deceleration / 3.0F);
+			//turn the sprite to face the current inputted dirrection
+			sprite_2d.FlipH = direction.X < 0;
+		}
+		else
+		{
+			incomingVelocity.X = Mathf.MoveToward(Velocity.X, 0, Deceleration);
+		}
+
+		if(!Input.IsActionPressed("crouch"))
+		{
+			if(ShapeCast.IsColliding())
+			{
+				GD.Print("Collision Detected");
+			}
+			else
+			{
+				CrouchingCollision.Disabled = true;
+				StandingCollision.Disabled = false;
+				PlayerState = playerStates.grounded;
+			}	
+		}
+
+		sprite_2d.Animation = "crouching";
+	}
 
 	private void doAirbornPhysics(ref Vector2 incomingVelocity, double incomingDelta)
 	{
 		//add gravity
 		incomingVelocity.Y += gravity * (float)incomingDelta;
+		direction = Input.GetVector("left", "right", "up", "down");
 
 		if(IsOnFloor())
 		{
@@ -137,15 +234,17 @@ public partial class PlayerCharacter : CharacterBody2D
 			GD.Print("entering Grounded State");
 			return;
 		}
-		if(IsOnWall())
+		if (!Input.IsActionPressed("crouch"))
 		{
-			determineDirrectionOfWall();
-			incomingVelocity = Stop;
-			clingTimer = clingTimerReset;
-			//if they are on the wall they are clinging 
-			PlayerState = playerStates.clinging;
-			GD.Print("entering Clinging State");
-			return;
+			if(IsOnWall())
+			{
+				determineDirrectionOfWall();
+				incomingVelocity = Stop;
+				clingTimer = clingTimerReset;
+				//if they are on the wall they are clinging 
+				PlayerState = playerStates.clinging;
+				return;
+			}
 		}
 
 		if (Input.IsActionJustPressed("teleport"))
@@ -170,7 +269,6 @@ public partial class PlayerCharacter : CharacterBody2D
 			}
 		}
 
-		direction = Input.GetVector("left", "right", "up", "down");
 		// Get the input direction and handle the movement/deceleration.
 		if (direction != Vector2.Zero)
 		{
@@ -228,9 +326,21 @@ public partial class PlayerCharacter : CharacterBody2D
 			}
 			//push away from wall and add jump power
 		}
+		direction = Input.GetVector("left", "right", "up", "down");
+
+		//push away from the wall slightly and become airborn
 		if (Input.IsActionJustPressed("crouch"))
 		{
-			//push away from the wall slightly
+			if (wallToRight)
+			{
+				incomingVelocity.X = -Speed/10;
+				PlayerState = playerStates.airborn;
+			}
+			else
+			{
+				incomingVelocity.X = Speed/10;
+				PlayerState = playerStates.airborn;
+			}
 		}
 
 	}

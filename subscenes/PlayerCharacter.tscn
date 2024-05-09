@@ -1,12 +1,61 @@
-[gd_scene load_steps=53 format=3 uid="uid://4l4khwvcmc86"]
+[gd_scene load_steps=68 format=3 uid="uid://4l4khwvcmc86"]
 
 [ext_resource type="Texture2D" uid="uid://cm2py4r01tbo" path="res://Images/Static/Jump (32x32).png" id="1_knf71"]
 [ext_resource type="Script" path="res://subscenes/PlayerCharacter.cs" id="1_qa2ox"]
+[ext_resource type="Texture2D" uid="uid://bxp14qb46qtpt" path="res://Images/Animated/Crouch (32x32).png" id="2_gfsuy"]
 [ext_resource type="Texture2D" uid="uid://cgulgbusqmaxg" path="res://Images/Animated/Idle (32x32).png" id="2_xbv0a"]
 [ext_resource type="Texture2D" uid="uid://xthuytj71ghk" path="res://Images/Animated/Double Jump (32x32).png" id="3_msxly"]
 [ext_resource type="Texture2D" uid="uid://bp3b51jdwbd1u" path="res://Images/Animated/Appearing (96x96).png" id="4_bv3y1"]
 [ext_resource type="Texture2D" uid="uid://3lilkk4qeaub" path="res://Images/Animated/Run (32x32).png" id="5_wjw48"]
 [ext_resource type="Texture2D" uid="uid://coa8eqin646m3" path="res://Images/Animated/Desappearing (96x96).png" id="7_kuqpw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4qx4"]
+atlas = ExtResource("2_gfsuy")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5kft"]
+atlas = ExtResource("2_gfsuy")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m3bib"]
+atlas = ExtResource("2_gfsuy")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cd5qw"]
+atlas = ExtResource("2_gfsuy")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ms0y"]
+atlas = ExtResource("2_gfsuy")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5s21"]
+atlas = ExtResource("2_gfsuy")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gfyle"]
+atlas = ExtResource("2_gfsuy")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htui5"]
+atlas = ExtResource("2_gfsuy")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ebc0"]
+atlas = ExtResource("2_gfsuy")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sswkf"]
+atlas = ExtResource("2_gfsuy")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dhlf"]
+atlas = ExtResource("2_gfsuy")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijgwl"]
+atlas = ExtResource("2_gfsuy")
+region = Rect2(352, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vr8mm"]
 atlas = ExtResource("2_xbv0a")
@@ -184,6 +233,47 @@ region = Rect2(576, 0, 96, 96)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_w4qx4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u5kft")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m3bib")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cd5qw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ms0y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5s21")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gfyle")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htui5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ebc0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sswkf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dhlf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijgwl")
+}],
+"loop": true,
+"name": &"crouching",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_vr8mm")
 }, {
 "duration": 1.0,
@@ -346,7 +436,12 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qhpou"]
-size = Vector2(18.6667, 24.6667)
+size = Vector2(65, 75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2gwwv"]
+size = Vector2(65, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bkbme"]
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 texture_filter = 1
@@ -355,15 +450,26 @@ script = ExtResource("1_qa2ox")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_ysfs3")
-animation = &"endDashing"
+animation = &"crouching"
 autoplay = "default"
-frame = 5
-frame_progress = 0.601168
+frame_progress = 0.65265
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 9)
-scale = Vector2(3, 3)
+[node name="CollisionShapeStanding" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 10)
 shape = SubResource("RectangleShape2D_qhpou")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true
+
+[node name="CollisionShapeCrouching" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 33)
+shape = SubResource("RectangleShape2D_2gwwv")
+disabled = true
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+position = Vector2(-1, 8)
+scale = Vector2(3.2, 1)
+shape = SubResource("RectangleShape2D_bkbme")
+target_position = Vector2(0, -25)
+max_results = 5
+collide_with_areas = true
