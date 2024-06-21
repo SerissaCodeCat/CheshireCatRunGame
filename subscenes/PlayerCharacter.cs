@@ -17,6 +17,10 @@ public partial class PlayerCharacter : CharacterBody2D
 	private bool doubleJumpAvailiable = true;
 	private bool teleportAvailiable = true;
 	private bool wallToRight = false;
+	private Vector2 shotOffset = new Vector2 (60.0f, 0.0f); 	
+	public PackedScene bullet { get; set; }
+	double bulletTimer = 0.0d;
+ 
 
 	public enum playerStates
 	{
@@ -47,7 +51,8 @@ public partial class PlayerCharacter : CharacterBody2D
 		StandingCollision = GetNode<CollisionShape2D>($"CollisionShapeStanding");
 		CrouchingCollision = GetNode<CollisionShape2D>($"CollisionShapeCrouching");
 		ShapeCast = GetNode<ShapeCast2D>("ShapeCast2D");
-
+		bullet = GD.Load<PackedScene>("res://subscenes/Bullet.tscn");
+		GD.Print("test the : " + bullet);
  	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -72,8 +77,12 @@ public partial class PlayerCharacter : CharacterBody2D
 			break;
 			default:
 			break;
-		}	
-		Velocity = finalVelocity;	
+		}
+		Velocity = finalVelocity;
+		
+		bulletTimer -= delta;
+		fireBullet();	
+		
 		MoveAndSlide();
 	}
 	private void doGroundedPhysics(ref Vector2 incomingVelocity, double incomingDelta)
@@ -391,6 +400,18 @@ public partial class PlayerCharacter : CharacterBody2D
 			{
 				wallToRight = GetSlideCollision(i).GetNormal().X > 0 ?  false : true;
 			}
+		}
+	}
+	private void fireBullet()
+	{
+		if(bulletTimer <= 0.0d)
+		{	
+			Bullet shot = bullet.Instantiate<Bullet>();
+			shot.spawn = sprite_2d.FlipH == true ? GlobalPosition - shotOffset : GlobalPosition + shotOffset;
+			shot.goRight = sprite_2d.FlipH == true ? false : true;
+			Owner.AddChild(shot);
+			bulletTimer = 1.0d;
+			GD.Print("FIRE");
 		}
 	}
 }

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://do8lfibdmkdhy"]
+[gd_scene load_steps=7 format=3 uid="uid://do8lfibdmkdhy"]
 
 [ext_resource type="Texture2D" uid="uid://dusfdmy58480y" path="res://Images/Static/Green.png" id="1_3u1rk"]
 [ext_resource type="Texture2D" uid="uid://d0oxbebk1qna5" path="res://Images/Static/Terrain (16x16).png" id="2_dglhe"]
 [ext_resource type="PackedScene" uid="uid://4l4khwvcmc86" path="res://subscenes/PlayerCharacter.tscn" id="3_r56qf"]
+[ext_resource type="PackedScene" uid="uid://duhexk8fow7wn" path="res://subscenes/Bullet.tscn" id="4_j443x"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a868q"]
 texture = ExtResource("2_dglhe")
@@ -600,3 +601,6 @@ layer_0/tile_data = PackedInt32Array(1638403, 393216, 0, 1638404, 393216, 0, 163
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("3_r56qf")]
 position = Vector2(83, 575)
+
+[node name="Bullet" parent="." instance=ExtResource("4_j443x")]
+position = Vector2(442, 437)
