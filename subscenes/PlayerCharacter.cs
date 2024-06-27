@@ -19,7 +19,7 @@ public partial class PlayerCharacter : CharacterBody2D
 	private bool wallToRight = false;
 	private Vector2 shotOffset = new Vector2 (60.0f, 0.0f); 	
 	public PackedScene bullet { get; set; }
-	double bulletTimer = 0.0d;
+	private double bulletTimer = 0.0d;
  
 
 	public enum playerStates
@@ -36,6 +36,8 @@ public partial class PlayerCharacter : CharacterBody2D
 	private Vector2 Stop = new Vector2(0,0);
 
 	private AnimatedSprite2D sprite_2d;
+	private Node2D aimingLynchpin;
+	private Node2D aimingDirrection;
 	private CollisionShape2D StandingCollision;
 	private CollisionShape2D CrouchingCollision;
 	private ShapeCast2D ShapeCast;
@@ -52,6 +54,8 @@ public partial class PlayerCharacter : CharacterBody2D
 		CrouchingCollision = GetNode<CollisionShape2D>($"CollisionShapeCrouching");
 		ShapeCast = GetNode<ShapeCast2D>("ShapeCast2D");
 		bullet = GD.Load<PackedScene>("res://subscenes/Bullet.tscn");
+		aimingLynchpin = GetNode<Node2D>($"aimingLynchpin");
+		aimingDirrection = GetNode<Node2D>($"aimingLynchpin/aimingDirection");
 		GD.Print("test the : " + bullet);
  	}
 	public override void _PhysicsProcess(double delta)
@@ -79,9 +83,8 @@ public partial class PlayerCharacter : CharacterBody2D
 			break;
 		}
 		Velocity = finalVelocity;
-		
 		bulletTimer -= delta;
-		fireBullet();	
+		//fireBullet();	
 		
 		MoveAndSlide();
 	}
@@ -92,7 +95,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
 		//if touching ground, refresh cyote timer, if not, decrease it
 		cyoteTimer = IsOnFloor() ? CyoteTime : -incomingDelta; 
-				
+		direction = Input.GetVector("left", "right", "up", "down");				
 		if(cyoteTimer == 0.0d)
 		{
 			teleportAvailiable = true;
@@ -123,15 +126,42 @@ public partial class PlayerCharacter : CharacterBody2D
 			GD.Print("entering Teleporting State");
 			return;
 		}
+		if (Input.IsActionPressed("fire"))
+		{
+			direction = Vector2.Zero;
+			//do aimingDirrection rotation thingy here
+			//aimingDirrection.Position = sprite_2d.FlipH == true? new Vector2(-65.0f,0) : new Vector2(65.0f,0);
+		}
+		if (Input.IsActionJustReleased("fire"))
+		{
+			fireBullet();
+		}
 
 		// Get the input direction and handle the movement/deceleration.
-		direction = Input.GetVector("left", "right", "up", "down");
 		if (direction != Vector2.Zero)
 		{
 			//add the currently input dirrection to our  velocity
 			incomingVelocity.X = Mathf.MoveToward(Velocity.X, direction.X * Speed, Deceleration);
 			//turn the sprite to face the current inputted dirrection
 			sprite_2d.FlipH = direction.X < 0;
+			if(direction.X < 0 && !Input.IsActionPressed("fire"))
+			{
+				if(aimingLynchpin.RotationDegrees != 180.0f)
+				{
+					aimingLynchpin.Rotate((float)Mathf.DegToRad(180.0d));
+					GD.Print("Aiming right" + aimingDirrection.Position);
+					GD.Print(aimingLynchpin.RotationDegrees);
+				}
+			}
+			else if(direction.X > 0 && !Input.IsActionPressed("fire"))
+			{
+				if(aimingLynchpin.RotationDegrees != 0.0f)
+				{
+					aimingLynchpin.Rotate((float)Mathf.DegToRad(-180.0d));
+					GD.Print("Aiming left" + aimingDirrection.Position);
+					GD.Print(aimingLynchpin.RotationDegrees);
+				}
+			} 
 		}
 		else
 		{
@@ -407,8 +437,9 @@ public partial class PlayerCharacter : CharacterBody2D
 		if(bulletTimer <= 0.0d)
 		{	
 			Bullet shot = bullet.Instantiate<Bullet>();
-			shot.spawn = sprite_2d.FlipH == true ? GlobalPosition - shotOffset : GlobalPosition + shotOffset;
-			shot.goRight = sprite_2d.FlipH == true ? false : true;
+			shot.setup(sprite_2d.FlipH == true ? GlobalPosition - shotOffset : GlobalPosition + shotOffset, 
+				aimingDirrection.GlobalPosition - aimingLynchpin.GlobalPosition, Bullet.bulletTypes.basic);
+			//shot.goRight = sprite_2d.FlipH == true ? false : true;
 			Owner.AddChild(shot);
 			bulletTimer = 1.0d;
 			GD.Print("FIRE");

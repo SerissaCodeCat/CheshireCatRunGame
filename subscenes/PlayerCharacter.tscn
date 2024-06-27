@@ -473,3 +473,8 @@ shape = SubResource("RectangleShape2D_bkbme")
 target_position = Vector2(0, -25)
 max_results = 5
 collide_with_areas = true
+
+[node name="aimingLynchpin" type="Node2D" parent="."]
+
+[node name="aimingDirection" type="Node2D" parent="aimingLynchpin"]
+position = Vector2(128, 0)
