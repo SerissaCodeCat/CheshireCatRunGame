@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Numerics;
+using System.Xml.XPath;
 
 public partial class PlayerCharacter : CharacterBody2D
 {
@@ -17,7 +19,7 @@ public partial class PlayerCharacter : CharacterBody2D
 	private bool doubleJumpAvailiable = true;
 	private bool teleportAvailiable = true;
 	private bool wallToRight = false;
-	private Vector2 shotOffset = new Vector2 (60.0f, 0.0f); 	
+	private Godot.Vector2 shotOffset = new Godot.Vector2 (60.0f, 0.0f); 	
 	public PackedScene bullet { get; set; }
 	private double bulletTimer = 0.0d;
  
@@ -31,13 +33,16 @@ public partial class PlayerCharacter : CharacterBody2D
 		crouching
 	}
 	public playerStates PlayerState = playerStates.grounded;
-	private Vector2 finalVelocity;
-    private Vector2 direction;
-	private Vector2 Stop = new Vector2(0,0);
+	private Godot.Vector2 finalVelocity;
+    private Godot.Vector2 direction;
+	private Godot.Vector2 Stop = new Godot.Vector2(0,0);
 
 	private AnimatedSprite2D sprite_2d;
+	private Sprite2D aimingSprite;
 	private Node2D aimingLynchpin;
 	private Node2D aimingDirrection;
+	private float aimingRotationSpeed = 120.0f;
+	private bool aimingRise = true;
 	private CollisionShape2D StandingCollision;
 	private CollisionShape2D CrouchingCollision;
 	private ShapeCast2D ShapeCast;
@@ -56,6 +61,8 @@ public partial class PlayerCharacter : CharacterBody2D
 		bullet = GD.Load<PackedScene>("res://subscenes/Bullet.tscn");
 		aimingLynchpin = GetNode<Node2D>($"aimingLynchpin");
 		aimingDirrection = GetNode<Node2D>($"aimingLynchpin/aimingDirection");
+		aimingSprite = GetNode<Sprite2D>($"aimingLynchpin/aimingSprite");
+		aimingSprite.Visible = false;
 		GD.Print("test the : " + bullet);
  	}
 	public override void _PhysicsProcess(double delta)
@@ -88,7 +95,7 @@ public partial class PlayerCharacter : CharacterBody2D
 		
 		MoveAndSlide();
 	}
-	private void doGroundedPhysics(ref Vector2 incomingVelocity, double incomingDelta)
+	private void doGroundedPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
 	{
 		//add gravity
 		incomingVelocity.Y += gravity * (float)incomingDelta;
@@ -128,9 +135,66 @@ public partial class PlayerCharacter : CharacterBody2D
 		}
 		if (Input.IsActionPressed("fire"))
 		{
-			direction = Vector2.Zero;
-			//do aimingDirrection rotation thingy here
-			//aimingDirrection.Position = sprite_2d.FlipH == true? new Vector2(-65.0f,0) : new Vector2(65.0f,0);
+			if(bulletTimer <= 0.0f)
+			{
+				direction = Godot.Vector2.Zero;
+				aimingSprite.Visible = true;
+				//do aimingDirrection rotation thingy here
+				if(!sprite_2d.FlipH)
+				{
+					if(aimingRise)
+					{
+						if(aimingLynchpin.RotationDegrees >= -80.0f)
+						{
+							aimingLynchpin.Rotate(-(float)Mathf.DegToRad(aimingRotationSpeed * incomingDelta));
+						}
+						else
+						{
+							aimingLynchpin.RotationDegrees = -80.0f;
+							aimingRise = !aimingRise;
+						}
+					}
+					else
+					{
+						if(aimingLynchpin.RotationDegrees < 0.0f)
+						{
+							aimingLynchpin.Rotate((float)Mathf.DegToRad(aimingRotationSpeed * incomingDelta));
+						}
+						else
+						{
+							aimingLynchpin.RotationDegrees = 0.0f;
+							aimingRise = !aimingRise;
+						}
+					}
+				}
+				else
+				{
+					if(aimingRise)
+					{
+						if(aimingLynchpin.RotationDegrees <= 260.0f)
+						{
+							aimingLynchpin.Rotate((float)Mathf.DegToRad(aimingRotationSpeed * incomingDelta));
+						}
+						else
+						{
+							aimingLynchpin.RotationDegrees = 260.0f;
+							aimingRise = !aimingRise;
+						}
+					}
+					else
+					{
+						if(aimingLynchpin.RotationDegrees >= 180.0f)
+						{
+							aimingLynchpin.Rotate(-(float)Mathf.DegToRad(aimingRotationSpeed * incomingDelta));
+						}
+						else
+						{
+							aimingLynchpin.RotationDegrees = 180.0f;
+							aimingRise = !aimingRise;
+						}
+					}
+				}
+			}
 		}
 		if (Input.IsActionJustReleased("fire"))
 		{
@@ -138,7 +202,7 @@ public partial class PlayerCharacter : CharacterBody2D
 		}
 
 		// Get the input direction and handle the movement/deceleration.
-		if (direction != Vector2.Zero)
+		if (direction != Godot.Vector2.Zero)
 		{
 			//add the currently input dirrection to our  velocity
 			incomingVelocity.X = Mathf.MoveToward(Velocity.X, direction.X * Speed, Deceleration);
@@ -149,8 +213,6 @@ public partial class PlayerCharacter : CharacterBody2D
 				if(aimingLynchpin.RotationDegrees != 180.0f)
 				{
 					aimingLynchpin.Rotate((float)Mathf.DegToRad(180.0d));
-					GD.Print("Aiming right" + aimingDirrection.Position);
-					GD.Print(aimingLynchpin.RotationDegrees);
 				}
 			}
 			else if(direction.X > 0 && !Input.IsActionPressed("fire"))
@@ -158,8 +220,6 @@ public partial class PlayerCharacter : CharacterBody2D
 				if(aimingLynchpin.RotationDegrees != 0.0f)
 				{
 					aimingLynchpin.Rotate((float)Mathf.DegToRad(-180.0d));
-					GD.Print("Aiming left" + aimingDirrection.Position);
-					GD.Print(aimingLynchpin.RotationDegrees);
 				}
 			} 
 		}
@@ -182,7 +242,7 @@ public partial class PlayerCharacter : CharacterBody2D
 			sprite_2d.Animation = "default";
 			
 	}
-	private void doCrouchingPhysics(ref Vector2 incomingVelocity, double incomingDelta)
+	private void doCrouchingPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
 	{
 		//add gravity
 		incomingVelocity.Y += gravity * (float)incomingDelta;
@@ -230,7 +290,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
 		// Get the input direction and handle the movement/deceleration.
 		direction = Input.GetVector("left", "right", "up", "down");
-		if (direction != Vector2.Zero)
+		if (direction != Godot.Vector2.Zero)
 		{
 			//add the currently input dirrection to our  velocity
 			incomingVelocity.X = Mathf.MoveToward(Velocity.X, direction.X * (Speed / 2.0f) , Deceleration / 3.0F);
@@ -259,7 +319,7 @@ public partial class PlayerCharacter : CharacterBody2D
 		sprite_2d.Animation = "crouching";
 	}
 
-	private void doAirbornPhysics(ref Vector2 incomingVelocity, double incomingDelta)
+	private void doAirbornPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
 	{
 		//add gravity
 		incomingVelocity.Y += gravity * (float)incomingDelta;
@@ -309,7 +369,7 @@ public partial class PlayerCharacter : CharacterBody2D
 		}
 
 		// Get the input direction and handle the movement/deceleration.
-		if (direction != Vector2.Zero)
+		if (direction != Godot.Vector2.Zero)
 		{
 			//add the currently input dirrection to our  velocity
 			incomingVelocity.X = Mathf.MoveToward(Velocity.X, direction.X * Speed, Deceleration);
@@ -327,7 +387,7 @@ public partial class PlayerCharacter : CharacterBody2D
 			sprite_2d.Animation = "doubleJump";
 	}
 
-	private void doClingingPhysics(ref Vector2 incomingVelocity, double incomingDelta)
+	private void doClingingPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
 	{
 
 		
@@ -384,7 +444,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
 	}
 
-	private void doTeleportingPhysics(ref Vector2 incomingVelocity, double incomingDelta)
+	private void doTeleportingPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
 	{
 		// do not add gravity. gravity does not apply to teleportation
 
@@ -437,12 +497,23 @@ public partial class PlayerCharacter : CharacterBody2D
 		if(bulletTimer <= 0.0d)
 		{	
 			Bullet shot = bullet.Instantiate<Bullet>();
-			shot.setup(sprite_2d.FlipH == true ? GlobalPosition - shotOffset : GlobalPosition + shotOffset, 
+			shot.setup(lerp(aimingLynchpin.GlobalPosition, aimingDirrection.GlobalPosition, 0.5f),
 				aimingDirrection.GlobalPosition - aimingLynchpin.GlobalPosition, Bullet.bulletTypes.basic);
-			//shot.goRight = sprite_2d.FlipH == true ? false : true;
 			Owner.AddChild(shot);
 			bulletTimer = 1.0d;
 			GD.Print("FIRE");
+			aimingLynchpin.RotationDegrees = sprite_2d.FlipH ? 180.0f : 0.0f;
+			aimingSprite.Visible = false;
 		}
+	}
+	private float lerp(float firstPoint, float secondPoint, float percentageBetweenTheTwoPoints = 0.5f)
+	{
+		return firstPoint * (1 - percentageBetweenTheTwoPoints) + secondPoint * percentageBetweenTheTwoPoints; 
+	}
+	private Godot.Vector2 lerp (Godot.Vector2 firstPoint, Godot.Vector2 secondPoint, float percentageBetweenTheTwoPoints = 0.5f)
+	{
+		Godot.Vector2 result = new Godot.Vector2(lerp(firstPoint.X, secondPoint.X, percentageBetweenTheTwoPoints), 
+			lerp(firstPoint.Y, secondPoint.Y, percentageBetweenTheTwoPoints));
+		return result;
 	}
 }

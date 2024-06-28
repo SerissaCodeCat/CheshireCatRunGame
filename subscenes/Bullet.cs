@@ -42,9 +42,8 @@ public partial class Bullet : CharacterBody2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-		//GD.Print("CoOrd X = " + GlobalPosition.X );
-		//GD.Print("CoOrd Y = " + GlobalPosition.Y );
-		//currentVelocity.Y += gravity * (float)delta;
+
+		currentVelocity.Y += gravity * (float)delta;
 		//currentVelocity.X = Mathf.MoveToward(currentVelocity.X, 0, deceleration);
 		Velocity = currentVelocity;
 		MoveAndSlide();

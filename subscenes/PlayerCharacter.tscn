@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://4l4khwvcmc86"]
+[gd_scene load_steps=69 format=3 uid="uid://4l4khwvcmc86"]
 
 [ext_resource type="Texture2D" uid="uid://cm2py4r01tbo" path="res://Images/Static/Jump (32x32).png" id="1_knf71"]
 [ext_resource type="Script" path="res://subscenes/PlayerCharacter.cs" id="1_qa2ox"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bp3b51jdwbd1u" path="res://Images/Animated/Appearing (96x96).png" id="4_bv3y1"]
 [ext_resource type="Texture2D" uid="uid://3lilkk4qeaub" path="res://Images/Animated/Run (32x32).png" id="5_wjw48"]
 [ext_resource type="Texture2D" uid="uid://coa8eqin646m3" path="res://Images/Animated/Desappearing (96x96).png" id="7_kuqpw"]
+[ext_resource type="Texture2D" uid="uid://clxid87x65b57" path="res://Images/Static/DirrectionalArrow.png" id="9_c5ha8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w4qx4"]
 atlas = ExtResource("2_gfsuy")
@@ -478,3 +479,7 @@ collide_with_areas = true
 
 [node name="aimingDirection" type="Node2D" parent="aimingLynchpin"]
 position = Vector2(128, 0)
+
+[node name="aimingSprite" type="Sprite2D" parent="aimingLynchpin"]
+position = Vector2(86, 0)
+texture = ExtResource("9_c5ha8")
