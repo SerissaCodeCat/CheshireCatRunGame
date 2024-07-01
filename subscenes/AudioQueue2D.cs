@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Threading;
 
 [Tool]
-public partial class AudioQueue : Node
+public partial class AudioQueue2D : Node
 {
 	private int _nextToPlay = 0;
-	private List<AudioStreamPlayer2D> _audioStreamPlayers;
+	private List<AudioStreamPlayer2D> _audioStreamPlayers = new List<AudioStreamPlayer2D>();
 	[Export]
 	public int maxNumberOfConcurrentSounds { get; set; } = 1;
 	public override void _Ready()
@@ -50,10 +50,11 @@ public partial class AudioQueue : Node
 		return base._GetConfigurationWarnings();
 	}
 
-	public void play()
+	public void playAtLocation(float x, float y)
 	{
 		if(!_audioStreamPlayers[_nextToPlay].Playing)
 		{
+			_audioStreamPlayers[_nextToPlay].GlobalPosition = new Vector2(x,y);
 			_audioStreamPlayers[_nextToPlay].Play();
 		}
 		_nextToPlay++;

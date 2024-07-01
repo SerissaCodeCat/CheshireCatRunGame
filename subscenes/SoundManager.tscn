@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://c6fwuffucpew6"]
+
+[ext_resource type="Script" path="res://subscenes/SoundManager.cs" id="1_mhcry"]
+[ext_resource type="PackedScene" uid="uid://cprt3p0iv23pb" path="res://subscenes/SoundPool2d.tscn" id="2_l8nxv"]
+[ext_resource type="PackedScene" uid="uid://bu8l4nq1v4yyw" path="res://subscenes/AudioQueue2D.tscn" id="3_gplye"]
+[ext_resource type="AudioStream" uid="uid://crxsl5hn76ljc" path="res://Audio/Sfx/bulletHit1.wav" id="4_fgx2v"]
+[ext_resource type="AudioStream" uid="uid://wcyb7x3rtgmd" path="res://Audio/Sfx/bulletHit2.wav" id="5_85vv2"]
+[ext_resource type="AudioStream" uid="uid://dk4otnbd8r7hr" path="res://Audio/Sfx/bulletHit3.wav" id="6_pq3ww"]
+
+[node name="SoundManager" type="Node2D"]
+script = ExtResource("1_mhcry")
+
+[node name="bulletImpactSoundPool" parent="." instance=ExtResource("2_l8nxv")]
+
+[node name="AudioQueue" parent="bulletImpactSoundPool" instance=ExtResource("3_gplye")]
+maxNumberOfConcurrentSounds = 2
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="bulletImpactSoundPool/AudioQueue"]
+stream = ExtResource("4_fgx2v")
+
+[node name="AudioQueue2" parent="bulletImpactSoundPool" instance=ExtResource("3_gplye")]
+maxNumberOfConcurrentSounds = 2
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="bulletImpactSoundPool/AudioQueue2"]
+stream = ExtResource("5_85vv2")
+
+[node name="AudioQueue3" parent="bulletImpactSoundPool" instance=ExtResource("3_gplye")]
+maxNumberOfConcurrentSounds = 2
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="bulletImpactSoundPool/AudioQueue3"]
+stream = ExtResource("6_pq3ww")

@@ -48,7 +48,16 @@ public partial class Bullet : CharacterBody2D
 		Velocity = currentVelocity;
 		MoveAndSlide();
 
-        if ((lifespan -= delta) <= 0.0d || GetSlideCollisionCount() > maxBounces)
+		if(GetSlideCollisionCount() != 0)
+		{
+			SoundManager.instance.playPossitionalAudio("bulletImpact", GlobalPosition.X, GlobalPosition.Y );
+			GD.Print("Senting Sound Trigger");
+		}
+        if ((lifespan -= delta) <= 0.0d)
+		{
+			QueueFree();
+		}
+		if(GetSlideCollisionCount() > maxBounces)
 		{
 			QueueFree();
 		}
