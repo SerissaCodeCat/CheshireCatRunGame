@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://duhexk8fow7wn"]
+[gd_scene load_steps=6 format=3 uid="uid://duhexk8fow7wn"]
 
 [ext_resource type="Script" path="res://subscenes/Bullet.cs" id="1_axh0p"]
 [ext_resource type="Texture2D" uid="uid://d2tvvwvrejpgg" path="res://Images/Static/Bullet.png" id="2_idwle"]
+[ext_resource type="PackedScene" uid="uid://bu8l4nq1v4yyw" path="res://subscenes/AudioQueue.tscn" id="3_yi7ho"]
+[ext_resource type="AudioStream" uid="uid://crxsl5hn76ljc" path="res://Audio/Sfx/bulletHit1.wav" id="4_8sp8h"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5hria"]
 radius = 3.0
@@ -15,3 +17,9 @@ texture = ExtResource("2_idwle")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5hria")
+
+[node name="AudioQueue" parent="." instance=ExtResource("3_yi7ho")]
+maxNumberOfConcurrentSounds = 2
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="AudioQueue"]
+stream = ExtResource("4_8sp8h")

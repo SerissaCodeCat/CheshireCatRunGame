@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu8l4nq1v4yyw"]
+
+[ext_resource type="Script" path="res://subscenes/AudioQueue.cs" id="1_j6yoq"]
+
+[node name="AudioQueue" type="Node2D"]
+script = ExtResource("1_j6yoq")

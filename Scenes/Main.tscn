@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://do8lfibdmkdhy"]
+[gd_scene load_steps=8 format=3 uid="uid://do8lfibdmkdhy"]
 
 [ext_resource type="Texture2D" uid="uid://dusfdmy58480y" path="res://Images/Static/Green.png" id="1_3u1rk"]
 [ext_resource type="Texture2D" uid="uid://d0oxbebk1qna5" path="res://Images/Static/Terrain (16x16).png" id="2_dglhe"]
 [ext_resource type="PackedScene" uid="uid://4l4khwvcmc86" path="res://subscenes/PlayerCharacter.tscn" id="3_r56qf"]
 [ext_resource type="PackedScene" uid="uid://duhexk8fow7wn" path="res://subscenes/Bullet.tscn" id="4_j443x"]
+[ext_resource type="PackedScene" uid="uid://bu8l4nq1v4yyw" path="res://subscenes/AudioQueue.tscn" id="5_wtjdd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a868q"]
 texture = ExtResource("2_dglhe")
@@ -604,3 +605,5 @@ position = Vector2(83, 575)
 
 [node name="Bullet" parent="." instance=ExtResource("4_j443x")]
 position = Vector2(442, 437)
+
+[node name="AudioQueue" parent="." instance=ExtResource("5_wtjdd")]
