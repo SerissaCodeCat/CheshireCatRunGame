@@ -8,10 +8,12 @@ using System.Threading;
 [Tool]
 public partial class AudioQueue2D : Node
 {
-	private int _nextToPlay = 0;
-	private List<AudioStreamPlayer2D> _audioStreamPlayers = new List<AudioStreamPlayer2D>();
 	[Export]
 	public int maxNumberOfConcurrentSounds { get; set; } = 1;
+	
+	private int _nextToPlay = 0;
+	private List<AudioStreamPlayer2D> _audioStreamPlayers = new List<AudioStreamPlayer2D>();
+
 	public override void _Ready()
 	{
 		if(GetChildCount() == 0)

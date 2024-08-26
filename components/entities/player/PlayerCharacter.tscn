@@ -1,7 +1,7 @@
 [gd_scene load_steps=69 format=3 uid="uid://4l4khwvcmc86"]
 
 [ext_resource type="Texture2D" uid="uid://cm2py4r01tbo" path="res://Images/Static/Jump (32x32).png" id="1_knf71"]
-[ext_resource type="Script" path="res://subscenes/PlayerCharacter.cs" id="1_qa2ox"]
+[ext_resource type="Script" path="res://components/entities/player/PlayerCharacter.cs" id="1_qa2ox"]
 [ext_resource type="Texture2D" uid="uid://bxp14qb46qtpt" path="res://Images/Animated/Crouch (32x32).png" id="2_gfsuy"]
 [ext_resource type="Texture2D" uid="uid://cgulgbusqmaxg" path="res://Images/Animated/Idle (32x32).png" id="2_xbv0a"]
 [ext_resource type="Texture2D" uid="uid://xthuytj71ghk" path="res://Images/Animated/Double Jump (32x32).png" id="3_msxly"]

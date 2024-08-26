@@ -58,7 +58,7 @@ public partial class PlayerCharacter : CharacterBody2D
 		StandingCollision = GetNode<CollisionShape2D>($"CollisionShapeStanding");
 		CrouchingCollision = GetNode<CollisionShape2D>($"CollisionShapeCrouching");
 		ShapeCast = GetNode<ShapeCast2D>("ShapeCast2D");
-		bullet = GD.Load<PackedScene>("res://subscenes/Bullet.tscn");
+		bullet = GD.Load<PackedScene>("res://components/entities/player/Bullet.tscn");
 		aimingLynchpin = GetNode<Node2D>($"aimingLynchpin");
 		aimingDirrection = GetNode<Node2D>($"aimingLynchpin/aimingDirection");
 		aimingSprite = GetNode<Sprite2D>($"aimingLynchpin/aimingSprite");
