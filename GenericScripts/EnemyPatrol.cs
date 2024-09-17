@@ -37,6 +37,7 @@ public partial class EnemyPatrol : CharacterBody2D
 		if (IsOnWall())
 		{
 			direction = !direction;
+			Velocity = Godot.Vector2.Zero;
 		}
 	}
 
