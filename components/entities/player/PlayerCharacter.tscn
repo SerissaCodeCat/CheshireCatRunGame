@@ -444,7 +444,7 @@ size = Vector2(65, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bkbme"]
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D"]
 texture_filter = 1
 script = ExtResource("1_qa2ox")
 

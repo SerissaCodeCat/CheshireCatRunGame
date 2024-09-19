@@ -231,8 +231,14 @@ autoplay = "default"
 position = Vector2(-1, 10)
 shape = SubResource("RectangleShape2D_qhpou")
 
-[node name="DetectionArea" type="Area2D" parent="."]
+[node name="DetectionAreaRight" type="Area2D" parent="."]
 
-[node name="CollisionShapeSight" type="CollisionShape2D" parent="DetectionArea"]
-position = Vector2(293, 9.25)
+[node name="CollisionShapeSight" type="CollisionShape2D" parent="DetectionAreaRight"]
+position = Vector2(302, 8)
+shape = SubResource("RectangleShape2D_j2p43")
+
+[node name="DetectionAreaLeft" type="Area2D" parent="."]
+
+[node name="CollisionShapeSight" type="CollisionShape2D" parent="DetectionAreaLeft"]
+position = Vector2(-303, 8)
 shape = SubResource("RectangleShape2D_j2p43")
