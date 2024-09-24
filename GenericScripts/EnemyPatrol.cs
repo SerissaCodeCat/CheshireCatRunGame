@@ -120,10 +120,11 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 	}
 	public bool DetectPlayerLeft(Node2D body)
 	{
-		GD.Print("ping from Left " + body.Name);
-		//if(body.Name == "Player")
-		//{
-		//}
+		if(body.Name.ToString() == "Player")
+		{
+			GD.Print("DETECTED!!");
+			LineOfSightCheck(body);
+		}
 		return false;
 	}
 	private void setDetectionDirrection()
@@ -132,7 +133,19 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		GD.Print("Setting area Right to" + direction);
 		AreaDetectionLeft.Monitoring = !direction;
 		GD.Print("Setting area left to " + !direction);
-
+	}
+	private bool LineOfSightCheck(Node2D target)
+	{
+		PhysicsDirectSpaceState2D worldState = GetWorld2D().DirectSpaceState;
+		var query = PhysicsRayQueryParameters2D.Create(Position, target.Position);
+		query.HitFromInside = false;
+		var sightCheck = worldState.IntersectRay(query);
+		if (sightCheck.Count != 0)
+		{
+			GD.Print(sightCheck.ToString());
+			//if(sightCheck[0].ToString() == "Player")
+		}
+		return false;
 	}
 
 }
