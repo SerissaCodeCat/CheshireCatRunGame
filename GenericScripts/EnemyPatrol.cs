@@ -9,6 +9,7 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 	public const float Speed = 350.0f;
 	public const float acceleration = 15.0f;
 	private bool wallToRight = false;
+	private bool playerDetected = false;
 	private Godot.Vector2 finalVelocity;
 	private bool direction = true;
 	private bool detected = false;
@@ -32,8 +33,10 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		AreaDetectionRight = GetNode<Area2D>($"DetectionAreaRight");
 		AreaDetectionLeft = GetNode<Area2D>($"DetectionAreaLeft");
 
-		AreaDetectionRight.BodyEntered += (body) => DetectPlayerRight(body);
-		AreaDetectionLeft.BodyEntered += (body) => DetectPlayerLeft(body);
+		AreaDetectionRight.BodyEntered += (body) => DetectPlayer(body);
+		AreaDetectionLeft.BodyEntered += (body) => DetectPlayer(body);
+		AreaDetectionRight.BodyExited += (body) => DetectPlayerLeaving(body);
+		AreaDetectionLeft.BodyExited += (body) => DetectPlayerLeaving(body);
 		sprite_2d = GetNode<AnimatedSprite2D>($"Sprite2D");
 		CollisionBody = GetNode<CollisionShape2D>($"CollisionShapeStanding");
 		setDetectionDirrection();
@@ -86,10 +89,16 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		{
 			if(idleTimer > 0.0d)
 			{
-				incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (direction? 1.0f: -1.0f) * (Speed / 2), acceleration);
+				if(playerDetected)
+				{
+					incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (direction ? 1.0f : -1.0f) * Speed, acceleration);
+				}
+				else
+				{
+					incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (direction? 1.0f: -1.0f) * (Speed / 2), acceleration);
+					idleTimer -= incomingDelta;
+				}
 				sprite_2d.FlipH = !direction;
-				idleTimer -= incomingDelta;
-				//GD.Print("Time Till Break = " +idleTimer);
 			}
 			else
 			{
@@ -110,29 +119,25 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		}
 	}
 
-	public bool DetectPlayerRight(Node2D body)
+	public void DetectPlayer(Node2D body)
 	{
-		GD.Print("ping from right" + body.Name);
-		//if(body.Name == "Player")
-		//{
-		//}
-		return false;
-	}
-	public bool DetectPlayerLeft(Node2D body)
-	{
-		if(body.Name.ToString() == "Player")
+		if (body.Name.ToString() == "Player")
 		{
-			GD.Print("DETECTED!!");
-			LineOfSightCheck(body);
+			playerDetected = LineOfSightCheck(body);
 		}
-		return false;
+	}
+	public void DetectPlayerLeaving(Node2D body)
+	{
+		if (body.Name.ToString() == "Player")
+		{
+			GD.Print("player Escaped");
+			playerDetected = false;
+		}
 	}
 	private void setDetectionDirrection()
 	{
 		AreaDetectionRight.Monitoring = direction;
-		GD.Print("Setting area Right to" + direction);
 		AreaDetectionLeft.Monitoring = !direction;
-		GD.Print("Setting area left to " + !direction);
 	}
 	private bool LineOfSightCheck(Node2D target)
 	{
@@ -142,8 +147,12 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		var sightCheck = worldState.IntersectRay(query);
 		if (sightCheck.Count != 0)
 		{
-			GD.Print(sightCheck.ToString());
-			//if(sightCheck[0].ToString() == "Player")
+			if((ulong)sightCheck["collider_id"] == target.GetInstanceId())
+			{
+				GD.Print("Target Aquired");
+
+				return true;
+			}
 		}
 		return false;
 	}
