@@ -236,9 +236,3 @@ shape = SubResource("RectangleShape2D_qhpou")
 [node name="CollisionShapeSight" type="CollisionShape2D" parent="DetectionAreaRight"]
 position = Vector2(302, 8)
 shape = SubResource("RectangleShape2D_j2p43")
-
-[node name="DetectionAreaLeft" type="Area2D" parent="."]
-
-[node name="CollisionShapeSight" type="CollisionShape2D" parent="DetectionAreaLeft"]
-position = Vector2(-303, 8)
-shape = SubResource("RectangleShape2D_j2p43")

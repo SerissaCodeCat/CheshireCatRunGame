@@ -19,27 +19,26 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 	private Godot.Vector2 Stop = new Godot.Vector2(0, 0);
 	private CollisionShape2D CollisionBody;
 	private Area2D AreaDetectionRight;
-	private Area2D AreaDetectionLeft;
 
 	private Shape2D detectionShapeRight;
-	private Shape2D detectionShapeLeft;
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 	private Random rnd = new Random();
 	private AnimatedSprite2D sprite_2d;
+	private Node2D enemyNode;
+
+	private Godot.Vector2 aboutFace;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		AreaDetectionRight = GetNode<Area2D>($"DetectionAreaRight");
-		AreaDetectionLeft = GetNode<Area2D>($"DetectionAreaLeft");
-
 		AreaDetectionRight.BodyEntered += (body) => DetectPlayer(body);
-		AreaDetectionLeft.BodyEntered += (body) => DetectPlayer(body);
 		AreaDetectionRight.BodyExited += (body) => DetectPlayerLeaving(body);
-		AreaDetectionLeft.BodyExited += (body) => DetectPlayerLeaving(body);
 		sprite_2d = GetNode<AnimatedSprite2D>($"Sprite2D");
+		enemyNode = this;
+		aboutFace = new(-1, enemyNode.Scale.Y);
 		CollisionBody = GetNode<CollisionShape2D>($"CollisionShapeStanding");
-		setDetectionDirrection();
+		//setDetectionDirrection();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -66,7 +65,9 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		{
 			direction = !direction;
 			Velocity = Godot.Vector2.Zero;
-			setDetectionDirrection();
+			//setDetectionDirrection();
+			FlipEntity();
+			
 		}
 	}
 
@@ -98,7 +99,7 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 					incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (direction? 1.0f: -1.0f) * (Speed / 2), acceleration);
 					idleTimer -= incomingDelta;
 				}
-				sprite_2d.FlipH = !direction;
+				//sprite_2d.FlipH = !direction;
 			}
 			else
 			{
@@ -115,7 +116,7 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		if (IsOnFloor())
 		{
 			incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (detectionDirrection ? 1.0f : -1.0f) * Speed, acceleration);
-			sprite_2d.FlipH = !direction;
+			//sprite_2d.FlipH = !direction;
 		}
 	}
 
@@ -130,14 +131,13 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 	{
 		if (body.Name.ToString() == "Player")
 		{
-			GD.Print("player Escaped");
+			//GD.Print("player Escaped");
 			playerDetected = false;
 		}
 	}
 	private void setDetectionDirrection()
 	{
 		AreaDetectionRight.Monitoring = direction;
-		AreaDetectionLeft.Monitoring = !direction;
 	}
 	private bool LineOfSightCheck(Node2D target)
 	{
@@ -149,12 +149,24 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		{
 			if((ulong)sightCheck["collider_id"] == target.GetInstanceId())
 			{
-				GD.Print("Target Aquired");
+				//GD.Print("Target Aquired");
 
 				return true;
 			}
 		}
 		return false;
+	}
+
+	private void FlipEntity()
+	{
+		if (enemyNode.Scale.X == -1)
+		{
+			enemyNode.Scale *= aboutFace;
+		}
+		else
+		{
+			enemyNode.Scale *= aboutFace;
+		}
 	}
 
 }
