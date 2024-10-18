@@ -63,7 +63,7 @@ public partial class PlayerCharacter : CharacterBody2D
 		aimingDirrection = GetNode<Node2D>($"aimingLynchpin/aimingDirection");
 		aimingSprite = GetNode<Sprite2D>($"aimingLynchpin/aimingSprite");
 		aimingSprite.Visible = false;
-		GD.Print("test the : " + bullet);
+		//GD.Print("test the : " + bullet);
  	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -108,7 +108,7 @@ public partial class PlayerCharacter : CharacterBody2D
 			teleportAvailiable = true;
 			doubleJumpAvailiable = true;
 			PlayerState = playerStates.airborn;
-			GD.Print("entering Airborn State");
+			//GD.Print("entering Airborn State");
 			return;
 		}
 
@@ -119,7 +119,7 @@ public partial class PlayerCharacter : CharacterBody2D
 			PlayerState = playerStates.airborn;
 			incomingVelocity.Y = JumpVelocity;
 			cyoteTimer = 0.0d;
-			GD.Print("entering Airborn State");
+			//GD.Print("entering Airborn State");
 			return;
 
 		}
@@ -130,7 +130,7 @@ public partial class PlayerCharacter : CharacterBody2D
 			doubleJumpAvailiable = true;
 			PlayerState = playerStates.teleporting;
 			teleportTimer = teleportTimerReset;
-			GD.Print("entering Teleporting State");
+			//GD.Print("entering Teleporting State");
 			return;
 		}
 		if (Input.IsActionPressed("fire"))
@@ -231,7 +231,7 @@ public partial class PlayerCharacter : CharacterBody2D
 		if(Input.IsActionJustPressed("crouch"))
 		{
 
-			GD.Print("entering CROUCHED State");
+			//GD.Print("entering CROUCHED State");
 			StandingCollision.Disabled = true;
 			CrouchingCollision.Disabled = false;
 			PlayerState = playerStates.crouching;	
@@ -256,7 +256,7 @@ public partial class PlayerCharacter : CharacterBody2D
 			StandingCollision.Disabled = false;
 			CrouchingCollision.Disabled = true;
 			PlayerState = playerStates.airborn;
-			GD.Print("entering Airborn State");
+			//GD.Print("entering Airborn State");
 			return;
 		}
 
@@ -269,7 +269,7 @@ public partial class PlayerCharacter : CharacterBody2D
 			PlayerState = playerStates.airborn;
 			incomingVelocity.Y = JumpVelocity*1.5f;
 			cyoteTimer = 0.0d;
-			GD.Print("SUPER JUMP");
+			//GD.Print("SUPER JUMP");
 			return;
 
 		}
@@ -284,7 +284,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
 			PlayerState = playerStates.teleporting;
 			teleportTimer = teleportTimerReset;
-			GD.Print("entering Teleporting State");
+			//GD.Print("entering Teleporting State");
 			return;
 		}
 
@@ -306,7 +306,7 @@ public partial class PlayerCharacter : CharacterBody2D
 		{
 			if(ShapeCast.IsColliding())
 			{
-				GD.Print("Collision Detected");
+				//GD.Print("Collision Detected");
 			}
 			else
 			{
@@ -330,7 +330,7 @@ public partial class PlayerCharacter : CharacterBody2D
 			PlayerState = playerStates.grounded;
 			doubleJumpAvailiable = true;
 			teleportAvailiable = true;
-			GD.Print("entering Grounded State");
+			//GD.Print("entering Grounded State");
 			return;
 		}
 		if (!Input.IsActionPressed("crouch"))
@@ -353,7 +353,7 @@ public partial class PlayerCharacter : CharacterBody2D
 				PlayerState = playerStates.teleporting;
 				teleportAvailiable = false;
 				teleportTimer = teleportTimerReset;
-				GD.Print("entering Teleporting State");
+				//GD.Print("entering Teleporting State");
 				return;
 			}
 		}
@@ -396,7 +396,7 @@ public partial class PlayerCharacter : CharacterBody2D
 			PlayerState = playerStates.grounded;
 			doubleJumpAvailiable = true;
 			teleportAvailiable = true;
-			GD.Print("entering Grounded State");
+			//GD.Print("entering Grounded State");
 			return;
 		}
 		//add gravity at 1/3 the normal value due to cat claws stuck in the wall we are clinging to
@@ -467,17 +467,17 @@ public partial class PlayerCharacter : CharacterBody2D
 			if(IsOnFloor())
 			{
 				PlayerState = playerStates.grounded;
-				GD.Print("entering Grounded State");
+				//GD.Print("entering Grounded State");
 			}
 			else if (IsOnWall())
 			{	
 				PlayerState = playerStates.clinging;
-				GD.Print("entering Clinging State");
+				//GD.Print("entering Clinging State");
 			}
 			else
 			{	
 				PlayerState = playerStates.airborn;
-				GD.Print("entering Airborn State");
+				//GD.Print("entering Airborn State");
 			}
 		}
 	}
@@ -501,7 +501,7 @@ public partial class PlayerCharacter : CharacterBody2D
 				aimingDirrection.GlobalPosition - aimingLynchpin.GlobalPosition, Bullet.bulletTypes.basic);
 			Owner.AddChild(shot);
 			bulletTimer = 1.0d;
-			GD.Print("FIRE");
+			//GD.Print("FIRE");
 			aimingLynchpin.RotationDegrees = sprite_2d.FlipH ? 180.0f : 0.0f;
 			aimingSprite.Visible = false;
 		}

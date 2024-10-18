@@ -25,7 +25,7 @@ public partial class Button : Node2D
 	{
 		if(canBeActivated)
 		{
-			GD.Print("Button Detected: " + body.Name);
+			//GD.Print("Button Detected: " + body.Name);
 			buttonSprite.Visible = false;
 			canBeActivated = false;
 			reactivationTimer = reactivationDelay;

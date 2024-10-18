@@ -11,11 +11,11 @@ public partial class Door : Node2D, iButtonActivation
 		doorSprite = GetNode<Sprite2D>($"Sprite2D");
 		doorCollision = GetNode<StaticBody2D>($"StaticBody2D"); 
 
-		GD.Print("door collision is: " + doorCollision);
+		//GD.Print("door collision is: " + doorCollision);
 	}
 	public bool Activate(Node2D body)
     {
-        GD.Print("Door Detected: " + body.Name);
+        //GD.Print("Door Detected: " + body.Name);
 		
 		doorSprite.Visible = !doorSprite.Visible;
         if (doorCollision.CollisionLayer == 1)

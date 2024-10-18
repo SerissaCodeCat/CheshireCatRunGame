@@ -12,7 +12,6 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 	private bool playerDetected = false;
 	private Godot.Vector2 finalVelocity;
 	private bool direction = true;
-	private bool detected = false;
 	private double idleTimer = 60.0d;
 	private double breakTimer = 0.0d;
 	private bool onBreak = false;
@@ -26,6 +25,13 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 	private AnimatedSprite2D sprite_2d;
 	private Node2D enemyNode;
 
+	private Node2D Player = null;
+
+	private double attackTimer = 0.0d;
+	private double attackOn;
+	private bool attacking;
+	private float attackRange = 70;
+
 	private Godot.Vector2 aboutFace;
 
 	// Called when the node enters the scene tree for the first time.
@@ -38,6 +44,8 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		enemyNode = this;
 		aboutFace = new(-1, enemyNode.Scale.Y);
 		CollisionBody = GetNode<CollisionShape2D>($"CollisionShapeStanding");
+		attacking = false;
+		attackOn = 2.0d; //this will set the timer so that the enemy attacks after 2 seconds of being within range and detecting the player
 		//setDetectionDirrection();
 	}
 
@@ -45,32 +53,41 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 	public override void _PhysicsProcess(double delta)
 	{
 		finalVelocity = Velocity;
-		
-		if(!detected && !onBreak) 
+		if(!attacking)
 		{
-			Move(ref finalVelocity, delta);
-		}
-		else if (!onBreak)
-		{ 
-			DetectedMove(ref finalVelocity, direction, delta);
+			if(!onBreak) 
+			{
+				Move(ref finalVelocity, delta);
+			}
+			else
+			{
+				takeBreak(ref finalVelocity, delta);
+			}
+			
+			Velocity = finalVelocity;
+			MoveAndSlide();
+			if (IsOnWall())
+			{
+				direction = !direction;
+				Velocity = Godot.Vector2.Zero;
+				FlipEntity();
+			}
 		}
 		else
 		{
-			takeBreak(ref finalVelocity, delta);
-		}
-		
-		Velocity = finalVelocity;
-		MoveAndSlide();
-		if (IsOnWall())
-		{
-			direction = !direction;
-			Velocity = Godot.Vector2.Zero;
-			//setDetectionDirrection();
-			FlipEntity();
-			
+			Attack(ref finalVelocity, direction, delta);
 		}
 	}
 
+	private bool rangeCheck()
+	{
+		if(Player.Position.X - Position.X < attackRange && Player.Position.X - Position.X > -attackRange)
+		{
+			attacking = true;
+			return true;
+		}
+		return false;
+	}
     private void takeBreak(ref Godot.Vector2 incomingVelocity, double incomingDelta)
     {
 		incomingVelocity = Godot.Vector2.Zero;
@@ -92,7 +109,7 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 			{
 				if(playerDetected)
 				{
-					incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (direction ? 1.0f : -1.0f) * Speed, acceleration);
+					DetectedMove(ref incomingVelocity, direction, incomingDelta);
 				}
 				else
 				{
@@ -110,13 +127,14 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 
 	}
 
-    public void DetectedMove(ref Godot.Vector2 incomingVelocity, bool detectionDirrection, double incomingDelta)
+    public void DetectedMove(ref Godot.Vector2 incomingVelocity, bool detection, double incomingDelta)
     {
 		incomingVelocity.Y += gravity * (float)incomingDelta;
 		if (IsOnFloor())
 		{
-			incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (detectionDirrection ? 1.0f : -1.0f) * Speed, acceleration);
+			incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (direction ? 1.0f : -1.0f) * Speed, acceleration);
 			//sprite_2d.FlipH = !direction;
+			rangeCheck();
 		}
 	}
 
@@ -124,20 +142,17 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 	{
 		if (body.Name.ToString() == "Player")
 		{
-			playerDetected = LineOfSightCheck(body);
+			Player = body;
+			playerDetected = LineOfSightCheck(Player);
 		}
 	}
 	public void DetectPlayerLeaving(Node2D body)
 	{
-		if (body.Name.ToString() == "Player")
+		if (body == Player)
 		{
 			//GD.Print("player Escaped");
 			playerDetected = false;
 		}
-	}
-	private void setDetectionDirrection()
-	{
-		AreaDetectionRight.Monitoring = direction;
 	}
 	private bool LineOfSightCheck(Node2D target)
 	{
@@ -149,12 +164,24 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		{
 			if((ulong)sightCheck["collider_id"] == target.GetInstanceId())
 			{
-				//GD.Print("Target Aquired");
-
 				return true;
 			}
 		}
 		return false;
+	}
+
+	private void Attack(ref Godot.Vector2 incomingVelocity, bool detectionDirrection, double incomingDelta)
+	{
+		incomingVelocity = Godot.Vector2.Zero;
+		incomingVelocity.Y += gravity * (float)incomingDelta;
+		attacking = true;
+		attackTimer += incomingDelta;
+		if(attackTimer >= attackOn)
+		{
+			GD.Print("bonk"); //this is where the damage function wound go.... IF I HAD ONE!
+			attackTimer = 0.0d;
+			attacking = rangeCheck();
+		}
 	}
 
 	private void FlipEntity()

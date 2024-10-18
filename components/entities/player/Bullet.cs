@@ -51,7 +51,7 @@ public partial class Bullet : CharacterBody2D
 		if(GetSlideCollisionCount() != 0)
 		{
 			SoundManager.instance.playPossitionalAudio("bulletImpact", GlobalPosition.X, GlobalPosition.Y );
-			GD.Print("Senting Sound Trigger");
+			//GD.Print("Senting Sound Trigger");
 		}
         if ((lifespan -= delta) <= 0.0d)
 		{
