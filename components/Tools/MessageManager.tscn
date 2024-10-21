@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bys5lki8juyg6"]
+
+[ext_resource type="Script" path="res://components/Tools/MessageManager.cs" id="1_bp821"]
+
+[node name="MessageManager" type="Node2D"]
+script = ExtResource("1_bp821")
