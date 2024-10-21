@@ -327,4 +327,7 @@ scale = Vector2(2.25, 2.25)
 position = Vector2(89, 574)
 
 [node name="Enemy" parent="." instance=ExtResource("6_p2lei")]
-position = Vector2(272, 575)
+position = Vector2(1514, 482)
+
+[node name="Enemy2" parent="." instance=ExtResource("6_p2lei")]
+position = Vector2(888, 564)

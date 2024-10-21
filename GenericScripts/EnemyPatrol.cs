@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Numerics;
 
-public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
+public partial class EnemyPatrol : CharacterBody2D
 {
 
 	public const float Speed = 350.0f;
@@ -31,7 +31,10 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 	private double attackOn;
 	private bool attacking;
 	private float attackRange = 70;
-
+	private bool stunned = false;
+	private double stunTimer = 0.0d;
+	private double flashTimer = 0.0d;
+	private const double stunTime = 3.0d;
 	private Godot.Vector2 aboutFace;
 
 	// Called when the node enters the scene tree for the first time.
@@ -46,14 +49,35 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		CollisionBody = GetNode<CollisionShape2D>($"CollisionShapeStanding");
 		attacking = false;
 		attackOn = 2.0d; //this will set the timer so that the enemy attacks after 2 seconds of being within range and detecting the player
-		//setDetectionDirrection();
+		MessageManager.instance.addToEnemyDictionary(this);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
 		finalVelocity = Velocity;
-		if(!attacking)
+		if (stunned)
+		{
+			Velocity = Godot.Vector2.Zero;
+			if(stunTimer <= 0.0d)
+			{
+				stunned = false;
+				sprite_2d.Visible = true;
+				flashTimer = 0.0d;
+			}
+			else
+			{
+				stunTimer -= delta;
+				flashTimer -= delta;
+				if(flashTimer <= 0.0d)
+				{
+					flashTimer = stunTimer/8;
+					sprite_2d.Visible = !sprite_2d.Visible;
+				}
+				MoveAndSlide();
+			}
+		}
+		else if(!attacking)
 		{
 			if(!onBreak) 
 			{
@@ -99,7 +123,7 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		}
 	}
 
-    public void Move(ref Godot.Vector2 incomingVelocity, double incomingDelta)
+    private void Move(ref Godot.Vector2 incomingVelocity, double incomingDelta)
 	{
 		
 		incomingVelocity.Y += gravity * (float)incomingDelta;
@@ -127,7 +151,7 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 
 	}
 
-    public void DetectedMove(ref Godot.Vector2 incomingVelocity, bool detection, double incomingDelta)
+    private void DetectedMove(ref Godot.Vector2 incomingVelocity, bool detection, double incomingDelta)
     {
 		incomingVelocity.Y += gravity * (float)incomingDelta;
 		if (IsOnFloor())
@@ -138,7 +162,7 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		}
 	}
 
-	public void DetectPlayer(Node2D body)
+	private void DetectPlayer(Node2D body)
 	{
 		if (body.Name.ToString() == "Player")
 		{
@@ -146,7 +170,7 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 			playerDetected = LineOfSightCheck(Player);
 		}
 	}
-	public void DetectPlayerLeaving(Node2D body)
+	private void DetectPlayerLeaving(Node2D body)
 	{
 		if (body == Player)
 		{
@@ -196,4 +220,9 @@ public partial class EnemyPatrol : CharacterBody2D, IPatrolOnGround
 		}
 	}
 
+	public void BeStunned()
+	{
+		stunned = true;
+		stunTimer = stunTime;
+	}
 }

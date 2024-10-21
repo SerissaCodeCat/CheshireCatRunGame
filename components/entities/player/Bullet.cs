@@ -47,11 +47,20 @@ public partial class Bullet : CharacterBody2D
 		//currentVelocity.X = Mathf.MoveToward(currentVelocity.X, 0, deceleration);
 		Velocity = currentVelocity;
 		MoveAndSlide();
-
-		if(GetSlideCollisionCount() != 0)
+		int tempCollisionCount = GetSlideCollisionCount(); 
+		if(tempCollisionCount != 0)
 		{
 			SoundManager.instance.playPossitionalAudio("bulletImpact", GlobalPosition.X, GlobalPosition.Y );
-			//GD.Print("Senting Sound Trigger");
+			for(int i = 0; i < tempCollisionCount; i++)
+			{
+				KinematicCollision2D tmp = GetSlideCollision(i);
+				GD.Print("Hit " + (tmp.GetCollider() as Node2D).Name.ToString());
+				if((tmp.GetCollider() as Node2D).Name.ToString().Contains("Enemy"))
+				{
+					MessageManager.instance.stunEnemyWithID(tmp.GetColliderId());
+				}
+				
+			}
 		}
         if ((lifespan -= delta) <= 0.0d)
 		{
