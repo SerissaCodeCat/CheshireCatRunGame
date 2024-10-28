@@ -22,6 +22,9 @@ public partial class PlayerCharacter : CharacterBody2D
 	private Godot.Vector2 shotOffset = new Godot.Vector2 (60.0f, 0.0f); 	
 	public PackedScene bullet { get; set; }
 	private double bulletTimer = 0.0d;
+
+	public int Health;
+	public int MaxHealth = 3;
  
 
 	public enum playerStates
@@ -63,8 +66,36 @@ public partial class PlayerCharacter : CharacterBody2D
 		aimingDirrection = GetNode<Node2D>($"aimingLynchpin/aimingDirection");
 		aimingSprite = GetNode<Sprite2D>($"aimingLynchpin/aimingSprite");
 		aimingSprite.Visible = false;
-		//GD.Print("test the : " + bullet);
- 	}
+		MessageManager.instance.addPlayerToMessageManager(this);
+	}
+	public bool setValues(PlayerCharacter incomingValues)
+	{
+		if(incomingValues != null)
+		{
+			GD.Print("Setting Values");
+			Health = MaxHealth;
+			return true;
+		}
+		return false;
+	}
+	public void DamagePLayer()
+	{
+		Health--;
+		GD.Print("player takes damage!! remaining health = " + Health + "/" + MaxHealth);
+		if (Health <= 0)
+		{
+			GD.Print("DEATH!");
+		}
+	}
+	public void HealPlayer(int amount = 1)
+	{
+		Health += amount;
+		if(Health > MaxHealth)
+		{
+			Health = MaxHealth;
+		}
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
 		finalVelocity = Velocity;

@@ -176,6 +176,7 @@ public partial class EnemyPatrol : CharacterBody2D
 		{
 			//GD.Print("player Escaped");
 			playerDetected = false;
+			//attacking = false;
 		}
 	}
 	private bool LineOfSightCheck(Node2D target)
@@ -202,9 +203,12 @@ public partial class EnemyPatrol : CharacterBody2D
 		attackTimer += incomingDelta;
 		if(attackTimer >= attackOn)
 		{
-			GD.Print("bonk"); //this is where the damage function wound go.... IF I HAD ONE!
-			attackTimer = 0.0d;
 			attacking = rangeCheck();
+			if(attacking)
+			{
+				MessageManager.instance.DamagePlayer();
+			}
+			attackTimer = 0.0d;
 		}
 	}
 
