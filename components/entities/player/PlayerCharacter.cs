@@ -25,6 +25,12 @@ public partial class PlayerCharacter : CharacterBody2D
 
 	public int Health;
 	public int MaxHealth = 3;
+	private bool damagable;
+	private double damageTimer = 0.0d;
+	private double flashTimer = 0.0d;
+	private const double DamageRecoveryTime = 3.0d;
+	private Godot.Color semiTransparent = new Godot.Color(1,1,1,0.5f);
+	private Godot.Color solid = new Godot.Color(1,1,1,1f);
  
 
 	public enum playerStates
@@ -67,6 +73,7 @@ public partial class PlayerCharacter : CharacterBody2D
 		aimingSprite = GetNode<Sprite2D>($"aimingLynchpin/aimingSprite");
 		aimingSprite.Visible = false;
 		MessageManager.instance.addPlayerToMessageManager(this);
+		damagable = true;
 	}
 	public bool setValues(PlayerCharacter incomingValues)
 	{
@@ -80,11 +87,16 @@ public partial class PlayerCharacter : CharacterBody2D
 	}
 	public void DamagePLayer()
 	{
-		Health--;
-		GD.Print("player takes damage!! remaining health = " + Health + "/" + MaxHealth);
-		if (Health <= 0)
+		if(damagable)
 		{
-			GD.Print("DEATH!");
+			GD.Print("DAMAGED!");
+			Health--;
+			damagable = false;
+			damageTimer = DamageRecoveryTime;
+			if (Health <= 0)
+			{
+				GD.Print("DEATH!");
+			}
 		}
 	}
 	public void HealPlayer(int amount = 1)
@@ -96,10 +108,40 @@ public partial class PlayerCharacter : CharacterBody2D
 		}
 	}
 
+	private void flashPlayer()
+	{
+		if(sprite_2d.Modulate.A == 0.5f)
+		{
+			sprite_2d.Modulate = solid;
+		}
+		else
+		{
+			sprite_2d.Modulate = semiTransparent;
+		}
+	}
 	public override void _PhysicsProcess(double delta)
 	{
 		finalVelocity = Velocity;
-		
+		if (!damagable)
+		{
+			if(damageTimer <= 0.0d)
+			{
+				damagable = true;
+				//sprite_2d.Visible = true;
+				sprite_2d.Modulate = solid;
+				flashTimer = 0.0d;
+			}
+			else
+			{
+				damageTimer -= delta;
+				flashTimer -= delta;
+				if(flashTimer <= 0.0d)
+				{
+					flashTimer = damageTimer/8;
+					flashPlayer();				
+				}
+			}
+		}
 		switch(PlayerState)
 		{
 			case playerStates.grounded:

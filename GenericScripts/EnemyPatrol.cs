@@ -9,7 +9,7 @@ public partial class EnemyPatrol : CharacterBody2D
 	public const float Speed = 350.0f;
 	public const float acceleration = 15.0f;
 	private bool wallToRight = false;
-	private bool playerDetected = false;
+	private bool Charging = false;
 	private Godot.Vector2 finalVelocity;
 	private bool direction = true;
 	private double idleTimer = 60.0d;
@@ -18,6 +18,7 @@ public partial class EnemyPatrol : CharacterBody2D
 	private Godot.Vector2 Stop = new Godot.Vector2(0, 0);
 	private CollisionShape2D CollisionBody;
 	private Area2D AreaDetectionRight;
+	private Area2D HurtBox;
 
 	private Shape2D detectionShapeRight;
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -30,19 +31,24 @@ public partial class EnemyPatrol : CharacterBody2D
 	private double attackTimer = 0.0d;
 	private double attackOn;
 	private bool attacking;
-	private float attackRange = 70;
+	private float attackRange = 80;
 	private bool stunned = false;
 	private double stunTimer = 0.0d;
 	private double flashTimer = 0.0d;
 	private const double stunTime = 3.0d;
 	private Godot.Vector2 aboutFace;
 
+	private bool PlayerInHurtbox;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		AreaDetectionRight = GetNode<Area2D>($"DetectionAreaRight");
 		AreaDetectionRight.BodyEntered += (body) => DetectPlayer(body);
-		AreaDetectionRight.BodyExited += (body) => DetectPlayerLeaving(body);
+		HurtBox = GetNode<Area2D>($"HurtBox2D");
+		HurtBox.BodyEntered += (body) => PlayerEnteredHurtbox(body);
+		HurtBox.BodyExited += (body) => PlayerLeftHurtBox(body);
+		PlayerInHurtbox = false;
 		sprite_2d = GetNode<AnimatedSprite2D>($"Sprite2D");
 		enemyNode = this;
 		aboutFace = new(-1, enemyNode.Scale.Y);
@@ -97,20 +103,10 @@ public partial class EnemyPatrol : CharacterBody2D
 				FlipEntity();
 			}
 		}
-		else
+		if(PlayerInHurtbox)
 		{
-			Attack(ref finalVelocity, direction, delta);
+			Attack();
 		}
-	}
-
-	private bool rangeCheck()
-	{
-		if(Player.Position.X - Position.X < attackRange && Player.Position.X - Position.X > -attackRange)
-		{
-			attacking = true;
-			return true;
-		}
-		return false;
 	}
     private void takeBreak(ref Godot.Vector2 incomingVelocity, double incomingDelta)
     {
@@ -131,9 +127,9 @@ public partial class EnemyPatrol : CharacterBody2D
 		{
 			if(idleTimer > 0.0d)
 			{
-				if(playerDetected)
+				if(Charging)
 				{
-					DetectedMove(ref incomingVelocity, direction, incomingDelta);
+					Charge(ref incomingVelocity, incomingDelta);
 				}
 				else
 				{
@@ -151,14 +147,13 @@ public partial class EnemyPatrol : CharacterBody2D
 
 	}
 
-    private void DetectedMove(ref Godot.Vector2 incomingVelocity, bool detection, double incomingDelta)
+    private void Charge(ref Godot.Vector2 incomingVelocity, double incomingDelta)
     {
 		incomingVelocity.Y += gravity * (float)incomingDelta;
 		if (IsOnFloor())
 		{
 			incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (direction ? 1.0f : -1.0f) * Speed, acceleration);
 			//sprite_2d.FlipH = !direction;
-			rangeCheck();
 		}
 	}
 
@@ -167,16 +162,7 @@ public partial class EnemyPatrol : CharacterBody2D
 		if (body.Name.ToString() == "Player")
 		{
 			Player = body;
-			playerDetected = LineOfSightCheck(Player);
-		}
-	}
-	private void DetectPlayerLeaving(Node2D body)
-	{
-		if (body == Player)
-		{
-			//GD.Print("player Escaped");
-			playerDetected = false;
-			//attacking = false;
+			Charging = LineOfSightCheck(Player);
 		}
 	}
 	private bool LineOfSightCheck(Node2D target)
@@ -195,21 +181,18 @@ public partial class EnemyPatrol : CharacterBody2D
 		return false;
 	}
 
-	private void Attack(ref Godot.Vector2 incomingVelocity, bool detectionDirrection, double incomingDelta)
+	private void Attack()
 	{
-		incomingVelocity = Godot.Vector2.Zero;
-		incomingVelocity.Y += gravity * (float)incomingDelta;
-		attacking = true;
-		attackTimer += incomingDelta;
-		if(attackTimer >= attackOn)
-		{
-			attacking = rangeCheck();
-			if(attacking)
-			{
-				MessageManager.instance.DamagePlayer();
-			}
-			attackTimer = 0.0d;
-		}
+		MessageManager.instance.DamagePlayer(this.GlobalPosition);
+	}
+	
+	private void PlayerEnteredHurtbox (Node2D body)
+	{
+		PlayerInHurtbox = true;
+	}
+	private void PlayerLeftHurtBox (Node2D body)
+	{
+		PlayerInHurtbox = false;
 	}
 
 	private void FlipEntity()
@@ -221,6 +204,12 @@ public partial class EnemyPatrol : CharacterBody2D
 		else
 		{
 			enemyNode.Scale *= aboutFace;
+		}
+
+		if(Charging)
+		{
+			BeStunned();
+			Charging = false;
 		}
 	}
 

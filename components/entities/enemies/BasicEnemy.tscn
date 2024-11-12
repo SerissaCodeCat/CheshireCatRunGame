@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bwr7vhdi28fly"]
+[gd_scene load_steps=36 format=3 uid="uid://bwr7vhdi28fly"]
 
 [ext_resource type="Script" path="res://GenericScripts/EnemyPatrol.cs" id="1_2ofwc"]
 [ext_resource type="Texture2D" uid="uid://c52wjioj0kqyf" path="res://Images/Animated/Enemy Idle (32x32).png" id="2_1bwto"]
@@ -218,8 +218,13 @@ size = Vector2(65, 75)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j2p43"]
 size = Vector2(523, 76.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g5khf"]
+size = Vector2(64, 75)
+
 [node name="Enemy" type="CharacterBody2D"]
 texture_filter = 1
+collision_layer = 4
+collision_mask = 5
 script = ExtResource("1_2ofwc")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
@@ -232,7 +237,17 @@ position = Vector2(-1, 10)
 shape = SubResource("RectangleShape2D_qhpou")
 
 [node name="DetectionAreaRight" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShapeSight" type="CollisionShape2D" parent="DetectionAreaRight"]
 position = Vector2(302, 8)
 shape = SubResource("RectangleShape2D_j2p43")
+
+[node name="HurtBox2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="HurtBoxCollisionShape" type="CollisionShape2D" parent="HurtBox2D"]
+position = Vector2(-1, 10.5)
+shape = SubResource("RectangleShape2D_g5khf")

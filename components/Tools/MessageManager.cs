@@ -35,8 +35,9 @@ public partial class MessageManager : Node2D
 		GD.Print("player added to message manager with IDvalue of: " + playerMessagerLink.GetInstanceId());
 	}
 
-	public void DamagePlayer()
+	public void DamagePlayer(Godot.Vector2 damageComingFrom)
 	{
+		GD.Print("Sending damage message to player");
 		playerMessagerLink.DamagePLayer();
 	}
 	public void stunEnemyWithID (ulong ID)
