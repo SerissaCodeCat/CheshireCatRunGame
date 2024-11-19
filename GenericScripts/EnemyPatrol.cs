@@ -183,7 +183,7 @@ public partial class EnemyPatrol : CharacterBody2D
 
 	private void Attack()
 	{
-		MessageManager.instance.DamagePlayer(this.GlobalPosition);
+		MessageManager.instance.DamagePlayer(this.Position);
 	}
 	
 	private void PlayerEnteredHurtbox (Node2D body)

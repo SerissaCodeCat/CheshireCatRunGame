@@ -5,43 +5,27 @@ using System.Xml.XPath;
 
 public partial class PlayerCharacter : CharacterBody2D
 {
-	public const float Speed = 450.0f;
-	public const float Deceleration = 15.0f;
-	public const float AirDeceleration = 3.3f;
-	public const float JumpVelocity = -460.0f;
-	private const double CyoteTime = 0.1d;
-	private const double teleportTimerReset = 0.3d;
-	private const double clingTimerReset = 1.0d;
-	private float dashSpeed = 1000.0f;
-	private double cyoteTimer = CyoteTime;
-	private double teleportTimer = teleportTimerReset;
-	private double clingTimer = clingTimerReset;
-	private bool doubleJumpAvailiable = true;
-	private bool teleportAvailiable = true;
-	private bool wallToRight = false;
-	private Godot.Vector2 shotOffset = new Godot.Vector2 (60.0f, 0.0f); 	
-	public PackedScene bullet { get; set; }
-	private double bulletTimer = 0.0d;
-
-	public int Health;
-	public int MaxHealth = 3;
-	private bool damagable;
-	private double damageTimer = 0.0d;
-	private double flashTimer = 0.0d;
-	private const double DamageRecoveryTime = 3.0d;
-	private Godot.Color semiTransparent = new Godot.Color(1,1,1,0.5f);
-	private Godot.Color solid = new Godot.Color(1,1,1,1f);
- 
-
+	/// <State Machine enumerator>
+	/// The enum that contains all the different states in which the player may be put.
+	/// </State Machine enumerator>
 	public enum playerStates
 	{
 		grounded,
 		airborn,
 		clinging,
 		teleporting,
-		crouching
+		crouching,
+		damaged
 	}
 	public playerStates PlayerState = playerStates.grounded;
+
+	/// <External Class refferances>
+	///  //////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// </External Class refferances>
+	private Godot.Vector2 shotOffset = new Godot.Vector2 (60.0f, 0.0f); 	
+	public PackedScene bullet { get; set; }
+	private Godot.Color semiTransparent = new Godot.Color(1,1,1,0.5f);
+	private Godot.Color solid = new Godot.Color(1,1,1,1f); 
 	private Godot.Vector2 finalVelocity;
     private Godot.Vector2 direction;
 	private Godot.Vector2 Stop = new Godot.Vector2(0,0);
@@ -50,16 +34,46 @@ public partial class PlayerCharacter : CharacterBody2D
 	private Sprite2D aimingSprite;
 	private Node2D aimingLynchpin;
 	private Node2D aimingDirrection;
-	private float aimingRotationSpeed = 120.0f;
 	private bool aimingRise = true;
 	private CollisionShape2D StandingCollision;
 	private CollisionShape2D CrouchingCollision;
 	private ShapeCast2D ShapeCast;
 
-
-	// Get the gravity from the project settings to be synced with RigidBody nodes.
+	/// <Floats>
+	/// ////////////////////////////////////////////////////////////////////////////////
+	/// </Floats>
+	public const float Speed = 450.0f;
+	public const float Deceleration = 15.0f;
+	public const float AirDeceleration = 3.3f;
+	public const float JumpVelocity = -600.0f;
+	private float dashSpeed = 1000.0f;
+	private float aimingRotationSpeed = 120.0f;
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-
+	/// <Doubles>
+	/// /////////////////////////////////////////////////////////////////////////////////
+	/// </Doubles>
+	private const double CyoteTime = 0.1d;
+	private const double teleportTimerReset = 0.3d;
+	private const double clingTimerReset = 1.0d;
+	private const double DamageRecoveryTime = 2.0d;
+	private double damageTimer = 0.0d;
+	private double flashTimer = 0.0d;
+	private double cyoteTimer = CyoteTime;
+	private double teleportTimer = teleportTimerReset;
+	private double clingTimer = clingTimerReset;
+	private double bulletTimer = 0.0d;
+	/// <Intergers>
+	/// ////////////////////////////////////////////////////////////////////////////////
+	/// </Intergers>
+	public int Health;
+	public int MaxHealth = 3;
+	/// <Bools>
+	/// ////////////////////////////////////////////////////////////////////////////////
+	/// </Bools>
+	private bool doubleJumpAvailiable = true;
+	private bool teleportAvailiable = true;
+	private bool wallToRight = false;
+	private bool damagable;
 	public override void _Ready()
 	{
 		base._Ready();
@@ -75,53 +89,10 @@ public partial class PlayerCharacter : CharacterBody2D
 		MessageManager.instance.addPlayerToMessageManager(this);
 		damagable = true;
 	}
-	public bool setValues(PlayerCharacter incomingValues)
-	{
-		if(incomingValues != null)
-		{
-			GD.Print("Setting Values");
-			Health = MaxHealth;
-			return true;
-		}
-		return false;
-	}
-	public void DamagePLayer()
-	{
-		if(damagable)
-		{
-			GD.Print("DAMAGED!");
-			Health--;
-			damagable = false;
-			damageTimer = DamageRecoveryTime;
-			if (Health <= 0)
-			{
-				GD.Print("DEATH!");
-			}
-		}
-	}
-	public void HealPlayer(int amount = 1)
-	{
-		Health += amount;
-		if(Health > MaxHealth)
-		{
-			Health = MaxHealth;
-		}
-	}
-
-	private void flashPlayer()
-	{
-		if(sprite_2d.Modulate.A == 0.5f)
-		{
-			sprite_2d.Modulate = solid;
-		}
-		else
-		{
-			sprite_2d.Modulate = semiTransparent;
-		}
-	}
-	public override void _PhysicsProcess(double delta)
+		public override void _PhysicsProcess(double delta)
 	{
 		finalVelocity = Velocity;
+		//the damage flash is done outside of the physics loop, this is because the flashing and damage recovery needs to span across two states
 		if (!damagable)
 		{
 			if(damageTimer <= 0.0d)
@@ -133,6 +104,11 @@ public partial class PlayerCharacter : CharacterBody2D
 			}
 			else
 			{
+				if(damageTimer <= DamageRecoveryTime/2)
+				{
+					//grounded state has the most flexibility to become other states in a single frame and so is the safest to default to
+					PlayerState = playerStates.grounded;
+				}
 				damageTimer -= delta;
 				flashTimer -= delta;
 				if(flashTimer <= 0.0d)
@@ -142,6 +118,7 @@ public partial class PlayerCharacter : CharacterBody2D
 				}
 			}
 		}
+
 		switch(PlayerState)
 		{
 			case playerStates.grounded:
@@ -159,7 +136,10 @@ public partial class PlayerCharacter : CharacterBody2D
 			case playerStates.crouching:
 				doCrouchingPhysics(ref finalVelocity, delta);
 			break;
-			default:
+			case playerStates.damaged:
+				doDamagedPhysics(ref finalVelocity, delta);
+			break;
+			default:PlayerState = playerStates.grounded;
 			break;
 		}
 		Velocity = finalVelocity;
@@ -181,7 +161,6 @@ public partial class PlayerCharacter : CharacterBody2D
 			teleportAvailiable = true;
 			doubleJumpAvailiable = true;
 			PlayerState = playerStates.airborn;
-			//GD.Print("entering Airborn State");
 			return;
 		}
 
@@ -192,7 +171,6 @@ public partial class PlayerCharacter : CharacterBody2D
 			PlayerState = playerStates.airborn;
 			incomingVelocity.Y = JumpVelocity;
 			cyoteTimer = 0.0d;
-			//GD.Print("entering Airborn State");
 			return;
 
 		}
@@ -203,7 +181,6 @@ public partial class PlayerCharacter : CharacterBody2D
 			doubleJumpAvailiable = true;
 			PlayerState = playerStates.teleporting;
 			teleportTimer = teleportTimerReset;
-			//GD.Print("entering Teleporting State");
 			return;
 		}
 		if (Input.IsActionPressed("fire"))
@@ -418,6 +395,13 @@ public partial class PlayerCharacter : CharacterBody2D
 				return;
 			}
 		}
+		if(!Input.IsActionPressed("jump"))
+		{
+			if(incomingVelocity.Y < 0.0f)
+			{
+				incomingVelocity.Y += gravity * 4 *(float)incomingDelta;
+			}
+		}
 
 		if (Input.IsActionJustPressed("teleport"))
 		{
@@ -554,7 +538,63 @@ public partial class PlayerCharacter : CharacterBody2D
 			}
 		}
 	}
+	private void doDamagedPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
+	{
+		incomingVelocity.Y += gravity * (float)incomingDelta;
+	}
+	public bool setValues(PlayerCharacter incomingValues)
+	{
+		if(incomingValues != null)
+		{
+			GD.Print("Setting Values");
+			Health = MaxHealth;
+			return true;
+		}
+		return false;
+	}
+    public void DamagePLayer(float DamageOriginX = 0.0f, float DamageOriginY = 0.0f)
+	{
+		if(damagable)
+		{
+			//GD.Print("DAMAGED!");
+			Health--;
+			damagable = false;
+			damageTimer = DamageRecoveryTime;
+			if (Health <= 0)
+			{
+				//GD.Print("DEATH!");
+			}
+			else
+			{
+				PlayerState = playerStates.damaged;
+				var tmpVelocity = new Godot.Vector2((this.Position.X - DamageOriginX)*10, (this.Position.Y - DamageOriginY)*10);//.Normalized();
+				if(tmpVelocity.Y < 1 && tmpVelocity.Y > -1)
+					tmpVelocity.Y += -400.0f;
 
+				Velocity  = tmpVelocity;
+				//GD.Print("output of damage Escape Vector X: " + Velocity.X + "   Y: " + Velocity.Y);
+			}
+		}
+	}
+	public void HealPlayer(int amount = 1)
+	{
+		Health += amount;
+		if(Health > MaxHealth)
+		{
+			Health = MaxHealth;
+		}
+	}
+	private void flashPlayer()
+	{
+		if(sprite_2d.Modulate.A == 0.5f)
+		{
+			sprite_2d.Modulate = solid;
+		}
+		else
+		{
+			sprite_2d.Modulate = semiTransparent;
+		}
+	}
 	private void determineDirrectionOfWall()
 	{
 		for (int i = 0;  i < GetSlideCollisionCount(); i++)

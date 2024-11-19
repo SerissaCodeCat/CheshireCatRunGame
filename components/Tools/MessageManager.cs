@@ -11,12 +11,12 @@ public partial class MessageManager : Node2D
 	public override void _Ready()
 	{
 		instance = this;
-		GD.Print("Loaded Messaage Manager");
+		//GD.Print("Loaded Messaage Manager");
 	}
 	public void addToEnemyDictionary(EnemyPatrol enemyInstance)
 	{
 		enemies.Add(enemyInstance.GetInstanceId(), enemyInstance);
-		GD.Print("added Enemy with ID of: " + enemyInstance.GetInstanceId());
+		//GD.Print("added Enemy with ID of: " + enemyInstance.GetInstanceId());
 	}
 	//used to transition player values between scenes
 	public void addPlayerToMessageManager(PlayerCharacter player)
@@ -37,12 +37,12 @@ public partial class MessageManager : Node2D
 
 	public void DamagePlayer(Godot.Vector2 damageComingFrom)
 	{
-		GD.Print("Sending damage message to player");
-		playerMessagerLink.DamagePLayer();
+		//GD.Print("Sending damage message to player");
+		playerMessagerLink.DamagePLayer(damageComingFrom.X, damageComingFrom.Y);
 	}
 	public void stunEnemyWithID (ulong ID)
 	{
-		GD.Print("stunn sent to ID: " + ID);
+		//GD.Print("stunn sent to ID: " + ID);
 		enemies[ID].BeStunned();
 	}
 	public void SendPlayerDamaged()
