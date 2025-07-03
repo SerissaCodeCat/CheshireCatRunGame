@@ -14,19 +14,19 @@ public partial class Door : Node2D, iButtonActivation
 		//GD.Print("door collision is: " + doorCollision);
 	}
 	public bool Activate(Node2D body)
-    {
-        //GD.Print("Door Detected: " + body.Name);
+	{
+		//GD.Print("Door Detected: " + body.Name);
 		
 		doorSprite.Visible = !doorSprite.Visible;
-        if (doorCollision.CollisionLayer == 1)
+		if (doorCollision.CollisionLayer == 1)
 			doorCollision.CollisionLayer = 0;
 		else
 			doorCollision.CollisionLayer = 1;
 		return true;
-    }
+	}
 
-    public int feedback()
-    {
-        return 0;
-    }
+	public int feedback()
+	{
+		return 0;
+	}
 }

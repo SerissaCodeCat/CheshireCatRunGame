@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b64mdeqnr6hpj" path="res://Images/Static/ButtonUnpressed.png" id="2_dll6n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_adohk"]
-size = Vector2(12, 6)
+size = Vector2(12, 5)
 
 [node name="Button" type="Node2D"]
 script = ExtResource("1_ensj7")
@@ -23,6 +23,6 @@ texture = ExtResource("1_0y6xt")
 [node name="ButtonArea2D" type="Area2D" parent="."]
 
 [node name="ButtonAreaCollisionShape2D" type="CollisionShape2D" parent="ButtonArea2D"]
-position = Vector2(0, 5)
+position = Vector2(1.26759e-06, 4.5)
 rotation = 3.14159
 shape = SubResource("RectangleShape2D_adohk")

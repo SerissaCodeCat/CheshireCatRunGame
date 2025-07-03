@@ -19,13 +19,14 @@ public partial class Button : Node2D
 		buttonAreaDetection.BodyEntered += (body) => SendActivation(body);
 		buttonSprite = GetNode<Sprite2D>($"buttonDefault");
 		
-    }
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public bool SendActivation(Node2D body)
+	}
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public bool SendActivation(Node2D body)
 	{
+		GD.Print("Button Detected: " + body.Name);
 		if(canBeActivated)
 		{
-			//GD.Print("Button Detected: " + body.Name);
+			GD.Print("Button Detected: " + body.Name);
 			buttonSprite.Visible = false;
 			canBeActivated = false;
 			reactivationTimer = reactivationDelay;
@@ -36,9 +37,9 @@ public partial class Button : Node2D
 		}
 		return true;
 	}
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
+	public override void _Process(double delta)
+	{
+		base._Process(delta);
 		if(!canBeActivated)
 		{
 			reactivationTimer -= delta;
@@ -48,8 +49,8 @@ public partial class Button : Node2D
 				canBeActivated = true;
 			}
 		}
-    }
-    public int feedback()
+	}
+	public int feedback()
 	{
 		return 0;
 	}
