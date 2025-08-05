@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bu8l4nq1v4yyw"]
 
-[ext_resource type="Script" path="res://components/Tools/AudioQueue2D.cs" id="1_143hm"]
+[ext_resource type="Script" uid="uid://db7f5ku0g861b" path="res://components/Tools/AudioQueue2D.cs" id="1_143hm"]
 
 [node name="AudioQueue" type="Node2D"]
 script = ExtResource("1_143hm")

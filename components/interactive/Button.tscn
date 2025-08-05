@@ -1,14 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bk1ehjvpflscn"]
+[gd_scene load_steps=4 format=3 uid="uid://bk1ehjvpflscn"]
 
 [ext_resource type="Texture2D" uid="uid://cn5gno5h4vbem" path="res://Images/Static/Buttonpressed.png" id="1_0y6xt"]
-[ext_resource type="Script" path="res://components/interactive/Button.cs" id="1_ensj7"]
 [ext_resource type="Texture2D" uid="uid://b64mdeqnr6hpj" path="res://Images/Static/ButtonUnpressed.png" id="2_dll6n"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_adohk"]
-size = Vector2(12, 5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wf5r1"]
+size = Vector2(18, 6)
 
-[node name="Button" type="Node2D"]
-script = ExtResource("1_ensj7")
+[node name="Button" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 4
 
 [node name="buttonDefault" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -20,9 +20,6 @@ texture_filter = 1
 texture_repeat = 1
 texture = ExtResource("1_0y6xt")
 
-[node name="ButtonArea2D" type="Area2D" parent="."]
-
-[node name="ButtonAreaCollisionShape2D" type="CollisionShape2D" parent="ButtonArea2D"]
-position = Vector2(1.26759e-06, 4.5)
-rotation = 3.14159
-shape = SubResource("RectangleShape2D_adohk")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_wf5r1")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cprt3p0iv23pb"]
 
-[ext_resource type="Script" path="res://components/Tools/SoundPool2d.cs" id="1_tfs01"]
+[ext_resource type="Script" uid="uid://dw52110t8ujmt" path="res://components/Tools/SoundPool2d.cs" id="1_tfs01"]
 
 [node name="SoundPool2d" type="Node2D"]
 script = ExtResource("1_tfs01")

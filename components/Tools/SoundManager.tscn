@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://c6fwuffucpew6"]
 
-[ext_resource type="Script" path="res://components/Tools/SoundManager.cs" id="1_4y1a0"]
+[ext_resource type="Script" uid="uid://b014rvojxfyeh" path="res://components/Tools/SoundManager.cs" id="1_4y1a0"]
 [ext_resource type="PackedScene" uid="uid://cprt3p0iv23pb" path="res://components/Tools/SoundPool2d.tscn" id="2_1xhrk"]
 [ext_resource type="PackedScene" uid="uid://bu8l4nq1v4yyw" path="res://components/Tools/AudioQueue2D.tscn" id="3_ij4k4"]
 [ext_resource type="AudioStream" uid="uid://crxsl5hn76ljc" path="res://Audio/Sfx/bulletHit1.wav" id="4_8376b"]

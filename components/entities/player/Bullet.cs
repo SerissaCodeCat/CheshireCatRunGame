@@ -62,7 +62,7 @@ public partial class Bullet : CharacterBody2D
 				
 			}
 		}
-        if ((lifespan -= delta) <= 0.0d)
+		if ((lifespan -= delta) <= 0.0d)
 		{
 			QueueFree();
 		}

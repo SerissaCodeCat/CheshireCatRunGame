@@ -1,6 +1,6 @@
 [gd_scene load_steps=36 format=3 uid="uid://bwr7vhdi28fly"]
 
-[ext_resource type="Script" path="res://GenericScripts/EnemyPatrol.cs" id="1_2ofwc"]
+[ext_resource type="Script" uid="uid://b20d3r0484ry7" path="res://GenericScripts/EnemyPatrol.cs" id="1_2ofwc"]
 [ext_resource type="Texture2D" uid="uid://c52wjioj0kqyf" path="res://Images/Animated/Enemy Idle (32x32).png" id="2_1bwto"]
 [ext_resource type="Texture2D" uid="uid://6p3ba8v1eavc" path="res://Images/Animated/Enemy Double Jump (32x32).png" id="3_uufe1"]
 [ext_resource type="Texture2D" uid="uid://b4lthtkubgd01" path="res://Images/Animated/Enemy Run (32x32).png" id="4_fnjd8"]
