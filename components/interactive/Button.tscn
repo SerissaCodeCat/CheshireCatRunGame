@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bk1ehjvpflscn"]
+[gd_scene load_steps=5 format=3 uid="uid://bk1ehjvpflscn"]
 
 [ext_resource type="Texture2D" uid="uid://cn5gno5h4vbem" path="res://Images/Static/Buttonpressed.png" id="1_0y6xt"]
+[ext_resource type="Script" uid="uid://cxmmwh4um2bg0" path="res://components/interactive/Button.cs" id="1_vx666"]
 [ext_resource type="Texture2D" uid="uid://b64mdeqnr6hpj" path="res://Images/Static/ButtonUnpressed.png" id="2_dll6n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wf5r1"]
@@ -9,6 +10,7 @@ size = Vector2(18, 6)
 [node name="Button" type="CharacterBody2D"]
 collision_layer = 8
 collision_mask = 4
+script = ExtResource("1_vx666")
 
 [node name="buttonDefault" type="Sprite2D" parent="."]
 texture_filter = 1

@@ -1,9 +1,7 @@
 // based on : https://www.youtube.com/watch?v=bdsHf08QmZ4
 
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.Threading;
 
 [Tool]
 public partial class AudioQueue2D : Node

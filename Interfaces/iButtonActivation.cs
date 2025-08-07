@@ -1,8 +1,14 @@
 using Godot;
 using System;
-public interface iButtonActivation
+public partial class iButtonActivation : Node2D
 {
-	public bool Activate(Node2D body);
-	public int feedback();
+    public virtual bool Activate()
+    {
+        throw new NotImplementedException();
+    }
+    public virtual int feedback()
+    {
+        throw new NotImplementedException();
+    }
 
 }
