@@ -39,25 +39,35 @@ public partial class PlayerCharacter : CharacterBody2D
     /// <Floats>
     /// ////////////////////////////////////////////////////////////////////////////////
     /// </Floats>
-    public const float Speed = 450.0f;
-    public const float Deceleration = 15.0f;
-    public const float AirDeceleration = 3.3f;
-    public const float JumpVelocity = -600.0f;
+    [Export]
+    public float Speed = 450.0f;
+    [Export]
+    public float Deceleration = 15.0f;
+    [Export]
+    public float AirDeceleration = 3.3f;
+    [Export]
+    public float JumpVelocity = -600.0f;
+    [Export]
     private float dashSpeed = 1000.0f;
+    [Export]
     private float aimingRotationSpeed = 120.0f;
     public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
     /// <Doubles>
     /// /////////////////////////////////////////////////////////////////////////////////
     /// </Doubles>
-    private const double CyoteTime = 0.1d;
-    private const double teleportTimerReset = 0.3d;
-    private const double clingTimerReset = 1.0d;
-    private const double DamageRecoveryTime = 2.0d;
+    [Export]
+    private double CyoteTime = 0.1d;
+    [Export]
+    private double teleportTimerReset = 0.3d;
+    [Export]
+    private double clingTimerReset = 1.0d;
+    [Export]
+    private double DamageRecoveryTime = 2.0d;
     private double damageTimer = 0.0d;
     private double flashTimer = 0.0d;
-    private double cyoteTimer = CyoteTime;
-    private double teleportTimer = teleportTimerReset;
-    private double clingTimer = clingTimerReset;
+    private double cyoteTimer;
+    private double teleportTimer;
+    private double clingTimer;
     private double bulletTimer = 0.0d;
     /// <Intergers>
     /// ////////////////////////////////////////////////////////////////////////////////
@@ -85,6 +95,9 @@ public partial class PlayerCharacter : CharacterBody2D
         aimingSprite.Visible = false;
         MessageManager.instance.addPlayerToMessageManager(this);
         damagable = true;
+        cyoteTimer = CyoteTime;
+        teleportTimer = teleportTimerReset;
+        clingTimer = clingTimerReset;
     }
     public override void _PhysicsProcess(double delta)
     {

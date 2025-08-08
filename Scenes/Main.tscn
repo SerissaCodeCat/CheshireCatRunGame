@@ -331,3 +331,13 @@ position = Vector2(338, 569)
 
 [node name="Enemy2" parent="." instance=ExtResource("6_p2lei")]
 position = Vector2(762, 570)
+
+[node name="Button2" parent="." node_paths=PackedStringArray("buttonLinksTo") instance=ExtResource("4_1uhlx")]
+position = Vector2(2856, 465)
+rotation = 1.5708
+scale = Vector2(3, 3)
+buttonLinksTo = NodePath("../Door2")
+
+[node name="Door2" parent="." instance=ExtResource("5_3auel")]
+position = Vector2(3277, 553)
+scale = Vector2(2.25, 2.25)
