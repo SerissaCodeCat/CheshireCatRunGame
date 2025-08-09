@@ -15,7 +15,6 @@ public partial class Button : CharacterBody2D
     {
         buttonSprite = GetNode<Sprite2D>($"buttonDefault");
         MessageManager.instance.addToInteractableDictionary(this);
-
     }
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public bool Activate()
