@@ -446,8 +446,8 @@ size = Vector2(65, 30)
 
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
-collision_layer = 2
-collision_mask = 9
+collision_layer = 15
+collision_mask = 232
 script = ExtResource("1_qa2ox")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]

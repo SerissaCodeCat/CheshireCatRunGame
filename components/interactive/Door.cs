@@ -15,10 +15,10 @@ public partial class Door : iButtonActivation
     public override bool Activate()
     {
         doorSprite.Visible = !doorSprite.Visible;
-        if (doorCollision.CollisionLayer == 1)
-            doorCollision.CollisionLayer = 0;
+        if (doorSprite.Visible == true)
+            doorCollision.CollisionLayer = 9;
         else
-            doorCollision.CollisionLayer = 1;
+            doorCollision.CollisionLayer = 0;
         return true;
     }
 

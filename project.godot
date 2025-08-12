@@ -86,10 +86,13 @@ fire={
 
 [layer_names]
 
-2d_physics/layer_1="Environment"
-2d_physics/layer_2="Player"
-2d_physics/layer_3="Enemy"
-2d_physics/layer_4="Buttons"
+2d_physics/layer_1="Background Far"
+2d_physics/layer_2="Background Mid"
+2d_physics/layer_3="Background Near"
+2d_physics/layer_4="Walkable Geometry"
+2d_physics/layer_5="Player"
+2d_physics/layer_6="NPC"
+2d_physics/layer_7="Buttons"
 
 [rendering]
 

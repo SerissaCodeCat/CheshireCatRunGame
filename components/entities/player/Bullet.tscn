@@ -8,7 +8,7 @@ radius = 3.0
 
 [node name="Bullet" type="CharacterBody2D"]
 collision_layer = 0
-collision_mask = 13
+collision_mask = 104
 script = ExtResource("1_axh0p")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

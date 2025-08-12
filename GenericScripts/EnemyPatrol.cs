@@ -128,7 +128,6 @@ public partial class EnemyPatrol : CharacterBody2D
 
     private void Move(ref Godot.Vector2 incomingVelocity, double incomingDelta)
     {
-
         incomingVelocity.Y += gravity * (float)incomingDelta;
         if (IsOnFloor())
         {
@@ -160,7 +159,6 @@ public partial class EnemyPatrol : CharacterBody2D
         if (IsOnFloor())
         {
             incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (direction ? 1.0f : -1.0f) * Speed, acceleration);
-            //sprite_2d.FlipH = !direction;
         }
     }
 
