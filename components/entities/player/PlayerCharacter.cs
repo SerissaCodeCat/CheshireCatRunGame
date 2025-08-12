@@ -171,6 +171,8 @@ public partial class PlayerCharacter : CharacterBody2D
         {
             teleportAvailiable = true;
             doubleJumpAvailiable = true;
+            clingTimer = clingTimerReset;
+
             PlayerState = playerStates.airborn;
             return;
         }
@@ -179,6 +181,8 @@ public partial class PlayerCharacter : CharacterBody2D
         {
             doubleJumpAvailiable = true;
             teleportAvailiable = true;
+            clingTimer = clingTimerReset;
+
             PlayerState = playerStates.airborn;
             incomingVelocity.Y = JumpVelocity;
             cyoteTimer = 0.0d;
@@ -190,6 +194,8 @@ public partial class PlayerCharacter : CharacterBody2D
         {
             teleportAvailiable = false;
             doubleJumpAvailiable = true;
+            clingTimer = clingTimerReset;
+
             PlayerState = playerStates.teleporting;
             teleportTimer = teleportTimerReset;
             return;
@@ -314,10 +320,10 @@ public partial class PlayerCharacter : CharacterBody2D
         {
             teleportAvailiable = true;
             doubleJumpAvailiable = true;
+            clingTimer = clingTimerReset;
             StandingCollision.Disabled = false;
             CrouchingCollision.Disabled = true;
             PlayerState = playerStates.airborn;
-            //GD.Print("entering Airborn State");
             return;
         }
 
@@ -325,12 +331,12 @@ public partial class PlayerCharacter : CharacterBody2D
         {
             doubleJumpAvailiable = true;
             teleportAvailiable = true;
+            clingTimer = clingTimerReset;
             StandingCollision.Disabled = false;
             CrouchingCollision.Disabled = true;
             PlayerState = playerStates.airborn;
             incomingVelocity.Y = JumpVelocity * 1.5f;
             cyoteTimer = 0.0d;
-            //GD.Print("SUPER JUMP");
             return;
 
         }
@@ -339,13 +345,13 @@ public partial class PlayerCharacter : CharacterBody2D
         {
             teleportAvailiable = false;
             doubleJumpAvailiable = true;
+            clingTimer = clingTimerReset;
 
             StandingCollision.Disabled = false;
             CrouchingCollision.Disabled = true;
 
             PlayerState = playerStates.teleporting;
             teleportTimer = teleportTimerReset;
-            //GD.Print("entering Teleporting State");
             return;
         }
 
@@ -394,13 +400,12 @@ public partial class PlayerCharacter : CharacterBody2D
             //GD.Print("entering Grounded State");
             return;
         }
-        if (!Input.IsActionPressed("crouch"))
+        if (!Input.IsActionPressed("down"))
         {
             if (IsOnWall())
             {
                 determineDirrectionOfWall();
                 incomingVelocity = Stop;
-                clingTimer = clingTimerReset;
                 //if they are on the wall they are clinging
                 PlayerState = playerStates.clinging;
                 return;
@@ -475,41 +480,41 @@ public partial class PlayerCharacter : CharacterBody2D
 
         if (Input.IsActionJustPressed("jump"))
         {
-            if (wallToRight)
+            direction = Input.GetVector("left", "right", "up", "down");
+            //push away from the wall slightly and become airborn
+            if (Input.IsActionPressed("down"))
+            {
+                PlayerState = playerStates.airborn;
+            }
+            else if (Input.IsActionPressed("left"))
             {
                 incomingVelocity.Y = JumpVelocity;
-                incomingVelocity.X = -Speed;
+                if (wallToRight == false)
+                {
+                    incomingVelocity.X = (Speed / 2);
+                }
+                else
+                {
+                    GD.Print("left wallcling bounce.");
+                    incomingVelocity.X = -Speed;
+                }
                 PlayerState = playerStates.airborn;
-                if (!sprite_2d.FlipH)
-                    sprite_2d.FlipH = true;
             }
-            else
+            else if (Input.IsActionPressed("right"))
             {
                 incomingVelocity.Y = JumpVelocity;
-                incomingVelocity.X = Speed;
-                PlayerState = playerStates.airborn;
-                if (sprite_2d.FlipH)
-                    sprite_2d.FlipH = false;
-            }
-            //push away from wall and add jump power
-        }
-        direction = Input.GetVector("left", "right", "up", "down");
-
-        //push away from the wall slightly and become airborn
-        if (Input.IsActionJustPressed("crouch"))
-        {
-            if (wallToRight)
-            {
-                incomingVelocity.X = -Speed / 10;
-                PlayerState = playerStates.airborn;
-            }
-            else
-            {
-                incomingVelocity.X = Speed / 10;
+                if (wallToRight == true)
+                {
+                    incomingVelocity.X = -(Speed / 2);
+                }
+                else
+                {
+                    GD.Print("Right wallcling bounce.");
+                    incomingVelocity.X = Speed;
+                }
                 PlayerState = playerStates.airborn;
             }
         }
-
     }
 
     private void doTeleportingPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
@@ -610,9 +615,11 @@ public partial class PlayerCharacter : CharacterBody2D
     {
         for (int i = 0; i < GetSlideCollisionCount(); i++)
         {
-            if (GetSlideCollision(i).GetCollider().GetType().FullName == "Godot.TileMap")
+            if (GetSlideCollision(i).GetCollider().GetType().FullName == "Godot.TileMapLayer")
             {
+                GD.Print("detected TileMapLayer");
                 wallToRight = GetSlideCollision(i).GetNormal().X > 0 ? false : true;
+                GD.Print("wall is to the right = " + wallToRight);
             }
         }
     }
