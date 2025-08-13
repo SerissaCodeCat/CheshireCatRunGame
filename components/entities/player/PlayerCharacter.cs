@@ -183,8 +183,17 @@ public partial class PlayerCharacter : CharacterBody2D
             teleportAvailiable = true;
             clingTimer = clingTimerReset;
 
-            PlayerState = playerStates.airborn;
-            incomingVelocity.Y = JumpVelocity;
+            if (!Input.IsActionPressed("down"))
+            {
+                incomingVelocity.Y = JumpVelocity;
+                PlayerState = playerStates.airborn;
+            }
+            else
+            {
+                GD.Print("downhop");
+                Godot.Vector2 tmp = new Vector2(this.Position.X, this.Position.Y + 10);
+                this.Position = tmp;
+            }
             cyoteTimer = 0.0d;
             return;
 
