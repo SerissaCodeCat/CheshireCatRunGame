@@ -56,18 +56,21 @@ public partial class PlayerCharacter : CharacterBody2D
     /// /////////////////////////////////////////////////////////////////////////////////
     /// </Doubles>
     [Export]
-    private double CyoteTime = 0.1d;
+    private double CyoteTime = 0.05d;
     [Export]
     private double teleportTimerReset = 0.3d;
     [Export]
     private double clingTimerReset = 1.0d;
     [Export]
-    private double DamageRecoveryTime = 2.0d;
+    private double DamageRecoveryReset = 2.0d;
+    [Export]
+    private double FirstClingReset = 0.5d;
     private double damageTimer = 0.0d;
     private double flashTimer = 0.0d;
     private double cyoteTimer;
     private double teleportTimer;
     private double clingTimer;
+    private double firstClingTimer;
     private double bulletTimer = 0.0d;
     /// <Intergers>
     /// ////////////////////////////////////////////////////////////////////////////////
@@ -114,7 +117,7 @@ public partial class PlayerCharacter : CharacterBody2D
             }
             else
             {
-                if (damageTimer <= DamageRecoveryTime / 2)
+                if (damageTimer <= DamageRecoveryReset / 2)
                 {
                     //grounded state has the most flexibility to become other states in a single frame and so is the safest to default to
                     PlayerState = playerStates.grounded;
@@ -167,8 +170,9 @@ public partial class PlayerCharacter : CharacterBody2D
         //if touching ground, refresh cyote timer, if not, decrease it
         cyoteTimer = IsOnFloor() ? CyoteTime : -incomingDelta;
         direction = Input.GetVector("left", "right", "up", "down");
-        if (cyoteTimer == 0.0d)
+        if (cyoteTimer <= 0.00d)
         {
+            GD.Print("falling");
             teleportAvailiable = true;
             doubleJumpAvailiable = true;
             clingTimer = clingTimerReset;
@@ -177,7 +181,7 @@ public partial class PlayerCharacter : CharacterBody2D
             return;
         }
 
-        if (Input.IsActionJustPressed("jump"))
+        else if (Input.IsActionJustPressed("jump"))
         {
             doubleJumpAvailiable = true;
             teleportAvailiable = true;
@@ -199,7 +203,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
         }
 
-        if (Input.IsActionJustPressed("teleport"))
+        else if (Input.IsActionJustPressed("teleport"))
         {
             teleportAvailiable = false;
             doubleJumpAvailiable = true;
@@ -209,7 +213,7 @@ public partial class PlayerCharacter : CharacterBody2D
             teleportTimer = teleportTimerReset;
             return;
         }
-        if (Input.IsActionPressed("fire"))
+        else if (Input.IsActionPressed("fire"))
         {
             if (bulletTimer <= 0.0f)
             {
@@ -272,11 +276,18 @@ public partial class PlayerCharacter : CharacterBody2D
                 }
             }
         }
-        if (Input.IsActionJustReleased("fire"))
+        else if (Input.IsActionJustReleased("fire"))
         {
             fireBullet();
         }
+        else if (Input.IsActionJustPressed("crouch"))
+        {
 
+            //GD.Print("entering CROUCHED State");
+            StandingCollision.Disabled = true;
+            CrouchingCollision.Disabled = false;
+            PlayerState = playerStates.crouching;
+        }
         // Get the input direction and handle the movement/deceleration.
         if (direction != Godot.Vector2.Zero)
         {
@@ -302,15 +313,6 @@ public partial class PlayerCharacter : CharacterBody2D
         else
         {
             incomingVelocity.X = Mathf.MoveToward(Velocity.X, 0, Deceleration);
-        }
-
-        if (Input.IsActionJustPressed("crouch"))
-        {
-
-            //GD.Print("entering CROUCHED State");
-            StandingCollision.Disabled = true;
-            CrouchingCollision.Disabled = false;
-            PlayerState = playerStates.crouching;
         }
         if (incomingVelocity.X != 0.0f)
             sprite_2d.Animation = "running";
@@ -386,9 +388,7 @@ public partial class PlayerCharacter : CharacterBody2D
             }
             else
             {
-                CrouchingCollision.Disabled = true;
-                StandingCollision.Disabled = false;
-                PlayerState = playerStates.grounded;
+                enterGroundedState();
             }
         }
 
@@ -400,24 +400,30 @@ public partial class PlayerCharacter : CharacterBody2D
         //add gravity
         incomingVelocity.Y += gravity * (float)incomingDelta;
         direction = Input.GetVector("left", "right", "up", "down");
-
+        firstClingTimer -= incomingDelta;
         if (IsOnFloor())
         {
-            PlayerState = playerStates.grounded;
-            doubleJumpAvailiable = true;
-            teleportAvailiable = true;
-            //GD.Print("entering Grounded State");
+            enterGroundedState();
             return;
         }
         if (!Input.IsActionPressed("down"))
         {
             if (IsOnWall())
             {
-                determineDirrectionOfWall();
-                incomingVelocity = Stop;
-                //if they are on the wall they are clinging
-                PlayerState = playerStates.clinging;
-                return;
+                if (firstClingTimer <= 0.0d)
+                {
+                    //GD.Print("begin to cling!");
+                    //determineDirrectionOfWall();
+                    //incomingVelocity = Stop;
+                    //if they are on the wall they are clinging
+                    //PlayerState = playerStates.clinging;
+                    enterClingingState();
+                    return;
+                }
+                else
+                {
+                    GD.Print("nope");
+                }
             }
         }
         if (!Input.IsActionPressed("jump"))
@@ -475,10 +481,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
         if (IsOnFloor())
         {
-            PlayerState = playerStates.grounded;
-            doubleJumpAvailiable = true;
-            teleportAvailiable = true;
-            //GD.Print("entering Grounded State");
+            enterGroundedState();
             return;
         }
         //add gravity at 1/3 the normal value due to cat claws stuck in the wall we are clinging to
@@ -504,7 +507,6 @@ public partial class PlayerCharacter : CharacterBody2D
                 }
                 else
                 {
-                    GD.Print("left wallcling bounce.");
                     incomingVelocity.X = -Speed;
                 }
                 PlayerState = playerStates.airborn;
@@ -518,7 +520,6 @@ public partial class PlayerCharacter : CharacterBody2D
                 }
                 else
                 {
-                    GD.Print("Right wallcling bounce.");
                     incomingVelocity.X = Speed;
                 }
                 PlayerState = playerStates.airborn;
@@ -532,13 +533,11 @@ public partial class PlayerCharacter : CharacterBody2D
 
         if (!sprite_2d.FlipH)
         {
-            wallToRight = true;
             finalVelocity.X = dashSpeed;
             finalVelocity.Y = 0.0f;
         }
         else
         {
-            wallToRight = false;
             finalVelocity.X = -dashSpeed;
             finalVelocity.Y = 0.0f;
         }
@@ -548,24 +547,43 @@ public partial class PlayerCharacter : CharacterBody2D
             finalVelocity = Stop;
             if (IsOnFloor())
             {
-                PlayerState = playerStates.grounded;
-                //GD.Print("entering Grounded State");
+                enterGroundedState();
             }
             else if (IsOnWall())
             {
-                PlayerState = playerStates.clinging;
-                //GD.Print("entering Clinging State");
+                enterClingingState();
             }
             else
             {
-                PlayerState = playerStates.airborn;
-                //GD.Print("entering Airborn State");
+                enterAirbornState();
             }
         }
     }
     private void doDamagedPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
     {
         incomingVelocity.Y += gravity * (float)incomingDelta;
+    }
+
+    private void enterGroundedState()
+    {
+        cyoteTimer = CyoteTime;
+        clingTimer = clingTimerReset;
+        firstClingTimer = FirstClingReset;
+        doubleJumpAvailiable = true;
+        teleportAvailiable = true;
+        CrouchingCollision.Disabled = true;
+        StandingCollision.Disabled = false;
+        PlayerState = playerStates.grounded;
+    }
+    private void enterClingingState()
+    {
+        determineDirrectionOfWall();
+        finalVelocity = Stop;
+        PlayerState = playerStates.clinging;
+    }
+    private void enterAirbornState()
+    {
+        PlayerState = playerStates.airborn;
     }
     public bool setValues(PlayerCharacter incomingValues)
     {
@@ -584,7 +602,7 @@ public partial class PlayerCharacter : CharacterBody2D
             //GD.Print("DAMAGED!");
             Health--;
             damagable = false;
-            damageTimer = DamageRecoveryTime;
+            damageTimer = DamageRecoveryReset;
             if (Health <= 0)
             {
                 //GD.Print("DEATH!");
