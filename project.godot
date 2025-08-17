@@ -24,6 +24,7 @@ MessageManager="*res://components/Tools/MessageManager.cs"
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/stretch/scale_mode="integer"
 
 [dotnet]
 
@@ -96,5 +97,7 @@ fire={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=3
 renderer/rendering_method="mobile"
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+2d/snap/snap_2d_transforms_to_pixel=true
