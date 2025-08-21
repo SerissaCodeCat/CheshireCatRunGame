@@ -437,10 +437,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qhpou"]
-size = Vector2(65, 75)
+size = Vector2(17, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2gwwv"]
-size = Vector2(65, 30)
+size = Vector2(21, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bkbme"]
 
@@ -451,29 +451,26 @@ collision_mask = 232
 script = ExtResource("1_qa2ox")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(3, 3)
+texture_filter = 1
+texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_ysfs3")
 animation = &"crouching"
 autoplay = "default"
-frame_progress = 0.65265
 
 [node name="CollisionShapeStanding" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 10)
+position = Vector2(0.5, 4)
 shape = SubResource("RectangleShape2D_qhpou")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position_smoothing_enabled = true
-
 [node name="CollisionShapeCrouching" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 33)
+position = Vector2(-0.5, 7)
 shape = SubResource("RectangleShape2D_2gwwv")
 disabled = true
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="."]
-position = Vector2(-1, 8)
-scale = Vector2(3.2, 1)
+position = Vector2(0, 5)
+scale = Vector2(1, 0.8)
 shape = SubResource("RectangleShape2D_bkbme")
-target_position = Vector2(0, -25)
+target_position = Vector2(0, -4.045)
 max_results = 5
 collide_with_areas = true
 
@@ -483,5 +480,6 @@ collide_with_areas = true
 position = Vector2(128, 0)
 
 [node name="aimingSprite" type="Sprite2D" parent="aimingLynchpin"]
-position = Vector2(86, 0)
+position = Vector2(29, 0)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("9_c5ha8")
