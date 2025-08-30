@@ -7,12 +7,16 @@
 radius = 3.0
 
 [node name="Bullet" type="CharacterBody2D"]
+texture_filter = 1
+texture_repeat = 1
 collision_layer = 0
 collision_mask = 104
 script = ExtResource("1_axh0p")
+speed = 350.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+texture_repeat = 1
 texture = ExtResource("2_idwle")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

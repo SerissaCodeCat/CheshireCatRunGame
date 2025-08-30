@@ -442,13 +442,22 @@ size = Vector2(17, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2gwwv"]
 size = Vector2(21, 14)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bkbme"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqb5r"]
 
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
+texture_repeat = 1
 collision_layer = 15
 collision_mask = 232
 script = ExtResource("1_qa2ox")
+Speed = 200.0
+Acceleration = 5.0
+Deceleration = 10.0
+AirDeceleration = 1.1
+JumpVelocity = -400.0
+dashSpeed = 500.0
+CyoteTime = 0.1
+FirstClingReset = 0.3
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -467,11 +476,11 @@ shape = SubResource("RectangleShape2D_2gwwv")
 disabled = true
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="."]
-position = Vector2(0, 5)
 scale = Vector2(1, 0.8)
-shape = SubResource("RectangleShape2D_bkbme")
+shape = SubResource("RectangleShape2D_rqb5r")
 target_position = Vector2(0, -4.045)
 max_results = 5
+collision_mask = 8
 collide_with_areas = true
 
 [node name="aimingLynchpin" type="Node2D" parent="."]
@@ -480,6 +489,8 @@ collide_with_areas = true
 position = Vector2(128, 0)
 
 [node name="aimingSprite" type="Sprite2D" parent="aimingLynchpin"]
+texture_filter = 1
+texture_repeat = 1
 position = Vector2(29, 0)
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("9_c5ha8")

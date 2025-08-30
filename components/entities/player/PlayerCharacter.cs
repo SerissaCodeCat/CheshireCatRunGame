@@ -42,6 +42,8 @@ public partial class PlayerCharacter : CharacterBody2D
     [Export]
     public float Speed = 450.0f;
     [Export]
+    public float Acceleration = 1.0f;
+    [Export]
     public float Deceleration = 15.0f;
     [Export]
     public float AirDeceleration = 3.3f;
@@ -292,7 +294,7 @@ public partial class PlayerCharacter : CharacterBody2D
         if (direction != Godot.Vector2.Zero)
         {
             //add the currently input dirrection to our  velocity
-            incomingVelocity.X = Mathf.MoveToward(Velocity.X, direction.X * Speed, Deceleration);
+            incomingVelocity.X = Mathf.MoveToward(Velocity.X, direction.X * Speed, Acceleration);
             //turn the sprite to face the current inputted dirrection
             sprite_2d.FlipH = direction.X < 0;
             if (direction.X < 0 && !Input.IsActionPressed("fire"))

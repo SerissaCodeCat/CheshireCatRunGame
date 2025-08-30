@@ -3,13 +3,16 @@ using Godot;
 public partial class Bullet : CharacterBody2D
 {
     private Godot.Vector2 currentVelocity = new Godot.Vector2(0.0f, 0.0f);
-    const float speed = 650.0f;
-    const float deceleration = 4.0f;
+    [Export]
+    public float speed = 200.0f;
+    [Export]
+    public short maxBounces = 3;
+    [Export]
+    public float deceleration = 3.0f;
     private float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
     private Godot.Vector2 spawn;
     private bool goRight = true;
     private double lifespan = 5.0d;
-    private short maxBounces = 3;
 
     public enum bulletTypes
     {
@@ -27,7 +30,7 @@ public partial class Bullet : CharacterBody2D
     public void setup(Godot.Vector2 incomingSpawn, Godot.Vector2 incomingDirectionalVelocity, bulletTypes incomingType)
     {
         spawn = incomingSpawn;
-        currentVelocity = incomingDirectionalVelocity * 5;
+        currentVelocity = incomingDirectionalVelocity.Normalized() * speed;
 
         if (incomingType == bulletTypes.basic)
         {
