@@ -451,13 +451,13 @@ collision_layer = 15
 collision_mask = 232
 script = ExtResource("1_qa2ox")
 Speed = 200.0
-Acceleration = 5.0
+Acceleration = 7.5
 Deceleration = 10.0
 AirDeceleration = 1.1
 JumpVelocity = -400.0
 dashSpeed = 500.0
 CyoteTime = 0.1
-FirstClingReset = 0.3
+DamageReboundForce = 5.0
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

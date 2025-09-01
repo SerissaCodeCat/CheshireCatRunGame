@@ -20,7 +20,6 @@ texture = ExtResource("1_sa0i8")
 stretch_mode = 1
 
 [node name="Button" parent="." node_paths=PackedStringArray("buttonLinksTo") instance=ExtResource("2_rdb2v")]
-texture_filter = 1
 position = Vector2(1545, 142)
 rotation = -1.5708
 buttonLinksTo = NodePath("../Door")
@@ -31,9 +30,6 @@ position = Vector2(1568, 177)
 
 [node name="Player" parent="." instance=ExtResource("4_5q7gb")]
 position = Vector2(20, 190)
-
-[node name="Enemy2" parent="." instance=ExtResource("5_h2ngc")]
-position = Vector2(762, 570)
 
 [node name="Button2" parent="." node_paths=PackedStringArray("buttonLinksTo") instance=ExtResource("2_rdb2v")]
 position = Vector2(2856, 465)
@@ -51,3 +47,6 @@ tile_map_data = PackedByteArray("AAADAA0AAAAHAAAAAAAEAA0AAAAHAAAAAAAFAA0AAAAHAAA
 tile_set = ExtResource("6_v3vpo")
 
 [node name="PixelPerfectCamera" parent="." instance=ExtResource("7_rdb2v")]
+
+[node name="Enemy" parent="." instance=ExtResource("5_h2ngc")]
+position = Vector2(477, 192)

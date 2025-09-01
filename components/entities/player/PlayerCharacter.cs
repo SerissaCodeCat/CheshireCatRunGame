@@ -64,8 +64,9 @@ public partial class PlayerCharacter : CharacterBody2D
     [Export]
     private double clingTimerReset = 1.0d;
     [Export]
-    private double DamageRecoveryReset = 2.0d;
+    private float DamageRecoveryReset = 2.0f;
     [Export]
+    private float DamageReboundForce = 3.0f;
     private double FirstClingReset = 0.5d;
     private double damageTimer = 0.0d;
     private double flashTimer = 0.0d;
@@ -116,14 +117,17 @@ public partial class PlayerCharacter : CharacterBody2D
                 //sprite_2d.Visible = true;
                 sprite_2d.Modulate = solid;
                 flashTimer = 0.0d;
+                if (IsOnFloor())
+                {
+                    PlayerState = playerStates.grounded;
+                }
+                else
+                {
+                    PlayerState = playerStates.airborn;
+                }
             }
             else
             {
-                if (damageTimer <= DamageRecoveryReset / 2)
-                {
-                    //grounded state has the most flexibility to become other states in a single frame and so is the safest to default to
-                    PlayerState = playerStates.grounded;
-                }
                 damageTimer -= delta;
                 flashTimer -= delta;
                 if (flashTimer <= 0.0d)
@@ -174,7 +178,7 @@ public partial class PlayerCharacter : CharacterBody2D
         direction = Input.GetVector("left", "right", "up", "down");
         if (cyoteTimer <= 0.00d)
         {
-            GD.Print("falling");
+            //GD.Print("falling");
             teleportAvailiable = true;
             doubleJumpAvailiable = true;
             clingTimer = clingTimerReset;
@@ -408,23 +412,18 @@ public partial class PlayerCharacter : CharacterBody2D
             enterGroundedState();
             return;
         }
-        if (!Input.IsActionPressed("down"))
+        if (IsOnWall())
         {
-            if (IsOnWall())
+            if (firstClingTimer <= 0.0d)
             {
-                if (firstClingTimer <= 0.0d)
+                if (!Input.IsActionPressed("down"))
                 {
-                    //GD.Print("begin to cling!");
-                    //determineDirrectionOfWall();
-                    //incomingVelocity = Stop;
-                    //if they are on the wall they are clinging
-                    //PlayerState = playerStates.clinging;
                     enterClingingState();
                     return;
                 }
                 else
                 {
-                    GD.Print("nope");
+
                 }
             }
         }
@@ -607,16 +606,30 @@ public partial class PlayerCharacter : CharacterBody2D
             damageTimer = DamageRecoveryReset;
             if (Health <= 0)
             {
-                //GD.Print("DEATH!");
+                GD.Print("DEATH!");
+                Health = MaxHealth;
+                GD.Print("Life restored!");
+
             }
             else
             {
                 PlayerState = playerStates.damaged;
-                var tmpVelocity = new Godot.Vector2((this.Position.X - DamageOriginX) * 10, (this.Position.Y - DamageOriginY) * 10);//.Normalized();
-                if (tmpVelocity.Y < 1 && tmpVelocity.Y > -1)
-                    tmpVelocity.Y += -400.0f;
 
-                Velocity = tmpVelocity;
+                //work out the inverse dirrection that the damage is coming from, as a normalized Vector
+                var tmpVelocity = new Godot.Vector2((this.Position.X - DamageOriginX), (this.Position.Y - DamageOriginY)).Normalized();
+                tmpVelocity.X *= DamageReboundForce;
+                tmpVelocity.Y *= DamageReboundForce;
+                GD.Print("bounce velocity = " + tmpVelocity);
+                if (IsOnFloor())
+                {
+                    if (tmpVelocity.Y >= 0.0f)
+                    {
+                        //divide by twice damage rebound force as the sudden Acceleration to terminal velocity upwards is hillarious but not fun to play
+                        tmpVelocity.Y = -(gravity / (DamageReboundForce * 4));
+                        GD.Print("Gravity = " + gravity + "end bounce velocity = " + tmpVelocity);
+                    }
+                }
+                Velocity = tmpVelocity * DamageReboundForce;
                 //GD.Print("output of damage Escape Vector X: " + Velocity.X + "   Y: " + Velocity.Y);
             }
         }
