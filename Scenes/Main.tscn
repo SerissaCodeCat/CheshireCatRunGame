@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://tmboyrfs5335"]
+[gd_scene load_steps=8 format=3 uid="uid://tmboyrfs5335"]
 
 [ext_resource type="Shader" uid="uid://d4nv3ky80umn5" path="res://Shaders/ViewportWholePixelOnlyMovement.gdshader" id="1_kln2b"]
 [ext_resource type="PackedScene" uid="uid://do8lfibdmkdhy" path="res://Scenes/TestLevel.tscn" id="1_r150o"]
 [ext_resource type="Script" uid="uid://20rxdomqqrku" path="res://Scenes/SubViewportContainer.cs" id="2_rgh2o"]
 [ext_resource type="Texture2D" uid="uid://c5hnkcyj1dqgi" path="res://Images/Static/UIComponents/HealthBarBase.png" id="4_rgh2o"]
+[ext_resource type="Texture2D" uid="uid://ch1ng5acyompo" path="res://Images/Static/UIComponents/HealthBarSegmentFill.png" id="5_v1gob"]
+[ext_resource type="Texture2D" uid="uid://c21odw7pscp35" path="res://Images/Static/UIComponents/HealthBarSegmant.png" id="6_jw32o"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pbw6q"]
 shader = ExtResource("1_kln2b")
@@ -31,18 +33,92 @@ render_target_update_mode = 4
 [node name="TestLevel" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_r150o")]
 
 [node name="GUI" type="CanvasLayer" parent="."]
+follow_viewport_scale = 0.001
 
-[node name="Control" type="Control" parent="GUI"]
+[node name="UIControl" type="Control" parent="GUI"]
+texture_filter = 1
+texture_repeat = 1
+layout_direction = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 5.0
+offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(2, 2)
 
-[node name="HealthbarBase" type="TextureRect" parent="GUI/Control"]
+[node name="HealthPipOne" type="TextureRect" parent="GUI/UIControl"]
+z_index = 2
+z_as_relative = false
+texture_filter = 1
+texture_repeat = 1
 layout_mode = 0
-offset_right = 551.0
-offset_bottom = 252.0
+offset_right = 199.0
+offset_bottom = 99.0
 texture = ExtResource("4_rgh2o")
 stretch_mode = 4
+
+[node name="HealthPipOneFill" type="TextureRect" parent="GUI/UIControl/HealthPipOne"]
+z_as_relative = false
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 0
+offset_left = 69.0
+offset_top = 30.0
+offset_right = 126.0
+offset_bottom = 68.0
+texture = ExtResource("5_v1gob")
+stretch_mode = 4
+
+[node name="HealthBarPipTwo" type="TextureRect" parent="GUI/UIControl"]
+z_index = 2
+z_as_relative = false
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 0
+offset_left = 120.0
+offset_top = 29.0
+offset_right = 180.0
+offset_bottom = 69.0
+texture = ExtResource("6_jw32o")
+stretch_mode = 4
+
+[node name="HealthBarPipTwoFill" type="TextureRect" parent="GUI/UIControl/HealthBarPipTwo"]
+z_as_relative = false
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 58.0
+offset_bottom = 39.0
+texture = ExtResource("5_v1gob")
+stretch_mode = 4
+
+[node name="HealthPipThree" type="TextureRect" parent="GUI/UIControl"]
+z_index = 2
+z_as_relative = false
+texture_filter = 1
+texture_repeat = 1
+layout_direction = 2
+layout_mode = 0
+offset_left = 172.0
+offset_top = 29.0
+offset_right = 232.0
+offset_bottom = 69.0
+texture = ExtResource("6_jw32o")
+stretch_mode = 4
+
+[node name="HealthPipThreeFill" type="TextureRect" parent="GUI/UIControl/HealthPipThree"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 58.0
+offset_bottom = 39.0
+texture = ExtResource("5_v1gob")
