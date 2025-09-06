@@ -49,12 +49,12 @@ public partial class MessageManager : Node2D
         if (playerMessagerLink == null)
         {
             playerMessagerLink = player;
-            player.setValues(playerMessagerLink);
+            player.setValues(3);
 
         }
         else
         {
-            player.setValues(playerMessagerLink);
+            player.setValues(playerMessagerLink.Health);
             playerMessagerLink = player;
         }
         GD.Print("player added to message manager with IDvalue of: " + playerMessagerLink.GetInstanceId());
@@ -82,10 +82,13 @@ public partial class MessageManager : Node2D
     {
         throw NotImplementedException();
     }
-
+    public int enquireCurrentHealthofPlayer()
+    {
+        return playerMessagerLink.enquireCurrentHealth();
+    }
     public void sendNewHealthTotalToUI(int currentHealth)
     {
-        throw(NotImplementedException());
+        UIControlLink.setHealthTo(currentHealth);
     }
     ////////////////////////////////////////////////////////////////////////////
     ///////////////////// MESSAGES TO NPSs /////////////////////////////////////
@@ -147,9 +150,9 @@ public partial class MessageManager : Node2D
     ///////////////// SHADER UPDATES //////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
     public void updateViewportWholePixelOnlyMovement(Vector2 incomingPosition)
-	{
-		viewportLink.ViewportWholePixelOnlyMovement(incomingPosition);
-	}
+    {
+        viewportLink.ViewportWholePixelOnlyMovement(incomingPosition);
+    }
 
 
     ///////////////////////////////////////////////////////////////////////////

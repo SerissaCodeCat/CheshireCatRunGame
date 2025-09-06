@@ -3,7 +3,7 @@
 [ext_resource type="Shader" uid="uid://d4nv3ky80umn5" path="res://Shaders/ViewportWholePixelOnlyMovement.gdshader" id="1_kln2b"]
 [ext_resource type="PackedScene" uid="uid://do8lfibdmkdhy" path="res://Scenes/TestLevel.tscn" id="1_r150o"]
 [ext_resource type="Script" uid="uid://20rxdomqqrku" path="res://Scenes/SubViewportContainer.cs" id="2_rgh2o"]
-[ext_resource type="Script" uid="uid://11d2hgkvmrxj" path="res://GenericScripts/UIControl.cs" id="4_50glp"]
+[ext_resource type="Script" uid="uid://dye5b51gpj33n" path="res://Scenes/UIControl.cs" id="4_50glp"]
 [ext_resource type="Texture2D" uid="uid://c5hnkcyj1dqgi" path="res://Images/Static/UIComponents/HealthBarBase.png" id="4_rgh2o"]
 [ext_resource type="Texture2D" uid="uid://ch1ng5acyompo" path="res://Images/Static/UIComponents/HealthBarSegmentFill.png" id="5_v1gob"]
 [ext_resource type="Texture2D" uid="uid://c21odw7pscp35" path="res://Images/Static/UIComponents/HealthBarSegmant.png" id="6_jw32o"]

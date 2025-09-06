@@ -79,6 +79,7 @@ public partial class PlayerCharacter : CharacterBody2D
     /// ////////////////////////////////////////////////////////////////////////////////
     /// </Intergers>
     public int Health;
+    public const int startingHealth = 3;
     public int MaxHealth = 3;
     /// <Bools>
     /// ////////////////////////////////////////////////////////////////////////////////
@@ -586,15 +587,12 @@ public partial class PlayerCharacter : CharacterBody2D
     {
         PlayerState = playerStates.airborn;
     }
-    public bool setValues(PlayerCharacter incomingValues)
+    public bool setValues(int incomingHealth = startingHealth )
     {
-        if (incomingValues != null)
-        {
             GD.Print("Setting Values");
-            Health = MaxHealth;
+            Health = incomingHealth;
+            MessageManager.instance.sendNewHealthTotalToUI(Health);
             return true;
-        }
-        return false;
     }
     public void DamagePLayer(float DamageOriginX = 0.0f, float DamageOriginY = 0.0f)
     {
@@ -602,6 +600,7 @@ public partial class PlayerCharacter : CharacterBody2D
         {
             //GD.Print("DAMAGED!");
             Health--;
+            MessageManager.instance.sendNewHealthTotalToUI(Health);
             damagable = false;
             damageTimer = DamageRecoveryReset;
             if (Health <= 0)
@@ -678,6 +677,11 @@ public partial class PlayerCharacter : CharacterBody2D
             aimingLynchpin.RotationDegrees = sprite_2d.FlipH ? 180.0f : 0.0f;
             aimingSprite.Visible = false;
         }
+    }
+    public int enquireCurrentHealth()
+    {
+        MessageManager.instance.sendNewHealthTotalToUI(Health);
+        return Health;
     }
     private float lerp(float firstPoint, float secondPoint, float percentageBetweenTheTwoPoints = 0.5f)
     {
