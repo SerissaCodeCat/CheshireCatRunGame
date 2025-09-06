@@ -10,6 +10,7 @@ public partial class MessageManager : Node2D
     private PlayerCharacter playerMessagerLink = null;
     private PixelPerfectCamera cameraLink = null;
     private SubViewportContainer viewportLink = null;
+    private UIControl UIControlLink = null;
 
 
     public override void _Ready()
@@ -58,7 +59,13 @@ public partial class MessageManager : Node2D
         }
         GD.Print("player added to message manager with IDvalue of: " + playerMessagerLink.GetInstanceId());
     }
-
+    public void addUIControlToMessageManager(UIControl incomingUIControl)
+    {
+        if (UIControlLink == null)
+        {
+            UIControlLink = incomingUIControl;
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////
     //////////////// MESSGES TO PLAYER Node ////////////////////////////////////
@@ -76,6 +83,10 @@ public partial class MessageManager : Node2D
         throw NotImplementedException();
     }
 
+    public void sendNewHealthTotalToUI(int currentHealth)
+    {
+        throw(NotImplementedException());
+    }
     ////////////////////////////////////////////////////////////////////////////
     ///////////////////// MESSAGES TO NPSs /////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////

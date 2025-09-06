@@ -1,11 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://tmboyrfs5335"]
+[gd_scene load_steps=10 format=3 uid="uid://tmboyrfs5335"]
 
 [ext_resource type="Shader" uid="uid://d4nv3ky80umn5" path="res://Shaders/ViewportWholePixelOnlyMovement.gdshader" id="1_kln2b"]
 [ext_resource type="PackedScene" uid="uid://do8lfibdmkdhy" path="res://Scenes/TestLevel.tscn" id="1_r150o"]
 [ext_resource type="Script" uid="uid://20rxdomqqrku" path="res://Scenes/SubViewportContainer.cs" id="2_rgh2o"]
+[ext_resource type="Script" uid="uid://11d2hgkvmrxj" path="res://GenericScripts/UIControl.cs" id="4_50glp"]
 [ext_resource type="Texture2D" uid="uid://c5hnkcyj1dqgi" path="res://Images/Static/UIComponents/HealthBarBase.png" id="4_rgh2o"]
 [ext_resource type="Texture2D" uid="uid://ch1ng5acyompo" path="res://Images/Static/UIComponents/HealthBarSegmentFill.png" id="5_v1gob"]
 [ext_resource type="Texture2D" uid="uid://c21odw7pscp35" path="res://Images/Static/UIComponents/HealthBarSegmant.png" id="6_jw32o"]
+[ext_resource type="Texture2D" uid="uid://so7wwqyce3ef" path="res://Images/Static/UIComponents/EnergyBarFill.png" id="8_vy5pj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pbw6q"]
 shader = ExtResource("1_kln2b")
@@ -50,6 +52,7 @@ offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
+script = ExtResource("4_50glp")
 
 [node name="HealthPipOne" type="TextureRect" parent="GUI/UIControl"]
 z_index = 2
@@ -122,3 +125,18 @@ offset_top = 1.0
 offset_right = 58.0
 offset_bottom = 39.0
 texture = ExtResource("5_v1gob")
+
+[node name="EnergyBarFill" type="TextureRect" parent="GUI/UIControl"]
+show_behind_parent = true
+texture_filter = 1
+texture_repeat = 1
+clip_contents = true
+layout_direction = 2
+layout_mode = 0
+offset_left = 68.0
+offset_top = 71.0
+offset_right = 198.0
+offset_bottom = 83.0
+texture = ExtResource("8_vy5pj")
+expand_mode = 2
+stretch_mode = 2
