@@ -84,10 +84,12 @@ public partial class MessageManager : Node2D
     }
     public int enquireCurrentHealthofPlayer()
     {
+        GD.Print("test:");
         return playerMessagerLink.enquireCurrentHealth();
     }
     public void sendNewHealthTotalToUI(int currentHealth)
     {
+        GD.Print("setHealth");
         UIControlLink.setHealthTo(currentHealth);
     }
     ////////////////////////////////////////////////////////////////////////////

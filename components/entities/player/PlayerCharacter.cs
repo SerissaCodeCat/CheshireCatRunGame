@@ -587,12 +587,12 @@ public partial class PlayerCharacter : CharacterBody2D
     {
         PlayerState = playerStates.airborn;
     }
-    public bool setValues(int incomingHealth = startingHealth )
+    public bool setValues(int incomingHealth = startingHealth)
     {
-            GD.Print("Setting Values");
-            Health = incomingHealth;
-            MessageManager.instance.sendNewHealthTotalToUI(Health);
-            return true;
+        GD.Print("Setting Values");
+        Health = incomingHealth;
+        //MessageManager.instance.sendNewHealthTotalToUI(Health);
+        return true;
     }
     public void DamagePLayer(float DamageOriginX = 0.0f, float DamageOriginY = 0.0f)
     {
