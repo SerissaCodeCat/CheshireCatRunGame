@@ -53,6 +53,10 @@ public partial class PlayerCharacter : CharacterBody2D
     private float dashSpeed = 1000.0f;
     [Export]
     private float aimingRotationSpeed = 120.0f;
+    [Export]
+    private float DamageRecoveryReset = 2.0f;
+    [Export]
+    private float DamageReboundForce = 3.0f;
     public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
     /// <Doubles>
     /// /////////////////////////////////////////////////////////////////////////////////
@@ -64,9 +68,7 @@ public partial class PlayerCharacter : CharacterBody2D
     [Export]
     private double clingTimerReset = 1.0d;
     [Export]
-    private float DamageRecoveryReset = 2.0f;
-    [Export]
-    private float DamageReboundForce = 3.0f;
+    private double BulletResetTime = 2.5d;
     private double FirstClingReset = 0.5d;
     private double damageTimer = 0.0d;
     private double flashTimer = 0.0d;
@@ -164,7 +166,15 @@ public partial class PlayerCharacter : CharacterBody2D
                 break;
         }
         Velocity = finalVelocity;
-        bulletTimer -= delta;
+        if (bulletTimer > 0.0d)
+        {
+            bulletTimer -= delta;
+        }
+        else
+        {
+            bulletTimer = 0.0d;
+        }
+        MessageManager.instance.sendEnegyPercentageTotalToUI(GetbulletTimePercentageDecimal());
         //fireBullet();
 
         MoveAndSlide();
@@ -672,10 +682,20 @@ public partial class PlayerCharacter : CharacterBody2D
             shot.setup(lerp(aimingLynchpin.GlobalPosition, aimingDirrection.GlobalPosition, 0.5f),
                 aimingDirrection.GlobalPosition - aimingLynchpin.GlobalPosition, Bullet.bulletTypes.basic);
             Owner.AddChild(shot);
-            bulletTimer = 1.0d;
-            //GD.Print("FIRE");
+            bulletTimer = BulletResetTime;
             aimingLynchpin.RotationDegrees = sprite_2d.FlipH ? 180.0f : 0.0f;
             aimingSprite.Visible = false;
+        }
+    }
+    public double GetbulletTimePercentageDecimal()
+    {
+        if (bulletTimer > 0.0d)
+        {
+            return (bulletTimer / BulletResetTime);
+        }
+        else
+        {
+            return 0.0d;
         }
     }
     public int enquireCurrentHealth()

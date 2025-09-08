@@ -87,10 +87,18 @@ public partial class MessageManager : Node2D
         GD.Print("test:");
         return playerMessagerLink.enquireCurrentHealth();
     }
+    public double GetbulletTimePercentageOfPlayer()
+    {
+        return playerMessagerLink.GetbulletTimePercentageDecimal();
+    }
     public void sendNewHealthTotalToUI(int currentHealth)
     {
         GD.Print("setHealth");
         UIControlLink.setHealthTo(currentHealth);
+    }
+    public void sendEnegyPercentageTotalToUI(double incomingPercentage)
+    {
+        UIControlLink.setEnergyPercentageTo(incomingPercentage);
     }
     ////////////////////////////////////////////////////////////////////////////
     ///////////////////// MESSAGES TO NPSs /////////////////////////////////////

@@ -4,6 +4,10 @@ using System.Collections.Generic;
 public partial class UIControl : Control
 {
     private List<TextureRect> HealthPipFills;
+    private TextureRect EnergyBarFill;
+    private const float EnergyBarHeight = 12.0f;
+    private const float EnergyBarMaxLength = 130.0f;
+    private Vector2 tmp = new Vector2(EnergyBarHeight, EnergyBarMaxLength);
     public override void _Ready()
     {
 
@@ -16,6 +20,8 @@ public partial class UIControl : Control
         HealthPipFills.Add(GetNode<TextureRect>($"HealthPipThree/HealthPipThreeFill"));
         MessageManager.instance.enquireCurrentHealthofPlayer();
 
+        EnergyBarFill = GetNode<TextureRect>($"EnergyBarFill");
+        setEnergyPercentageTo(MessageManager.instance.GetbulletTimePercentageOfPlayer());
     }
 
     public void setHealthTo(int incomingHealth)
@@ -34,5 +40,18 @@ public partial class UIControl : Control
                 HealthPipFills[x].Visible = false;
             }
         }
+    }
+    public void setEnergyPercentageTo(double incomingPercentageDecimal)
+    {
+        GD.Print("incoming percentage = " + incomingPercentageDecimal);
+        if (incomingPercentageDecimal != 0.0d)
+        {
+            tmp = new Vector2(EnergyBarHeight, EnergyBarMaxLength - (float)(EnergyBarMaxLength * (incomingPercentageDecimal)));
+        }
+        else
+        {
+            tmp = new Vector2(EnergyBarHeight, EnergyBarMaxLength);
+        }
+        EnergyBarFill.SetSize(tmp);
     }
 }

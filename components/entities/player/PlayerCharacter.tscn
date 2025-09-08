@@ -456,8 +456,8 @@ Deceleration = 10.0
 AirDeceleration = 1.1
 JumpVelocity = -400.0
 dashSpeed = 500.0
-CyoteTime = 0.1
 DamageReboundForce = 5.0
+CyoteTime = 0.1
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
