@@ -12,7 +12,7 @@ config_version=5
 
 config/name="CatRunnerGame"
 run/main_scene="uid://tmboyrfs5335"
-config/features=PackedStringArray("4.4", "C#", "Mobile")
+config/features=PackedStringArray("4.5", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -22,8 +22,13 @@ MessageManager="*res://components/Tools/MessageManager.cs"
 
 [display]
 
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
 window/size/initial_position_type=0
+window/size/resizable=false
 window/size/borderless=true
+window/stretch/mode="viewport"
 window/stretch/aspect="ignore"
 window/stretch/scale_mode="integer"
 
@@ -101,6 +106,7 @@ fire={
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+2d/snap/snap_2d_transforms_to_pixel=true
 
 [xr]
 
