@@ -84,7 +84,6 @@ public partial class MessageManager : Node2D
     }
     public int enquireCurrentHealthofPlayer()
     {
-        GD.Print("test:");
         return playerMessagerLink.enquireCurrentHealth();
     }
     public double GetbulletTimePercentageOfPlayer()
@@ -99,6 +98,14 @@ public partial class MessageManager : Node2D
     public void sendEnegyPercentageTotalToUI(double incomingPercentage)
     {
         UIControlLink.setEnergyPercentageTo(incomingPercentage);
+    }
+    public void setPlayerSpawnPosition(Vector2 incomingPosition)
+    {
+        playerMessagerLink.SetSpawnPosition(incomingPosition);
+    }
+    public void resetPlayerToSpawnPosition()
+    {
+        playerMessagerLink.ResetPlayerToSpawnPosition();
     }
     ////////////////////////////////////////////////////////////////////////////
     ///////////////////// MESSAGES TO NPSs /////////////////////////////////////

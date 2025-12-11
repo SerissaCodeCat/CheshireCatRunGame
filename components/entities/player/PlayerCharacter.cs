@@ -90,6 +90,8 @@ public partial class PlayerCharacter : CharacterBody2D
     private bool teleportAvailiable = true;
     private bool wallToRight = false;
     private bool damagable;
+
+    private Vector2 spawnPosition = new Vector2(0, 0);
     public override void _Ready()
     {
         base._Ready();
@@ -617,6 +619,8 @@ public partial class PlayerCharacter : CharacterBody2D
             {
                 GD.Print("DEATH!");
                 Health = MaxHealth;
+                ResetPlayerToSpawnPosition();
+                MessageManager.instance.sendNewHealthTotalToUI(Health);
                 GD.Print("Life restored!");
 
             }
@@ -686,6 +690,15 @@ public partial class PlayerCharacter : CharacterBody2D
             aimingLynchpin.RotationDegrees = sprite_2d.FlipH ? 180.0f : 0.0f;
             aimingSprite.Visible = false;
         }
+    }
+    public void ResetPlayerToSpawnPosition()
+    {
+        this.Position = spawnPosition;
+        Velocity = Stop;
+    }
+    public void SetSpawnPosition(Vector2 incomingPosition)
+    {
+        spawnPosition = incomingPosition;
     }
     public double GetbulletTimePercentageDecimal()
     {
