@@ -8,6 +8,7 @@ size = Vector2(30, 62)
 
 [node name="Door" type="Node2D"]
 light_mask = 0
+z_index = 4
 script = ExtResource("1_wy0mm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

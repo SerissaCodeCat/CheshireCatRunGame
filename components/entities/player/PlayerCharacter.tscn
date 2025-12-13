@@ -447,7 +447,7 @@ size = Vector2(21, 14)
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
 texture_repeat = 1
-collision_layer = 15
+collision_layer = 16
 collision_mask = 232
 script = ExtResource("1_qa2ox")
 Speed = 200.0
@@ -460,6 +460,7 @@ DamageReboundForce = 5.0
 CyoteTime = 0.1
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 5
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_ysfs3")

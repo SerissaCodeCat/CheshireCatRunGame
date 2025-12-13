@@ -193,10 +193,12 @@ public partial class EnemyPatrol : CharacterBody2D
 
     private void PlayerEnteredHurtbox(Node2D body)
     {
+        if (body.Name.ToString() == "Player")
         PlayerInHurtbox = true;
     }
     private void PlayerLeftHurtBox(Node2D body)
     {
+        if (body.Name.ToString() == "Player")
         PlayerInHurtbox = false;
     }
 

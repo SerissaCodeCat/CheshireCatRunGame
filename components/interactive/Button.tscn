@@ -8,6 +8,7 @@
 size = Vector2(18, 6)
 
 [node name="Button" type="CharacterBody2D"]
+z_index = 7
 texture_filter = 1
 texture_repeat = 1
 collision_layer = 64

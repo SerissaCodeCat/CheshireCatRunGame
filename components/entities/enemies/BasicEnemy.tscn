@@ -225,12 +225,13 @@ size = Vector2(23, 23)
 texture_filter = 1
 texture_repeat = 1
 collision_layer = 56
-collision_mask = 24
+collision_mask = 248
 floor_stop_on_slope = false
 script = ExtResource("1_2ofwc")
 Speed = 175.0
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 6
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_ysfs3")
@@ -242,15 +243,17 @@ shape = SubResource("RectangleShape2D_qhpou")
 
 [node name="DetectionAreaRight" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 16
 
 [node name="CollisionShapeSight" type="CollisionShape2D" parent="DetectionAreaRight"]
+light_mask = 0
 position = Vector2(108.75, 2)
 shape = SubResource("RectangleShape2D_j2p43")
 
 [node name="HurtBox2D" type="Area2D" parent="."]
+position = Vector2(0, -1)
 collision_layer = 0
-collision_mask = 2
+collision_mask = 16
 
 [node name="HurtBoxCollisionShape" type="CollisionShape2D" parent="HurtBox2D"]
 position = Vector2(-0.5, 4.5)
