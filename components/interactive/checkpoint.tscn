@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bq8ku8833m08m"]
+
+[ext_resource type="Script" uid="uid://dhnex85bspmgc" path="res://components/interactive/CheckpointVersion1.cs" id="1_yqk2i"]
+[ext_resource type="Texture2D" uid="uid://chr5x4itl1h64" path="res://Images/Static/StaticScenery/catscratchCheckpointIcon.png" id="2_w4hu3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_018bq"]
+size = Vector2(66, 114)
+
+[node name="Checkpoint" type="Node2D"]
+script = ExtResource("1_yqk2i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_w4hu3")
+
+[node name="ActivationDetectionBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 18
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationDetectionBox"]
+texture_filter = 1
+position = Vector2(0, 7)
+shape = SubResource("RectangleShape2D_018bq")

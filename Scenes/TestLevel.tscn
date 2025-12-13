@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://do8lfibdmkdhy"]
+[gd_scene load_steps=10 format=4 uid="uid://do8lfibdmkdhy"]
 
 [ext_resource type="Script" uid="uid://c46xu4q5qse8a" path="res://GenericScripts/LevelStartScript.cs" id="1_43uqb"]
 [ext_resource type="Texture2D" uid="uid://dusfdmy58480y" path="res://Images/Static/Green.png" id="1_sa0i8"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bwr7vhdi28fly" path="res://components/entities/enemies/BasicEnemy.tscn" id="5_h2ngc"]
 [ext_resource type="TileSet" uid="uid://coc87o3shvfnb" path="res://Tileset/new_tile_set.tres" id="6_v3vpo"]
 [ext_resource type="PackedScene" uid="uid://bwrs86lxilhcr" path="res://components/camera/PixelPerfectCamera.tscn" id="7_rdb2v"]
+[ext_resource type="PackedScene" uid="uid://bq8ku8833m08m" path="res://components/interactive/checkpoint.tscn" id="9_5q7gb"]
 
 [node name="TestLevel" type="Node"]
 script = ExtResource("1_43uqb")
@@ -50,3 +51,6 @@ tile_set = ExtResource("6_v3vpo")
 
 [node name="Enemy" parent="." instance=ExtResource("5_h2ngc")]
 position = Vector2(477, 192)
+
+[node name="Checkpoint" parent="." instance=ExtResource("9_5q7gb")]
+position = Vector2(307, 152)
