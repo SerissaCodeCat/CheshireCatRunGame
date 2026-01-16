@@ -456,7 +456,6 @@ Deceleration = 10.0
 AirDeceleration = 1.1
 JumpVelocity = -400.0
 dashSpeed = 500.0
-DamageReboundForce = 5.0
 CyoteTime = 0.1
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
@@ -477,6 +476,7 @@ shape = SubResource("RectangleShape2D_2gwwv")
 disabled = true
 
 [node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
 scale = Vector2(1, 0.8)
 shape = SubResource("RectangleShape2D_rqb5r")
 target_position = Vector2(0, -4.045)
@@ -485,6 +485,7 @@ collision_mask = 8
 collide_with_areas = true
 
 [node name="aimingLynchpin" type="Node2D" parent="."]
+visible = false
 
 [node name="aimingDirection" type="Node2D" parent="aimingLynchpin"]
 position = Vector2(128, 0)

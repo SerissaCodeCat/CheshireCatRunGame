@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://bexu47ev2tjf3"]
+
+[ext_resource type="Texture2D" uid="uid://lvsj0sol8gnb" path="res://Images/Static/StaticScenery/SpikeTrapPlaceHolder.png" id="1_1g3ie"]
+[ext_resource type="Script" uid="uid://c7uo0tndh422i" path="res://components/interactive/SpikeTrap.cs" id="1_cg2an"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cg2an"]
+size = Vector2(60.5, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qqmwi"]
+size = Vector2(64, 20)
+
+[node name="Spike Trap" type="Node2D"]
+script = ExtResource("1_cg2an")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -32)
+texture = ExtResource("1_1g3ie")
+
+[node name="ActivationDetectionBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationDetectionBox"]
+position = Vector2(0, -51)
+shape = SubResource("RectangleShape2D_cg2an")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -50)
+shape = SubResource("RectangleShape2D_qqmwi")

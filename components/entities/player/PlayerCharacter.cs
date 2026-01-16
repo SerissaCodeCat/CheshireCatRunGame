@@ -1,4 +1,5 @@
 using Godot;
+using Godot.NativeInterop;
 
 public partial class PlayerCharacter : CharacterBody2D
 {
@@ -55,8 +56,8 @@ public partial class PlayerCharacter : CharacterBody2D
     private float aimingRotationSpeed = 120.0f;
     [Export]
     private float DamageRecoveryReset = 2.0f;
-    [Export]
-    private float DamageReboundForce = 3.0f;
+    private const int HorizontalDamageReboundForce = 150;
+    private const int VerticalDamageReboundForce = 300;
     public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
     /// <Doubles>
     /// /////////////////////////////////////////////////////////////////////////////////
@@ -191,7 +192,6 @@ public partial class PlayerCharacter : CharacterBody2D
         direction = Input.GetVector("left", "right", "up", "down");
         if (cyoteTimer <= 0.00d)
         {
-            //GD.Print("falling");
             teleportAvailiable = true;
             doubleJumpAvailiable = true;
             clingTimer = clingTimerReset;
@@ -213,7 +213,6 @@ public partial class PlayerCharacter : CharacterBody2D
             }
             else
             {
-                GD.Print("downhop");
                 Godot.Vector2 tmp = new Vector2(this.Position.X, this.Position.Y + 10);
                 this.Position = tmp;
             }
@@ -302,7 +301,6 @@ public partial class PlayerCharacter : CharacterBody2D
         else if (Input.IsActionJustPressed("crouch"))
         {
 
-            //GD.Print("entering CROUCHED State");
             StandingCollision.Disabled = true;
             CrouchingCollision.Disabled = false;
             PlayerState = playerStates.crouching;
@@ -403,7 +401,6 @@ public partial class PlayerCharacter : CharacterBody2D
         {
             if (ShapeCast.IsColliding())
             {
-                //GD.Print("Collision Detected");
             }
             else
             {
@@ -455,7 +452,6 @@ public partial class PlayerCharacter : CharacterBody2D
                 PlayerState = playerStates.teleporting;
                 teleportAvailiable = false;
                 teleportTimer = teleportTimerReset;
-                //GD.Print("entering Teleporting State");
                 return;
             }
         }
@@ -601,27 +597,23 @@ public partial class PlayerCharacter : CharacterBody2D
     }
     public bool setValues(int incomingHealth = startingHealth)
     {
-        GD.Print("Setting Values");
         Health = incomingHealth;
         //MessageManager.instance.sendNewHealthTotalToUI(Health);
         return true;
     }
-    public void DamagePLayer(float DamageOriginX = 0.0f, float DamageOriginY = 0.0f)
+    public void DamagePLayer(float DamageOriginX = 0.0f, float DamageOriginY = 0.0f, int damage = 1)
     {
         if (damagable)
         {
-            //GD.Print("DAMAGED!");
-            Health--;
+            Health -= damage;
             MessageManager.instance.sendNewHealthTotalToUI(Health);
             damagable = false;
             damageTimer = DamageRecoveryReset;
             if (Health <= 0)
             {
-                GD.Print("DEATH!");
                 Health = MaxHealth;
                 ResetPlayerToSpawnPosition();
                 MessageManager.instance.sendNewHealthTotalToUI(Health);
-                GD.Print("Life restored!");
 
             }
             else
@@ -629,21 +621,18 @@ public partial class PlayerCharacter : CharacterBody2D
                 PlayerState = playerStates.damaged;
 
                 //work out the inverse dirrection that the damage is coming from, as a normalized Vector
-                var tmpVelocity = new Godot.Vector2((this.Position.X - DamageOriginX), (this.Position.Y - DamageOriginY)).Normalized();
-                tmpVelocity.X *= DamageReboundForce;
-                tmpVelocity.Y *= DamageReboundForce;
-                GD.Print("bounce velocity = " + tmpVelocity);
-                if (IsOnFloor())
+                //var tmpVelocity = new Godot.Vector2((this.Position.X - DamageOriginX), (this.Position.Y + DamageOriginY)).Normalized();
+                int tmpx = this.Position.X > DamageOriginX ? 1 : -1;
+                GD.Print("tmpx = " + tmpx);
+                int tmpy = this.Position.Y > DamageOriginY ? 1 : -1;
+                //if player is on floor always bounce upwards
+                if(IsOnFloor())
                 {
-                    if (tmpVelocity.Y >= 0.0f)
-                    {
-                        //divide by twice damage rebound force as the sudden Acceleration to terminal velocity upwards is hillarious but not fun to play
-                        tmpVelocity.Y = -(gravity / (DamageReboundForce * 4));
-                        GD.Print("Gravity = " + gravity + "end bounce velocity = " + tmpVelocity);
-                    }
+                    tmpy = -1;
                 }
-                Velocity = tmpVelocity * DamageReboundForce;
-                //GD.Print("output of damage Escape Vector X: " + Velocity.X + "   Y: " + Velocity.Y);
+                GD.Print("tmpy = " + tmpy);
+                Godot.Vector2 tmpVelocity = new Godot.Vector2(tmpx * HorizontalDamageReboundForce, tmpy * VerticalDamageReboundForce);             
+                Velocity = tmpVelocity;
             }
         }
     }
@@ -672,9 +661,7 @@ public partial class PlayerCharacter : CharacterBody2D
         {
             if (GetSlideCollision(i).GetCollider().GetType().FullName == "Godot.TileMapLayer")
             {
-                GD.Print("detected TileMapLayer");
                 wallToRight = GetSlideCollision(i).GetNormal().X > 0 ? false : true;
-                GD.Print("wall is to the right = " + wallToRight);
             }
         }
     }

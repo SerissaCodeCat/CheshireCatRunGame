@@ -213,13 +213,13 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qhpou"]
-size = Vector2(21, 24)
+size = Vector2(19, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j2p43"]
 size = Vector2(194.5, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g5khf"]
-size = Vector2(23, 23)
+size = Vector2(21, 24)
 
 [node name="Enemy" type="CharacterBody2D"]
 texture_filter = 1
@@ -242,6 +242,7 @@ position = Vector2(-0.5, 4)
 shape = SubResource("RectangleShape2D_qhpou")
 
 [node name="DetectionAreaRight" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 16
 
@@ -256,5 +257,5 @@ collision_layer = 0
 collision_mask = 16
 
 [node name="HurtBoxCollisionShape" type="CollisionShape2D" parent="HurtBox2D"]
-position = Vector2(-0.5, 4.5)
+position = Vector2(-0.5, 4)
 shape = SubResource("RectangleShape2D_g5khf")

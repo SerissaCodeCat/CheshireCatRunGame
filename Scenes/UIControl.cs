@@ -43,7 +43,6 @@ public partial class UIControl : Control
     }
     public void setEnergyPercentageTo(double incomingPercentageDecimal)
     {
-        GD.Print("incoming percentage = " + incomingPercentageDecimal);
         if (incomingPercentageDecimal != 0.0d)
         {
             tmp = new Vector2(EnergyBarHeight, EnergyBarMaxLength - (float)(EnergyBarMaxLength * (incomingPercentageDecimal)));

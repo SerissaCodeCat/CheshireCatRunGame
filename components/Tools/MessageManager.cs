@@ -74,8 +74,7 @@ public partial class MessageManager : Node2D
     //damage the player, and note where the damage came from so that player node can react physically to the damage.
     public void DamagePlayer(Godot.Vector2 damageComingFrom, int damage = 1)
     {
-        //GD.Print("Sending damage message to player");
-        playerMessagerLink.DamagePLayer(damageComingFrom.X, damageComingFrom.Y);
+        playerMessagerLink.DamagePLayer(damageComingFrom.X, damageComingFrom.Y, damage);
     }
     //damage without the bounce. usefull for environmental damage like gas / steam / heat  ect.
     public void sendPlayerNonePhysicalDamage(int damage = 1)
@@ -92,7 +91,6 @@ public partial class MessageManager : Node2D
     }
     public void sendNewHealthTotalToUI(int currentHealth)
     {
-        GD.Print("setHealth");
         UIControlLink.setHealthTo(currentHealth);
     }
     public void sendEnegyPercentageTotalToUI(double incomingPercentage)
@@ -112,7 +110,6 @@ public partial class MessageManager : Node2D
     ////////////////////////////////////////////////////////////////////////////
     public void stunEnemyWithID(ulong ID)
     {
-        //GD.Print("stunn sent to ID: " + ID);
         enemies[ID].BeStunned();
     }
 

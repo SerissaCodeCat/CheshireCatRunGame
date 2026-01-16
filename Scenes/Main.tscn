@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://tmboyrfs5335"]
+[gd_scene load_steps=9 format=3 uid="uid://tmboyrfs5335"]
 
 [ext_resource type="Shader" uid="uid://d4nv3ky80umn5" path="res://Shaders/ViewportWholePixelOnlyMovement.gdshader" id="1_kln2b"]
-[ext_resource type="PackedScene" uid="uid://do8lfibdmkdhy" path="res://Scenes/TestLevel.tscn" id="1_r150o"]
 [ext_resource type="Script" uid="uid://20rxdomqqrku" path="res://Scenes/SubViewportContainer.cs" id="2_rgh2o"]
 [ext_resource type="Script" uid="uid://dye5b51gpj33n" path="res://Scenes/UIControl.cs" id="4_50glp"]
 [ext_resource type="Texture2D" uid="uid://c5hnkcyj1dqgi" path="res://Images/Static/UIComponents/HealthBarBase.png" id="4_rgh2o"]
@@ -31,8 +30,6 @@ script = ExtResource("2_rgh2o")
 handle_input_locally = false
 size = Vector2i(644, 364)
 render_target_update_mode = 4
-
-[node name="TestLevel" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_r150o")]
 
 [node name="GUI" type="CanvasLayer" parent="."]
 follow_viewport_scale = 0.001
