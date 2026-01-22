@@ -20,7 +20,15 @@ public partial class PixelPerfectCamera : Camera2D
     }
     public override void _Process(double delta)
     {
-        actualCameraPosition = actualCameraPosition.Lerp(Target.GlobalPosition, (float)delta * 3.0f);
+        Vector2 actualCameraTargetPosition;
+        if (Target == null)
+        {
+            return;
+        }
+        //keep the camera from going above Y of 0, but allow X movement. remember that in Godot, Y increases downwards.
+        actualCameraTargetPosition = Target.GlobalPosition.Y > 0 ? new Vector2(Target.GlobalPosition.X, 0) : Target.GlobalPosition;
+        
+        actualCameraPosition = actualCameraPosition.Lerp(actualCameraTargetPosition, (float)delta * 3.0f);
         cameraOffsetPossition = actualCameraPosition.Round() - actualCameraPosition;
 
         MessageManager.instance.updateViewportWholePixelOnlyMovement(cameraOffsetPossition);

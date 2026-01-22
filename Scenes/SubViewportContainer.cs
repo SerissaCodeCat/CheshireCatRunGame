@@ -13,7 +13,6 @@ public partial class SubViewportContainer : Godot.SubViewportContainer
 	starting level path exposed to the editor for easy setup
 	of the initial level to be loaded by the main scene.
 	*/
-	[Export]
 	public String startingLevelPath {get; set;} = "res://Scenes/TestLevel.tscn";
 
 	/*

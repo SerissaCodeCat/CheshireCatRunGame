@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://c7uo0tndh422i" path="res://components/interactive/SpikeTrap.cs" id="1_cg2an"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cg2an"]
-size = Vector2(60.5, 22)
+size = Vector2(64, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qqmwi"]
 size = Vector2(64, 20)
