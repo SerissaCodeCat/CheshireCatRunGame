@@ -13,7 +13,7 @@ public partial class SubViewportContainer : Godot.SubViewportContainer
 	starting level path exposed to the editor for easy setup
 	of the initial level to be loaded by the main scene.
 	*/
-	public String startingLevelPath {get; set;} = "res://Scenes/TestLevel.tscn";
+	public String startingLevelPath {get; set;} = null;
 
 	/*
 	system filepath to the next level to be loaded, 
@@ -28,6 +28,10 @@ public partial class SubViewportContainer : Godot.SubViewportContainer
 
 	public override void _Ready()
 	{
+		if (startingLevelPath == null)
+		{
+			startingLevelPath = "res://Scenes/TestLevel.tscn";
+		}
 		MessageManager.instance.addViewportToMessager(this);
 		material = (ShaderMaterial)this.Material;
 		viewportLink = this.GetChild<SubViewport>(0);

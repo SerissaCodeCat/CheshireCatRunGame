@@ -36,16 +36,6 @@ position = Vector2(1554, -13)
 [node name="Player" parent="." instance=ExtResource("4_5q7gb")]
 position = Vector2(6, 0)
 
-[node name="Button2" parent="." node_paths=PackedStringArray("buttonLinksTo") instance=ExtResource("2_rdb2v")]
-position = Vector2(2842, 275)
-rotation = 1.5708
-scale = Vector2(3, 3)
-buttonLinksTo = NodePath("../Door2")
-
-[node name="Door2" parent="." instance=ExtResource("3_43uqb")]
-position = Vector2(3263, 363)
-scale = Vector2(2.25, 2.25)
-
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1
 position = Vector2(-14, -190)
