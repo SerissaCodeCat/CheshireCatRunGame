@@ -76,6 +76,11 @@ public partial class MessageManager : Node2D
     {
         playerMessagerLink.DamagePLayer(damageComingFrom.X, damageComingFrom.Y, damage);
     }
+    public void KillPlayer()
+    {
+        GD.Print("Message Manager telling player to die");
+        playerMessagerLink.KillPlayer();
+    }
     //damage without the bounce. usefull for environmental damage like gas / steam / heat  ect.
     public void sendPlayerNonePhysicalDamage(int damage = 1)
     {

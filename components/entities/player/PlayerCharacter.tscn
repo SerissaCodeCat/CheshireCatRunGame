@@ -485,7 +485,6 @@ collision_mask = 8
 collide_with_areas = true
 
 [node name="aimingLynchpin" type="Node2D" parent="."]
-visible = false
 
 [node name="aimingDirection" type="Node2D" parent="aimingLynchpin"]
 position = Vector2(128, 0)

@@ -24,6 +24,7 @@ offset_top = -3.0
 offset_right = 641.0
 offset_bottom = 361.0
 scale = Vector2(3, 3)
+stretch = true
 script = ExtResource("2_rgh2o")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]

@@ -636,6 +636,15 @@ public partial class PlayerCharacter : CharacterBody2D
             }
         }
     }
+    public void KillPlayer()
+    {
+        GD.Print("Player killed by KillZone");
+        Health = 0;
+        MessageManager.instance.sendNewHealthTotalToUI(Health);
+        ResetPlayerToSpawnPosition();
+        Health = MaxHealth;
+        MessageManager.instance.sendNewHealthTotalToUI(Health);
+    }
     public void HealPlayer(int amount = 1)
     {
         Health += amount;
