@@ -451,10 +451,10 @@ collision_layer = 16
 collision_mask = 232
 script = ExtResource("1_qa2ox")
 Speed = 200.0
-Acceleration = 7.5
-Deceleration = 10.0
+Acceleration = 10.0
+Deceleration = 12.0
 AirDeceleration = 1.1
-JumpVelocity = -400.0
+JumpVelocity = -420.0
 dashSpeed = 500.0
 CyoteTime = 0.1
 
