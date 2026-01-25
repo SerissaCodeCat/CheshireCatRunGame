@@ -42,19 +42,19 @@ public partial class PlayerCharacter : CharacterBody2D
     /// </Floats>
     [Export]
     public float Speed = 450.0f;
-    [Export]
+    [Export(PropertyHint.Range, "0,5.0")]
     public float Acceleration = 1.0f;
-    [Export]
+    [Export(PropertyHint.Range, "0,20.0")]
     public float Deceleration = 15.0f;
-    [Export]
+    [Export(PropertyHint.Range, "0,10.0")]
     public float AirDeceleration = 3.3f;
-    [Export]
+    [Export(PropertyHint.Range, "0,-1000.0")]
     public float JumpVelocity = -600.0f;
     [Export]
     private float dashSpeed = 1000.0f;
-    [Export]
+    [Export(PropertyHint.Range, "0,300.0")]
     private float aimingRotationSpeed = 120.0f;
-    [Export]
+    [Export(PropertyHint.Range, "0,5.0")]
     private float DamageRecoveryReset = 2.0f;
     private const int HorizontalDamageReboundForce = 150;
     private const int VerticalDamageReboundForce = 300;
@@ -62,14 +62,15 @@ public partial class PlayerCharacter : CharacterBody2D
     /// <Doubles>
     /// /////////////////////////////////////////////////////////////////////////////////
     /// </Doubles>
-    [Export]
+    [Export (PropertyHint.Range, "0.0,1.0")]
     private double CyoteTime = 0.05d;
-    [Export]
+    [Export(PropertyHint.Range, "0,1.0")]
     private double teleportTimerReset = 0.3d;
-    [Export]
+    [Export(PropertyHint.Range, "0,10.0")]
     private double clingTimerReset = 1.0d;
-    [Export]
+    [Export(PropertyHint.Range, "0,10.0")]
     private double BulletResetTime = 2.5d;
+    [Export (PropertyHint.Range, "0,1.0")]
     private double FirstClingReset = 0.5d;
     private double damageTimer = 0.0d;
     private double flashTimer = 0.0d;
@@ -105,11 +106,12 @@ public partial class PlayerCharacter : CharacterBody2D
         aimingDirrection = GetNode<Node2D>($"aimingLynchpin/aimingDirection");
         aimingSprite = GetNode<Sprite2D>($"aimingLynchpin/aimingSprite");
         aimingSprite.Visible = false;
-        MessageManager.instance.addPlayerToMessageManager(this);
         damagable = true;
         cyoteTimer = CyoteTime;
         teleportTimer = teleportTimerReset;
         clingTimer = clingTimerReset;
+        MessageManager.instance.addPlayerToMessageManager(this);
+
     }
     public override void _PhysicsProcess(double delta)
     {
@@ -178,18 +180,15 @@ public partial class PlayerCharacter : CharacterBody2D
             bulletTimer = 0.0d;
         }
         MessageManager.instance.sendEnegyPercentageTotalToUI(GetbulletTimePercentageDecimal());
-        //fireBullet();
-
         MoveAndSlide();
     }
     private void doGroundedPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
     {
         //add gravity
-        incomingVelocity.Y += gravity * (float)incomingDelta;
+        //incomingVelocity.Y += gravity * (float)incomingDelta;
 
         //if touching ground, refresh cyote timer, if not, decrease it
         cyoteTimer = IsOnFloor() ? CyoteTime : -incomingDelta;
-        direction = Input.GetVector("left", "right", "up", "down");
         if (cyoteTimer <= 0.00d)
         {
             teleportAvailiable = true;
@@ -199,8 +198,35 @@ public partial class PlayerCharacter : CharacterBody2D
             PlayerState = playerStates.airborn;
             return;
         }
+        // Get the input direction and handle the movement/deceleration.
+        direction = Input.GetVector("left", "right", "up", "down");
+        if (direction != Godot.Vector2.Zero)
+        {
+            //add the currently input dirrection to our  velocity
+            incomingVelocity.X = Mathf.MoveToward(Velocity.X, direction.X * Speed, Acceleration);
+            //turn the sprite to face the current inputted dirrection
+            sprite_2d.FlipH = direction.X < 0;
+            if (direction.X < 0 && !Input.IsActionPressed("fire"))
+            {
+                if (aimingLynchpin.RotationDegrees != 180.0f)
+                {
+                    aimingLynchpin.Rotate((float)Mathf.DegToRad(180.0d));
+                }
+            }
+            else if (direction.X > 0 && !Input.IsActionPressed("fire"))
+            {
+                if (aimingLynchpin.RotationDegrees != 0.0f)
+                {
+                    aimingLynchpin.Rotate((float)Mathf.DegToRad(-180.0d));
+                }
+            }
+        }
+        else
+        {
+            incomingVelocity.X = Mathf.MoveToward(Velocity.X, 0, Deceleration);
+        }
 
-        else if (Input.IsActionJustPressed("jump"))
+        if (Input.IsActionJustPressed("jump"))
         {
             doubleJumpAvailiable = true;
             teleportAvailiable = true;
@@ -305,32 +331,7 @@ public partial class PlayerCharacter : CharacterBody2D
             CrouchingCollision.Disabled = false;
             PlayerState = playerStates.crouching;
         }
-        // Get the input direction and handle the movement/deceleration.
-        if (direction != Godot.Vector2.Zero)
-        {
-            //add the currently input dirrection to our  velocity
-            incomingVelocity.X = Mathf.MoveToward(Velocity.X, direction.X * Speed, Acceleration);
-            //turn the sprite to face the current inputted dirrection
-            sprite_2d.FlipH = direction.X < 0;
-            if (direction.X < 0 && !Input.IsActionPressed("fire"))
-            {
-                if (aimingLynchpin.RotationDegrees != 180.0f)
-                {
-                    aimingLynchpin.Rotate((float)Mathf.DegToRad(180.0d));
-                }
-            }
-            else if (direction.X > 0 && !Input.IsActionPressed("fire"))
-            {
-                if (aimingLynchpin.RotationDegrees != 0.0f)
-                {
-                    aimingLynchpin.Rotate((float)Mathf.DegToRad(-180.0d));
-                }
-            }
-        }
-        else
-        {
-            incomingVelocity.X = Mathf.MoveToward(Velocity.X, 0, Deceleration);
-        }
+
         if (incomingVelocity.X != 0.0f)
             sprite_2d.Animation = "running";
         else

@@ -34,7 +34,7 @@ position = Vector2(1217, -473)
 scale = Vector2(0.58984685, 0.58984685)
 
 [node name="Player" parent="." instance=ExtResource("5_xwjr1")]
-position = Vector2(1471, -546)
+position = Vector2(1116, -600)
 
 [node name="Button2" parent="." node_paths=PackedStringArray("buttonLinksTo") instance=ExtResource("3_v5c3b")]
 position = Vector2(2962, -197)
