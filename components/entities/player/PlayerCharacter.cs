@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Godot;
 using Godot.NativeInterop;
 
@@ -35,7 +36,9 @@ public partial class PlayerCharacter : CharacterBody2D
     private bool aimingRise = true;
     private CollisionShape2D StandingCollision;
     private CollisionShape2D CrouchingCollision;
-    private ShapeCast2D ShapeCast;
+    private ShapeCast2D ShapeCastCeilingCheck;
+    private ShapeCast2D ShapeCastWallCheck;
+
 
     /// <Floats>
     /// ////////////////////////////////////////////////////////////////////////////////
@@ -50,6 +53,14 @@ public partial class PlayerCharacter : CharacterBody2D
     public float AirDeceleration = 3.3f;
     [Export(PropertyHint.Range, "0,-1000.0")]
     public float JumpVelocity = -600.0f;
+    [Export(PropertyHint.Range, "0,10.0")]
+    public float JumpAscentionTimer = 3.0f;
+    [Export(PropertyHint.Range, "0,5.0")]
+    public float JumpHangingTime = 01.0f;
+    [Export(PropertyHint.Range, "0,5.0")]
+    public float PlayerGravityMultiplier = 1.0f;
+    private float JumpHangingTimeTimer = 0.0f;
+
     [Export]
     private float dashSpeed = 1000.0f;
     [Export(PropertyHint.Range, "0,300.0")]
@@ -100,7 +111,8 @@ public partial class PlayerCharacter : CharacterBody2D
         sprite_2d = GetNode<AnimatedSprite2D>($"Sprite2D");
         StandingCollision = GetNode<CollisionShape2D>($"CollisionShapeStanding");
         CrouchingCollision = GetNode<CollisionShape2D>($"CollisionShapeCrouching");
-        ShapeCast = GetNode<ShapeCast2D>("ShapeCast2D");
+        ShapeCastCeilingCheck = GetNode<ShapeCast2D>("ShapeCast2DCeilingCheck");
+        ShapeCastWallCheck = GetNode<ShapeCast2D>("ShapeCast2DWallCheck");
         bullet = GD.Load<PackedScene>("res://components/entities/player/Bullet.tscn");
         aimingLynchpin = GetNode<Node2D>($"aimingLynchpin");
         aimingDirrection = GetNode<Node2D>($"aimingLynchpin/aimingDirection");
@@ -228,6 +240,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
         if (Input.IsActionJustPressed("jump"))
         {
+            enterAirbornState();
             doubleJumpAvailiable = true;
             teleportAvailiable = true;
             clingTimer = clingTimerReset;
@@ -341,7 +354,7 @@ public partial class PlayerCharacter : CharacterBody2D
     private void doCrouchingPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
     {
         //add gravity
-        incomingVelocity.Y += gravity * (float)incomingDelta;
+        incomingVelocity.Y += gravity * PlayerGravityMultiplier *  (float)incomingDelta;
         //if touching ground, refresh cyote timer, if not, decrease it
         cyoteTimer = IsOnFloor() ? CyoteTime : -incomingDelta;
 
@@ -358,6 +371,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
         if (Input.IsActionJustPressed("jump"))
         {
+            enterAirbornState();
             doubleJumpAvailiable = true;
             teleportAvailiable = true;
             clingTimer = clingTimerReset;
@@ -400,7 +414,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
         if (!Input.IsActionPressed("crouch"))
         {
-            if (ShapeCast.IsColliding())
+            if (ShapeCastCeilingCheck.IsColliding())
             {
             }
             else
@@ -415,7 +429,7 @@ public partial class PlayerCharacter : CharacterBody2D
     private void doAirbornPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
     {
         //add gravity
-        incomingVelocity.Y += gravity * (float)incomingDelta;
+        //incomingVelocity.Y += gravity * (float)incomingDelta;
         direction = Input.GetVector("left", "right", "up", "down");
         firstClingTimer -= incomingDelta;
         if (IsOnFloor())
@@ -438,12 +452,18 @@ public partial class PlayerCharacter : CharacterBody2D
                 }
             }
         }
-        if (!Input.IsActionPressed("jump"))
+        if(JumpHangingTimeTimer > 0.0f && incomingVelocity.Y > 0.0f)
         {
-            if (incomingVelocity.Y < 0.0f)
-            {
-                incomingVelocity.Y += gravity * 4 * (float)incomingDelta;
-            }
+            JumpHangingTimeTimer -= (float)incomingDelta;
+            incomingVelocity.Y = 0.0f;
+        }
+        else
+        {
+            incomingVelocity.Y += gravity * PlayerGravityMultiplier *  (float)incomingDelta;
+        }
+        if (Input.IsActionJustReleased("jump") && incomingVelocity.Y < 0.0f)
+        {
+            incomingVelocity.Y = 0.0f;
         }
 
         if (Input.IsActionJustPressed("teleport"))
@@ -495,6 +515,11 @@ public partial class PlayerCharacter : CharacterBody2D
             enterGroundedState();
             return;
         }
+        if (!ShapeCastWallCheck.IsColliding())
+        {
+            enterAirbornState();
+            return;
+        }
         //add gravity at 1/3 the normal value due to cat claws stuck in the wall we are clinging to
         if (clingTimer <= 0)
             incomingVelocity.Y += gravity / 3 * (float)incomingDelta;
@@ -503,6 +528,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
         if (Input.IsActionJustPressed("jump"))
         {
+            enterAirbornState();
             direction = Input.GetVector("left", "right", "up", "down");
             //push away from the wall slightly and become airborn
             if (Input.IsActionPressed("down"))
@@ -594,6 +620,8 @@ public partial class PlayerCharacter : CharacterBody2D
     }
     private void enterAirbornState()
     {
+        JumpHangingTimeTimer = JumpHangingTime;    
+        GD.Print("Setting JumpHangingTimeTimer to " + JumpHangingTime);    
         PlayerState = playerStates.airborn;
     }
     public bool setValues(int incomingHealth = startingHealth)
@@ -672,6 +700,15 @@ public partial class PlayerCharacter : CharacterBody2D
             if (GetSlideCollision(i).GetCollider().GetType().FullName == "Godot.TileMapLayer")
             {
                 wallToRight = GetSlideCollision(i).GetNormal().X > 0 ? false : true;
+                //cast the wall detection ray out to the side that the wall is on
+                if (wallToRight)
+                {
+                    ShapeCastWallCheck.TargetPosition = new Vector2(15.0f, 0.0f);
+                }
+                else           
+                {
+                    ShapeCastWallCheck.TargetPosition = new Vector2(-15.0f, 0.0f); 
+                }
             }
         }
     }

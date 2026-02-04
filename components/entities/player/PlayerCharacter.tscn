@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://4l4khwvcmc86"]
+[gd_scene format=3 uid="uid://4l4khwvcmc86"]
 
 [ext_resource type="Texture2D" uid="uid://cm2py4r01tbo" path="res://Images/Static/Jump (32x32).png" id="1_knf71"]
 [ext_resource type="Script" uid="uid://cvc7rkydq2dha" path="res://components/entities/player/PlayerCharacter.cs" id="1_qa2ox"]
@@ -444,7 +444,9 @@ size = Vector2(21, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rqb5r"]
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mfnvq"]
+
+[node name="Player" type="CharacterBody2D" unique_id=1334160596]
 texture_filter = 1
 texture_repeat = 1
 collision_layer = 16
@@ -455,10 +457,11 @@ Acceleration = 5.0
 Deceleration = 12.0
 AirDeceleration = 1.1
 JumpVelocity = -420.0
+JumpHangingTime = 0.05
 dashSpeed = 500.0
 CyoteTime = 0.1
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1446792829]
 z_index = 5
 texture_filter = 1
 texture_repeat = 1
@@ -466,32 +469,40 @@ sprite_frames = SubResource("SpriteFrames_ysfs3")
 animation = &"crouching"
 autoplay = "default"
 
-[node name="CollisionShapeStanding" type="CollisionShape2D" parent="."]
+[node name="CollisionShapeStanding" type="CollisionShape2D" parent="." unique_id=1729310471]
 position = Vector2(0.5, 4)
 shape = SubResource("RectangleShape2D_qhpou")
 
-[node name="CollisionShapeCrouching" type="CollisionShape2D" parent="."]
+[node name="CollisionShapeCrouching" type="CollisionShape2D" parent="." unique_id=1890144852]
 position = Vector2(-0.5, 7)
 shape = SubResource("RectangleShape2D_2gwwv")
 disabled = true
 
-[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+[node name="ShapeCast2DCeilingCheck" type="ShapeCast2D" parent="." unique_id=1619678466]
 visible = false
 scale = Vector2(1, 0.8)
 shape = SubResource("RectangleShape2D_rqb5r")
 target_position = Vector2(0, -4.045)
-max_results = 5
+max_results = 2
 collision_mask = 8
 collide_with_areas = true
 
-[node name="aimingLynchpin" type="Node2D" parent="."]
+[node name="aimingLynchpin" type="Node2D" parent="." unique_id=577584212]
 
-[node name="aimingDirection" type="Node2D" parent="aimingLynchpin"]
+[node name="aimingDirection" type="Node2D" parent="aimingLynchpin" unique_id=811891212]
 position = Vector2(128, 0)
 
-[node name="aimingSprite" type="Sprite2D" parent="aimingLynchpin"]
+[node name="aimingSprite" type="Sprite2D" parent="aimingLynchpin" unique_id=1032450229]
 texture_filter = 1
 texture_repeat = 1
 position = Vector2(29, 0)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("9_c5ha8")
+
+[node name="ShapeCast2DWallCheck" type="ShapeCast2D" parent="." unique_id=179772153]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_mfnvq")
+target_position = Vector2(15, 0)
+max_results = 2
+collision_mask = 8
+collide_with_areas = true
