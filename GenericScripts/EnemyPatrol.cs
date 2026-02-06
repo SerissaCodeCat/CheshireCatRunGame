@@ -167,6 +167,8 @@ public partial class EnemyPatrol : CharacterBody2D
         if (body.Name.ToString() == "Player")
         {
             Player = body;
+            onBreak = false;
+            idleTimer = rnd.Next(20, 120);
             Charging = LineOfSightCheck(Player);
         }
     }
