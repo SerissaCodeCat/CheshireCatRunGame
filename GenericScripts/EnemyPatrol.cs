@@ -25,6 +25,7 @@ public partial class EnemyPatrol : CharacterBody2D
     private bool onBreak = false;
     private Godot.Vector2 Stop = new Godot.Vector2(0, 0);
     private CollisionShape2D CollisionBody;
+    private ShapeCast2D EdgeDetectionCast;
     private Area2D AreaDetectionRight;
     private Area2D HurtBox;
 
@@ -60,6 +61,7 @@ public partial class EnemyPatrol : CharacterBody2D
         enemyNode = this;
         aboutFace = new(-1, enemyNode.Scale.Y);
         CollisionBody = GetNode<CollisionShape2D>($"CollisionShapeStanding");
+        EdgeDetectionCast = GetNode<ShapeCast2D>($"EdgeDetectionShapeCast2D");
         attacking = false;
         attackOn = 2.0d; //this will set the timer so that the enemy attacks after 2 seconds of being within range and detecting the player
         MessageManager.instance.addToEnemyDictionary(this);
@@ -104,6 +106,12 @@ public partial class EnemyPatrol : CharacterBody2D
             Velocity = finalVelocity;
             MoveAndSlide();
             if (IsOnWall())
+            {
+                direction = !direction;
+                Velocity = Godot.Vector2.Zero;
+                FlipEntity();
+            }
+            if(!EdgeDetectionCast.IsColliding() && !Charging)
             {
                 direction = !direction;
                 Velocity = Godot.Vector2.Zero;
