@@ -16,6 +16,16 @@ public partial class EnemyPatrol : CharacterBody2D
     [Export]
     // time enemy will remain stunned when conditions Met
     private double stunTime = 3.0d;
+    [Export]
+    private bool canHurtPlayer = true;
+    [Export]
+    private bool canBeStunned = true;
+    [Export]
+    private bool canDetectPlayer = true;
+    [Export]
+    private bool canCharge = true;
+    [Export]
+    private bool canInstantKill = false;
 
     private bool wallToRight = false;
     private bool Charging = false;
