@@ -26,6 +26,8 @@ public partial class EnemyPatrol : CharacterBody2D
     private bool canCharge = true;
     [Export]
     private bool canInstantKill = false;
+    [Export]
+    private bool canJump = false;
 
     private bool wallToRight = false;
     private bool Charging = false;
@@ -36,6 +38,8 @@ public partial class EnemyPatrol : CharacterBody2D
     private Godot.Vector2 Stop = new Godot.Vector2(0, 0);
     private CollisionShape2D CollisionBody;
     private ShapeCast2D EdgeDetectionCast;
+    private ShapeCast2D JumpDetectionCast1;
+    private ShapeCast2D JumpDetectionCast2;
     private Area2D AreaDetectionRight;
     private Area2D HurtBox;
 
@@ -72,6 +76,8 @@ public partial class EnemyPatrol : CharacterBody2D
         aboutFace = new(-1, enemyNode.Scale.Y);
         CollisionBody = GetNode<CollisionShape2D>($"CollisionShapeStanding");
         EdgeDetectionCast = GetNode<ShapeCast2D>($"EdgeDetectionShapeCast2D");
+        JumpDetectionCast1 = GetNode<ShapeCast2D>($"JumpablePlatformShapeCast2D");
+        JumpDetectionCast2 = GetNode<ShapeCast2D>($"JumpablePlatformShapeCast2D2");
         attacking = false;
         attackOn = 2.0d; //this will set the timer so that the enemy attacks after 2 seconds of being within range and detecting the player
         MessageManager.instance.addToEnemyDictionary(this);
@@ -119,6 +125,23 @@ public partial class EnemyPatrol : CharacterBody2D
             {
                 direction = !direction;
                 Velocity = Godot.Vector2.Zero;
+                if (canJump)
+                {
+                    if (JumpDetectionCast1.IsColliding())
+                    {
+                        GD.Print("jump DetectionCast 1 Colliding");
+                        if (!JumpDetectionCast2.IsColliding())
+                        {
+                            GD.Print("could jump");
+                            //Velocity = new Godot.Vector2(Velocity.X, -400);
+                        }
+                        else
+                        {
+                            GD.Print("Cant Jump");
+                        }
+                        
+                    }
+                }
                 FlipEntity();
             }
             if(!EdgeDetectionCast.IsColliding() && !Charging)
@@ -130,7 +153,17 @@ public partial class EnemyPatrol : CharacterBody2D
         }
         if (PlayerInHurtbox)
         {
-            Attack();
+            if(canHurtPlayer)
+            {
+                if (canInstantKill)
+                {
+                    MessageManager.instance.KillPlayer();
+                }
+                else
+                {
+                    Attack();
+                }
+            }
         }
     }
     private void takeBreak(ref Godot.Vector2 incomingVelocity, double incomingDelta)
@@ -187,7 +220,10 @@ public partial class EnemyPatrol : CharacterBody2D
             Player = body;
             onBreak = false;
             idleTimer = rnd.Next(20, 120);
-            Charging = LineOfSightCheck(Player);
+            if (canCharge)
+            {
+                Charging = LineOfSightCheck(Player);
+            }
         }
     }
     private bool LineOfSightCheck(Node2D target)
@@ -242,7 +278,10 @@ public partial class EnemyPatrol : CharacterBody2D
 
     public void BeStunned()
     {
-        stunned = true;
-        stunTimer = stunTime;
+        if(canBeStunned)
+        {
+            stunned = true;
+            stunTimer = stunTime;
+        }
     }
 }

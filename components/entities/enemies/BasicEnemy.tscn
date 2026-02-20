@@ -271,7 +271,15 @@ target_position = Vector2(0, 10)
 collision_mask = 8
 
 [node name="JumpablePlatformShapeCast2D" type="ShapeCast2D" parent="." unique_id=499604832]
-position = Vector2(0, -33)
+position = Vector2(0, -19)
 rotation = -1.5707964
 shape = SubResource("RectangleShape2D_ibegj")
 target_position = Vector2(0, 28)
+collision_mask = 8
+
+[node name="JumpablePlatformShapeCast2D2" type="ShapeCast2D" parent="." unique_id=1677464256]
+position = Vector2(0, -43)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_ibegj")
+target_position = Vector2(0, 28)
+collision_mask = 8
