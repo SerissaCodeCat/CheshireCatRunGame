@@ -75,9 +75,6 @@ position = Vector2(3151, -275)
 
 [node name="Enemy2" parent="." unique_id=1536094552 instance=ExtResource("8_2f6ep")]
 position = Vector2(566, -521)
-canBeStunned = false
-canInstantKill = true
-canJump = true
 
 [node name="Enemy3" parent="." unique_id=90465597 instance=ExtResource("8_2f6ep")]
 position = Vector2(273, -138)
