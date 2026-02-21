@@ -115,7 +115,7 @@ public partial class MessageManager : Node2D
     ////////////////////////////////////////////////////////////////////////////
     public void stunEnemyWithID(ulong ID)
     {
-        enemies[ID].BeStunned();
+        enemies[ID].SwitchToStunState();
     }
 
 
