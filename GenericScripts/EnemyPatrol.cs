@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Runtime.CompilerServices;
 public enum CurrentState
 {
     patroling,
@@ -36,6 +37,9 @@ public partial class EnemyPatrol : CharacterBody2D
     [Export]
     private bool canJump = false;
 
+    private const double changeDirectionTimer = 0.5d;
+    private double changeDirectionTimerCurrent;
+
     private bool wallToRight = false;
     private Godot.Vector2 finalVelocity;
     private bool direction = true;
@@ -44,6 +48,7 @@ public partial class EnemyPatrol : CharacterBody2D
     private Godot.Vector2 Stop = new Godot.Vector2(0, 0);
     private CollisionShape2D CollisionBody;
     private ShapeCast2D EdgeDetectionCast;
+    private ShapeCast2D WallDetectionCast;
     private ShapeCast2D JumpDetectionCast1;
     private ShapeCast2D JumpDetectionCast2;
     private Area2D AreaDetectionRight;
@@ -85,10 +90,12 @@ public partial class EnemyPatrol : CharacterBody2D
         aboutFace = new(-1, enemyNode.Scale.Y);
         CollisionBody = GetNode<CollisionShape2D>($"CollisionShapeStanding");
         EdgeDetectionCast = GetNode<ShapeCast2D>($"EdgeDetectionShapeCast2D");
+        WallDetectionCast = GetNode<ShapeCast2D>($"WallDetectionShapeCast2D");
         JumpDetectionCast1 = GetNode<ShapeCast2D>($"JumpablePlatformShapeCast2D");
         JumpDetectionCast2 = GetNode<ShapeCast2D>($"JumpablePlatformShapeCast2D2");
         attacking = false;
         attackOn = 2.0d; //this will set the timer so that the enemy attacks after 2 seconds of being within range and detecting the player
+        changeDirectionTimerCurrent = changeDirectionTimer;
         CurrentState = CurrentState.patroling;
         MessageManager.instance.addToEnemyDictionary(this);
     }
@@ -96,7 +103,6 @@ public partial class EnemyPatrol : CharacterBody2D
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)
     {
-
         finalVelocity = Velocity;
         switch (CurrentState)
         {
@@ -117,18 +123,17 @@ public partial class EnemyPatrol : CharacterBody2D
                 break;
         }
         Velocity = finalVelocity;
+        changeDirectionTimerCurrent -= delta;
         MoveAndSlide();
     }
     private void Patrol(double incomingDelta, ref Godot.Vector2 incomingVelocity)
     {
-        GD.Print("Patroling");
         incomingVelocity.Y += gravity * (float)incomingDelta;
         incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (direction ? 1.0f : -1.0f) * (Speed / 2), acceleration);
         idleTimer -= incomingDelta;
-        if (IsOnWall())
+        if (WallDetectionCast.IsColliding())
         {
-            direction = !direction;
-            Velocity = Godot.Vector2.Zero;
+            //Velocity = Godot.Vector2.Zero;
             if (canJump)
             {
                 if (JumpDetectionCast1.IsColliding())
@@ -146,6 +151,8 @@ public partial class EnemyPatrol : CharacterBody2D
                     
                 }
             }
+            direction = !direction;
+            Velocity = Godot.Vector2.Zero;
             FlipEntity();
         }
         if(!EdgeDetectionCast.IsColliding())
@@ -161,7 +168,11 @@ public partial class EnemyPatrol : CharacterBody2D
         if (IsOnFloor())
         {
             incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (direction ? 1.0f : -1.0f) * Speed, acceleration);
-        }   
+        }
+        if(IsOnWall())
+        {
+            SwitchToStunState();
+        }
     }
     private void Jumping(double incomingDelta, ref Godot.Vector2 incomingVelocity)
     {
@@ -179,7 +190,12 @@ public partial class EnemyPatrol : CharacterBody2D
     }
     private void Stunned(double incomingDelta, ref Godot.Vector2 incomingVelocity)
     {
-        
+        stunTimer -= incomingDelta;
+        if (stunTimer <= 0.0d)
+        {
+            SwitchToPatrolState();
+        }
+        incomingVelocity = Godot.Vector2.Zero;
     }
 
 
@@ -234,14 +250,13 @@ public partial class EnemyPatrol : CharacterBody2D
 
     private void FlipEntity()
     {
-        if (enemyNode.Scale.X == -1)
+        if (changeDirectionTimerCurrent > 0.0d)
         {
-            enemyNode.Scale *= aboutFace;
+            GD.Print("Tried to flip but timer not ready");
+            return;
         }
-        else
-        {
-            enemyNode.Scale *= aboutFace;
-        }
+        GD.Print("Flipping");
+        enemyNode.Scale *= aboutFace;
     }
 
     private void SwitchToPatrolState()
@@ -267,6 +282,7 @@ public partial class EnemyPatrol : CharacterBody2D
     public void SwitchToStunState()
     {
         GD.Print("Entering Stunned State");
+        stunTimer = stunTime;
         CurrentState = CurrentState.stunned;
     }
 }

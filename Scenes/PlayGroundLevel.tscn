@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://bwrs86lxilhcr" path="res://components/camera/PixelPerfectCamera.tscn" id="7_ubr2o"]
 [ext_resource type="PackedScene" uid="uid://bwr7vhdi28fly" path="res://components/entities/enemies/BasicEnemy.tscn" id="8_2f6ep"]
 [ext_resource type="PackedScene" uid="uid://bq8ku8833m08m" path="res://components/interactive/checkpoint.tscn" id="9_ogptx"]
-[ext_resource type="PackedScene" uid="uid://bexu47ev2tjf3" path="res://components/interactive/spikeTrap.tscn" id="10_i7unl"]
 
 [node name="TestLevel" type="Node" unique_id=1384232819]
 script = ExtResource("1_6hjy0")
@@ -36,16 +35,6 @@ scale = Vector2(0.58984685, 0.58984685)
 [node name="Player" parent="." unique_id=61991898 instance=ExtResource("5_xwjr1")]
 position = Vector2(1116, -600)
 
-[node name="Button2" parent="." unique_id=1824480755 node_paths=PackedStringArray("buttonLinksTo") instance=ExtResource("3_v5c3b")]
-position = Vector2(2962, -197)
-rotation = 1.5708
-scale = Vector2(3, 3)
-buttonLinksTo = NodePath("../Door2")
-
-[node name="Door2" parent="." unique_id=1460409730 instance=ExtResource("4_xfd6h")]
-position = Vector2(3383, -109)
-scale = Vector2(2.25, 2.25)
-
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1025525118]
 texture_filter = 1
 position = Vector2(106, -662)
@@ -54,9 +43,6 @@ tile_set = ExtResource("6_gy3ny")
 
 [node name="PixelPerfectCamera" parent="." unique_id=1368281936 instance=ExtResource("7_ubr2o")]
 position = Vector2(106, -662)
-
-[node name="Enemy" parent="." unique_id=724728739 instance=ExtResource("8_2f6ep")]
-position = Vector2(586, -409)
 
 [node name="Checkpoint" parent="." unique_id=544731840 instance=ExtResource("9_ogptx")]
 position = Vector2(995, -513)
@@ -70,17 +56,5 @@ position = Vector2(1281, -176)
 [node name="Checkpoint4" parent="." unique_id=507832121 instance=ExtResource("9_ogptx")]
 position = Vector2(-112, -559)
 
-[node name="Spike Trap" parent="." unique_id=2143299267 instance=ExtResource("10_i7unl")]
-position = Vector2(3151, -275)
-
-[node name="Enemy2" parent="." unique_id=1536094552 instance=ExtResource("8_2f6ep")]
-position = Vector2(566, -521)
-
-[node name="Enemy3" parent="." unique_id=90465597 instance=ExtResource("8_2f6ep")]
-position = Vector2(273, -138)
-
-[node name="Enemy4" parent="." unique_id=471544633 instance=ExtResource("8_2f6ep")]
-position = Vector2(473, -138)
-
-[node name="Enemy5" parent="." unique_id=1430088793 instance=ExtResource("8_2f6ep")]
-position = Vector2(794, -137)
+[node name="Enemy" parent="." unique_id=1172901401 instance=ExtResource("8_2f6ep")]
+position = Vector2(521, -519)

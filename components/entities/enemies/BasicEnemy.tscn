@@ -225,6 +225,8 @@ size = Vector2(21, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ibegj"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s0g8k"]
+
 [node name="Enemy" type="CharacterBody2D" unique_id=1172901401]
 texture_filter = 1
 texture_repeat = 1
@@ -278,8 +280,15 @@ target_position = Vector2(0, 28)
 collision_mask = 8
 
 [node name="JumpablePlatformShapeCast2D2" type="ShapeCast2D" parent="." unique_id=1677464256]
-position = Vector2(0, -43)
+position = Vector2(1, -43)
 rotation = -1.5707964
 shape = SubResource("RectangleShape2D_ibegj")
 target_position = Vector2(0, 28)
+collision_mask = 8
+
+[node name="WallDetectionShapeCast2D" type="ShapeCast2D" parent="." unique_id=1364444524]
+position = Vector2(20, 1)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_s0g8k")
+target_position = Vector2(-3.5762787e-07, 8)
 collision_mask = 8
