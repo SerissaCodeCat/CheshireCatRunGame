@@ -20,7 +20,7 @@ public partial class EnemyPatrol : CharacterBody2D
     public float acceleration = 15.0f;
     [Export]
     //initial timer before guard will "take a break"
-    private double idleTimer = 60.0d;
+    private double idleTimer;
     [Export]
     // time enemy will remain stunned when conditions Met
     private double stunTime = 3.0d;
@@ -35,7 +35,11 @@ public partial class EnemyPatrol : CharacterBody2D
     [Export]
     private bool canInstantKill = false;
     [Export]
+    private bool canTakeBreaks = true;
+    [Export]
     private bool canJump = false;
+    [Export]
+    private float jumpForce = 250.0f;
 
     private const double changeDirectionTimer = 0.5d;
     private double changeDirectionTimerCurrent;
@@ -76,7 +80,6 @@ public partial class EnemyPatrol : CharacterBody2D
     public CurrentState CurrentState;
 
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
 
@@ -98,9 +101,9 @@ public partial class EnemyPatrol : CharacterBody2D
         changeDirectionTimerCurrent = changeDirectionTimer;
         CurrentState = CurrentState.patroling;
         MessageManager.instance.addToEnemyDictionary(this);
+        idleTimer = rnd.Next(45, 120);
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)
     {
         finalVelocity = Velocity;
@@ -130,25 +133,22 @@ public partial class EnemyPatrol : CharacterBody2D
     {
         incomingVelocity.Y += gravity * (float)incomingDelta;
         incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (direction ? 1.0f : -1.0f) * (Speed / 2), acceleration);
-        idleTimer -= incomingDelta;
+        if(canTakeBreaks)
+        {
+            idleTimer -= incomingDelta;
+            if (idleTimer <= 0.0d)
+            {
+                onBreak = true;
+                SwitchToBreakState();
+            }
+        }
         if (WallDetectionCast.IsColliding())
         {
-            //Velocity = Godot.Vector2.Zero;
-            if (canJump)
+            if(canJump)
             {
-                if (JumpDetectionCast1.IsColliding())
+                if(SwitchToJumpState(incomingDelta, ref incomingVelocity))
                 {
-                    GD.Print("jump DetectionCast 1 Colliding");
-                    if (!JumpDetectionCast2.IsColliding())
-                    {
-                        GD.Print("could jump");
-                        //switch State HERE!
-                    }
-                    else
-                    {
-                        GD.Print("Cant Jump");
-                    }
-                    
+                    return;
                 }
             }
             direction = !direction;
@@ -176,7 +176,12 @@ public partial class EnemyPatrol : CharacterBody2D
     }
     private void Jumping(double incomingDelta, ref Godot.Vector2 incomingVelocity)
     {
-        
+        incomingVelocity.Y += gravity * (float)incomingDelta;
+        incomingVelocity.X = Mathf.MoveToward(incomingVelocity.X, (direction ? 1.0f : -1.0f) * (Speed / 2), acceleration);
+        if(IsOnFloor())
+        {
+            SwitchToPatrolState();
+        }
     }
     private void TakingBreak(double incomingDelta, ref Godot.Vector2 incomingVelocity)
     {
@@ -184,15 +189,23 @@ public partial class EnemyPatrol : CharacterBody2D
         breakTimer -= incomingDelta;
         if (breakTimer <= 0.0d)
         {
-            idleTimer = rnd.Next(20, 120);
+            idleTimer = rnd.Next(10, 30);
             onBreak = false;
         }
     }
     private void Stunned(double incomingDelta, ref Godot.Vector2 incomingVelocity)
     {
         stunTimer -= incomingDelta;
+        flashTimer -= incomingDelta;
+        if (flashTimer <= 0.0d)
+        {
+            flashTimer = stunTimer / 8;
+            sprite_2d.Visible = !sprite_2d.Visible;
+        }
+
         if (stunTimer <= 0.0d)
         {
+            sprite_2d.Visible = true;
             SwitchToPatrolState();
         }
         incomingVelocity = Godot.Vector2.Zero;
@@ -261,28 +274,40 @@ public partial class EnemyPatrol : CharacterBody2D
 
     private void SwitchToPatrolState()
     {
-        GD.Print("Entering Patrol State");
         CurrentState = CurrentState.patroling;
     }
     private void SwitchToChargeState()
     {
-        GD.Print("Entering Charge State");
         CurrentState = CurrentState.charging;
     }
-    private void SwitchToJumpState()
+    private bool SwitchToJumpState(double incomingDelta, ref Godot.Vector2 incomingVelocity)
     {
-        GD.Print("Entering Jump State");
-        CurrentState = CurrentState.jumping;
+        if (JumpDetectionCast1.IsColliding())
+        {
+            GD.Print("jump DetectionCast 1 Colliding");
+            if (!JumpDetectionCast2.IsColliding())
+            {
+                GD.Print("Entering Jump State");
+                CurrentState = CurrentState.jumping;
+                incomingVelocity = new Godot.Vector2(0, -jumpForce);
+                return true;
+            }
+            else
+            {
+                return false;
+            }   
+        }
+        return false;
     }
     private void SwitchToBreakState()
     {
-        GD.Print("Entering Break State");
         CurrentState = CurrentState.takingBreak;
     }
     public void SwitchToStunState()
     {
-        GD.Print("Entering Stunned State");
         stunTimer = stunTime;
+        flashTimer = stunTimer / 8;
+        sprite_2d.Visible = false;
         CurrentState = CurrentState.stunned;
     }
 }

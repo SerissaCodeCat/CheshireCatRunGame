@@ -290,5 +290,5 @@ collision_mask = 8
 position = Vector2(20, 1)
 rotation = -1.5707964
 shape = SubResource("RectangleShape2D_s0g8k")
-target_position = Vector2(-3.5762787e-07, 8)
-collision_mask = 8
+target_position = Vector2(-2.3841858e-07, 4)
+collision_mask = 40
