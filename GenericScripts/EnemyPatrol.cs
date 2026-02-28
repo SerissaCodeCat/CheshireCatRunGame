@@ -138,7 +138,6 @@ public partial class EnemyPatrol : CharacterBody2D
             idleTimer -= incomingDelta;
             if (idleTimer <= 0.0d)
             {
-                onBreak = true;
                 SwitchToBreakState();
             }
         }
@@ -151,13 +150,11 @@ public partial class EnemyPatrol : CharacterBody2D
                     return;
                 }
             }
-            direction = !direction;
             Velocity = Godot.Vector2.Zero;
             FlipEntity();
         }
         if(!EdgeDetectionCast.IsColliding())
         {
-            direction = !direction;
             Velocity = Godot.Vector2.Zero;
             FlipEntity();
         }
@@ -190,7 +187,7 @@ public partial class EnemyPatrol : CharacterBody2D
         if (breakTimer <= 0.0d)
         {
             idleTimer = rnd.Next(10, 30);
-            onBreak = false;
+            SwitchToPatrolState();            
         }
     }
     private void Stunned(double incomingDelta, ref Godot.Vector2 incomingVelocity)
@@ -217,7 +214,6 @@ public partial class EnemyPatrol : CharacterBody2D
         if (body.Name.ToString() == "Player")
         {
             Player = body;
-            onBreak = false;
             idleTimer = rnd.Next(20, 120);
             if (canCharge)
             {
@@ -265,11 +261,12 @@ public partial class EnemyPatrol : CharacterBody2D
     {
         if (changeDirectionTimerCurrent > 0.0d)
         {
-            GD.Print("Tried to flip but timer not ready");
             return;
         }
-        GD.Print("Flipping");
         enemyNode.Scale *= aboutFace;
+        direction = !direction;
+        changeDirectionTimerCurrent = changeDirectionTimer;
+
     }
 
     private void SwitchToPatrolState()

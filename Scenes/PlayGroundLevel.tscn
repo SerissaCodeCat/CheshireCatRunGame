@@ -65,10 +65,10 @@ jumpForce = 310.0
 position = Vector2(581, -407)
 
 [node name="Enemy3" parent="." unique_id=693194035 instance=ExtResource("8_2f6ep")]
-position = Vector2(486, -145)
+position = Vector2(345, -472)
 
 [node name="Enemy4" parent="." unique_id=1964040214 instance=ExtResource("8_2f6ep")]
 position = Vector2(945, -137)
 
 [node name="Enemy5" parent="." unique_id=308457700 instance=ExtResource("8_2f6ep")]
-position = Vector2(237, -136)
+position = Vector2(203, -474)
