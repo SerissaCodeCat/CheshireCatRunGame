@@ -12,7 +12,6 @@ public partial class MessageManager : Node2D
     private SubViewportContainer viewportLink = null;
     private UIControl UIControlLink = null;
 
-
     public override void _Ready()
     {
         instance = this; //ensure that this is the ONLY message manager
@@ -127,17 +126,6 @@ public partial class MessageManager : Node2D
         interactables[ID].Activate();
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-    /////////////////MESSAGES TO ALL ENTITIES //////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////
-    public void pauseEntities()
-    {
-        throw NotImplementedException();
-    }
-    public void unpauseEntites()
-    {
-        throw NotImplementedException();
-    }
 
     ////////////////////////////////////////////////////////////////////////////
     /////////////////MESSAGES TO CAMERA ////////////////////////////////////////
@@ -172,7 +160,14 @@ public partial class MessageManager : Node2D
     {
         viewportLink.ViewportWholePixelOnlyMovement(incomingPosition);
     }
-
+    ///////////////////////////////////////////////////////////////////////////
+    ///////////////// MESSAGES TO Viewport ////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    public void LoadLevelWithPath(String levelPath)
+    {
+        viewportLink.SetNextLevelPath(levelPath);
+        viewportLink.LoadLevel();
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     ///////// DEBUGGING AND CRASH HANDLERS ////////////////////////////////////
