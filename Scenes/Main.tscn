@@ -2,7 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://d4nv3ky80umn5" path="res://Shaders/ViewportWholePixelOnlyMovement.gdshader" id="1_kln2b"]
 [ext_resource type="Script" uid="uid://20rxdomqqrku" path="res://Scenes/SubViewportContainer.cs" id="2_rgh2o"]
-[ext_resource type="Shader" uid="uid://ck2ry6bjvkq8p" path="res://Shaders/BlurFilter.gdshader" id="3_50glp"]
+[ext_resource type="PackedScene" uid="uid://bpylpk2tc85yo" path="res://Scenes/pause_menu.tscn" id="3_50glp"]
 [ext_resource type="Script" uid="uid://dye5b51gpj33n" path="res://Scenes/UIControl.cs" id="4_50glp"]
 [ext_resource type="Texture2D" uid="uid://c5hnkcyj1dqgi" path="res://Images/Static/UIComponents/HealthBarBase.png" id="4_rgh2o"]
 [ext_resource type="Texture2D" uid="uid://ch1ng5acyompo" path="res://Images/Static/UIComponents/HealthBarSegmentFill.png" id="5_v1gob"]
@@ -12,222 +12,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pbw6q"]
 shader = ExtResource("1_kln2b")
 shader_parameter/camera_offset = Vector2(0, 0)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vy5pj"]
-shader = ExtResource("3_50glp")
-shader_parameter/LevelOfDistortion = 0.0
-
-[sub_resource type="Animation" id="Animation_bmxlf"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BlurFilter:material:shader_parameter/LevelOfDistortion")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("PauseMenu:modulate:r")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PauseMenu:modulate:g")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PauseMenu:modulate:b")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PauseMenu:modulate:a")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("UIControl:modulate:r")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/6/type = "bezier"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("UIControl:modulate:g")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/7/type = "bezier"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("UIControl:modulate:b")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/8/type = "bezier"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("UIControl:modulate:a")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_4kpch"]
-resource_name = "menuTransitionAnimation"
-length = 0.3
-loop_mode = 1
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BlurFilter:material:shader_parameter/LevelOfDistortion")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0, 0.8, -0.050000004, -0.13333334, 0, 0),
-"times": PackedFloat32Array(0, 0.3)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("PauseMenu:modulate:r")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(2, 2),
-"points": PackedFloat32Array(1, 0, 0, 0.050000004, 0, 1, -0.15, 0, 0.15, 0),
-"times": PackedFloat32Array(0, 0.3)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PauseMenu:modulate:g")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(2, 2),
-"points": PackedFloat32Array(1, 0, 0, 0.050000004, 0, 1, -0.15, 0, 0.15, 0),
-"times": PackedFloat32Array(0, 0.3)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PauseMenu:modulate:b")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(2, 2),
-"points": PackedFloat32Array(1, 0, 0, 0.050000004, 0, 1, -0.15, 0, 0.15, 0),
-"times": PackedFloat32Array(0, 0.3)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PauseMenu:modulate:a")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(2, 2),
-"points": PackedFloat32Array(0, 0, 0, 0.050000004, 0.16666667, 1, -0.15, 0, 0.15, 0),
-"times": PackedFloat32Array(0, 0.3)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("UIControl:modulate:r")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.050000004, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.3)
-}
-tracks/6/type = "bezier"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("UIControl:modulate:g")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.050000004, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.3)
-}
-tracks/7/type = "bezier"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("UIControl:modulate:b")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.050000004, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.3)
-}
-tracks/8/type = "bezier"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("UIControl:modulate:a")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 0, -0.050000004, 0.16666667, 0, 0),
-"times": PackedFloat32Array(0, 0.3)
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_grg3l"]
-_data = {
-&"RESET": SubResource("Animation_bmxlf"),
-&"menuTransitionAnimation": SubResource("Animation_4kpch")
-}
 
 [node name="Main" type="Node2D" unique_id=1255911885]
 
@@ -253,13 +37,6 @@ render_target_update_mode = 4
 [node name="GUI" type="CanvasLayer" parent="." unique_id=319553014]
 process_mode = 3
 follow_viewport_scale = 0.001
-
-[node name="BlurFilter" type="ColorRect" parent="GUI" unique_id=1013811255]
-material = SubResource("ShaderMaterial_vy5pj")
-offset_left = -9.0
-offset_top = -7.0
-offset_right = 1926.0
-offset_bottom = 1088.0
 
 [node name="UIControl" type="Control" parent="GUI" unique_id=1753311162]
 texture_filter = 1
@@ -365,36 +142,6 @@ texture = ExtResource("8_vy5pj")
 expand_mode = 2
 stretch_mode = 2
 
-[node name="PauseMenu" type="PanelContainer" parent="GUI" unique_id=489649279]
-process_mode = 3
-modulate = Color(1, 1, 1, 0)
-clip_contents = true
-offset_left = 631.0
-offset_top = 290.0
-offset_right = 1339.0
-offset_bottom = 728.0
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1343167864]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/PauseMenu" unique_id=1452652742]
-layout_direction = 4
-layout_mode = 2
-
-[node name="Resume" type="Button" parent="GUI/PauseMenu/VBoxContainer" unique_id=1223676685]
-layout_mode = 2
-text = "Resume"
-
-[node name="Options" type="Button" parent="GUI/PauseMenu/VBoxContainer" unique_id=404436291]
-layout_mode = 2
-text = "Options
-"
-
-[node name="MainMenu" type="Button" parent="GUI/PauseMenu/VBoxContainer" unique_id=1135159799]
-layout_mode = 2
-text = "Main Menu
-"
-
-[node name="Quit" type="Button" parent="GUI/PauseMenu/VBoxContainer" unique_id=1080106871]
-layout_mode = 2
-text = "Quit Application"
-
-[node name="menuTransition" type="AnimationPlayer" parent="GUI" unique_id=237644536]
-libraries/ = SubResource("AnimationLibrary_grg3l")
+[node name="PauseMenu" parent="CanvasLayer" unique_id=765613216 instance=ExtResource("3_50glp")]
