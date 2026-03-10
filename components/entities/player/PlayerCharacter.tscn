@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bp3b51jdwbd1u" path="res://Images/Animated/Appearing (96x96).png" id="4_bv3y1"]
 [ext_resource type="Texture2D" uid="uid://3lilkk4qeaub" path="res://Images/Animated/Run (32x32).png" id="5_wjw48"]
 [ext_resource type="Texture2D" uid="uid://coa8eqin646m3" path="res://Images/Animated/Desappearing (96x96).png" id="7_kuqpw"]
-[ext_resource type="Texture2D" uid="uid://clxid87x65b57" path="res://Images/Static/DirrectionalArrow.png" id="9_c5ha8"]
+[ext_resource type="Texture2D" uid="uid://clxid87x65b57" path="res://Images/Static/GameInteractions/DirrectionalArrow.png" id="9_c5ha8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w4qx4"]
 atlas = ExtResource("2_gfsuy")

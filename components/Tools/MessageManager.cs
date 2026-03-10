@@ -165,6 +165,7 @@ public partial class MessageManager : Node2D
     ///////////////////////////////////////////////////////////////////////////
     public void LoadLevelWithPath(String levelPath)
     {
+        GD.Print("LEVEL TO LOAD = "+levelPath);
         viewportLink.SetNextLevelPath(levelPath);
         viewportLink.LoadLevel();
     }

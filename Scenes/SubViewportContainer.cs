@@ -45,9 +45,11 @@ public partial class SubViewportContainer : Godot.SubViewportContainer
 	public void SetNextLevelPath(String incomingPath)
 	{
 		nextLevelPath = incomingPath;
+		GD.Print("Setting level path to load to:" + nextLevelPath );
 	}
 	public void LoadLevel()
 	{
+		GD.Print("current level = " + currentLevel);
 		if (currentLevel != null)
 		{
 			GD.Print("Freeing current level...");

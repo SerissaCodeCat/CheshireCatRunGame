@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://bgf3njeoqnyct"]
 
 [ext_resource type="Script" uid="uid://c46xu4q5qse8a" path="res://GenericScripts/LevelStartScript.cs" id="1_6hjy0"]
-[ext_resource type="Texture2D" uid="uid://dusfdmy58480y" path="res://Images/Static/Green.png" id="2_73bjl"]
+[ext_resource type="Texture2D" uid="uid://dusfdmy58480y" path="res://Images/Static/StaticScenery/Green.png" id="2_73bjl"]
 [ext_resource type="PackedScene" uid="uid://bk1ehjvpflscn" path="res://components/interactive/Button.tscn" id="3_v5c3b"]
 [ext_resource type="PackedScene" uid="uid://dtwaimaj02e5b" path="res://components/interactive/Door.tscn" id="4_xfd6h"]
 [ext_resource type="PackedScene" uid="uid://4l4khwvcmc86" path="res://components/entities/player/PlayerCharacter.tscn" id="5_xwjr1"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bwrs86lxilhcr" path="res://components/camera/PixelPerfectCamera.tscn" id="7_ubr2o"]
 [ext_resource type="PackedScene" uid="uid://bwr7vhdi28fly" path="res://components/entities/enemies/BasicEnemy.tscn" id="8_2f6ep"]
 [ext_resource type="PackedScene" uid="uid://bq8ku8833m08m" path="res://components/interactive/checkpoint.tscn" id="9_ogptx"]
+[ext_resource type="PackedScene" uid="uid://dwqfmpt7ou3wa" path="res://components/interactive/LevelTransition.tscn" id="10_ert6t"]
 
 [node name="TestLevel" type="Node" unique_id=1384232819]
 script = ExtResource("1_6hjy0")
@@ -53,9 +54,6 @@ position = Vector2(2367, -515)
 [node name="Checkpoint3" parent="." unique_id=627598528 instance=ExtResource("9_ogptx")]
 position = Vector2(1281, -176)
 
-[node name="Checkpoint4" parent="." unique_id=507832121 instance=ExtResource("9_ogptx")]
-position = Vector2(-112, -559)
-
 [node name="Enemy" parent="." unique_id=1172901401 instance=ExtResource("8_2f6ep")]
 position = Vector2(521, -519)
 canJump = true
@@ -72,3 +70,7 @@ position = Vector2(945, -137)
 
 [node name="Enemy5" parent="." unique_id=308457700 instance=ExtResource("8_2f6ep")]
 position = Vector2(203, -474)
+
+[node name="LevelTransition" parent="." unique_id=1970810522 instance=ExtResource("10_ert6t")]
+position = Vector2(-146, -532)
+LevelToTransitionTo = "res://Scenes/Levels/TestLevel.tscn"

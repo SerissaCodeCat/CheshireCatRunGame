@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dusfdmy58480y"
-path="res://.godot/imported/Green.png-24595754e6788c4b293793646ccedce6.ctex"
+uid="uid://bn5tdnscuy3a7"
+path="res://.godot/imported/EndSign.png-3eb247c740c926b5de6142323f04299b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/Static/Green.png"
-dest_files=["res://.godot/imported/Green.png-24595754e6788c4b293793646ccedce6.ctex"]
+source_file="res://Images/Static/StaticScenery/EndSign.png"
+dest_files=["res://.godot/imported/EndSign.png-3eb247c740c926b5de6142323f04299b.ctex"]
 
 [params]
 

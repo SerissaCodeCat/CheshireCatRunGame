@@ -27,7 +27,7 @@ offset_bottom = 361.0
 scale = Vector2(3, 3)
 stretch = true
 script = ExtResource("2_rgh2o")
-startingLevelPath = "res://Scenes/PlayGroundLevel.tscn"
+startingLevelPath = "res://Scenes/Levels/PlayGroundLevel.tscn"
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1110212667]
 handle_input_locally = false

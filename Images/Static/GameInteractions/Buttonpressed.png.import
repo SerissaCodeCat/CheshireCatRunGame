@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clxid87x65b57"
-path="res://.godot/imported/DirrectionalArrow.png-30946f4b684ca87632a1d089dd38bde2.ctex"
+uid="uid://cn5gno5h4vbem"
+path="res://.godot/imported/Buttonpressed.png-070ae43842fde59044ae1c3b547810e1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/Static/DirrectionalArrow.png"
-dest_files=["res://.godot/imported/DirrectionalArrow.png-30946f4b684ca87632a1d089dd38bde2.ctex"]
+source_file="res://Images/Static/GameInteractions/Buttonpressed.png"
+dest_files=["res://.godot/imported/Buttonpressed.png-070ae43842fde59044ae1c3b547810e1.ctex"]
 
 [params]
 
