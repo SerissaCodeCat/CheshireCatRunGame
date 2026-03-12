@@ -23,10 +23,20 @@ public partial class MessageManager : Node2D
         enemies.Add(enemyInstance.GetInstanceId(), enemyInstance);
         GD.Print("added Enemy with ID of: " + enemyInstance.GetInstanceId());
     }
+    public void removeFromEnemyDictionary(ulong enemyInstanceID)
+    {
+        enemies.Remove(enemyInstanceID);
+        GD.Print("Removed Enemy with ID of: " + enemyInstanceID);
+    }
     public void addToInteractableDictionary(Button buttonInstance)
     {
         interactables.Add(buttonInstance.GetInstanceId(), buttonInstance);
         GD.Print("added Interactable with ID of: " + buttonInstance.GetInstanceId());
+    }
+    public void removeFromInteractableDictionary(ulong buttonInstanceID)
+    {
+        interactables.Remove(buttonInstanceID);
+        GD.Print("Removed interactable with ID of: " + buttonInstanceID);
     }
     public void addCameraToMessager(PixelPerfectCamera Camera)
     {
@@ -36,11 +46,6 @@ public partial class MessageManager : Node2D
         }
     }
 
-    //part of the pixel perfect camera sytem
-    public void addViewportToMessager(SubViewportContainer incomingViewport)
-    {
-        viewportLink = incomingViewport;
-    }
 
     //used to transition player values between scenes
     public void addPlayerToMessageManager(PlayerCharacter player)
@@ -57,6 +62,26 @@ public partial class MessageManager : Node2D
             playerMessagerLink = player;
         }
         GD.Print("player added to message manager with IDvalue of: " + playerMessagerLink.GetInstanceId());
+    }
+
+    public void flushLevelData()
+    {
+        playerMessagerLink = null;
+        cameraLink = null;
+        foreach (var x in interactables.Keys)
+        {
+            removeFromInteractableDictionary(x);
+        }
+        foreach (var y in enemies.Keys)
+        {
+            removeFromEnemyDictionary(y);
+        }
+        enemies = new System.Collections.Generic.Dictionary<ulong, EnemyPatrol>();
+    }
+    //part of the pixel perfect camera sytem
+    public void addViewportToMessager(SubViewportContainer incomingViewport)
+    {
+        viewportLink = incomingViewport;
     }
     public void addUIControlToMessageManager(UIControl incomingUIControl)
     {
@@ -132,9 +157,12 @@ public partial class MessageManager : Node2D
     ////////////////////////////////////////////////////////////////////////////
 
     //camera will smoothly follow target.
-    void setPlayerAsCameraTarget()
+    public void setPlayerAsCameraTarget()
     {
-        cameraLink.SetCameraTarget(playerMessagerLink);
+        if (playerMessagerLink != null)
+            cameraLink.SetCameraTarget(playerMessagerLink);
+        else
+            GD.Print("No player character to link camera to!");
     }
     //useful for zooming the camera to a point of interest
     public void setCameraTarget(Node2D target)
@@ -165,6 +193,8 @@ public partial class MessageManager : Node2D
     ///////////////////////////////////////////////////////////////////////////
     public void LoadLevelWithPath(String levelPath)
     {
+        GD.Print("Freeing message manager lists & identifiers");
+        flushLevelData();
         GD.Print("LEVEL TO LOAD = "+levelPath);
         viewportLink.SetNextLevelPath(levelPath);
         viewportLink.LoadLevel();

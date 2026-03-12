@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwrs86lxilhcr"]
+[gd_scene format=3 uid="uid://bwrs86lxilhcr"]
 
 [ext_resource type="Script" uid="uid://dwyih87kxvbv0" path="res://components/camera/PixelPerfectCamera.cs" id="1_vfi8i"]
 
-[node name="PixelPerfectCamera" type="Node2D"]
+[node name="PixelPerfectCamera" type="Node2D" unique_id=1375250101]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2006701593]
 script = ExtResource("1_vfi8i")

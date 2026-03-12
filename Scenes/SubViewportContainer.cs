@@ -64,10 +64,10 @@ public partial class SubViewportContainer : Godot.SubViewportContainer
 		{
 			levelToLoad = startingLevelPath;
 		}
-		GD.Print("Loading level: " + levelToLoad);
 		PackedScene levelScene = GD.Load<PackedScene>(levelToLoad);
 		currentLevel = levelScene.Instantiate();
 		viewportLink.AddChild(currentLevel);
 		GD.Print("Level loaded successfully.");
+		MessageManager.instance.setPlayerAsCameraTarget();
 	}
 }
