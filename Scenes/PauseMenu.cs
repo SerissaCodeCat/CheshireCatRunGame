@@ -20,6 +20,7 @@ public partial class PauseMenu : Control
 	public override void _Ready()
 	{
 		ResumeButton.Pressed += resume;
+		ResumeButton.GrabFocus(); // makes the resume button be the default highlighted button
 		OptionsButton.Pressed += options;
 		QuitButton.Pressed += quit;
 		MainMenuButton.Pressed += mainMenu;

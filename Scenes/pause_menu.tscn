@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://boawtqc76n35p" path="res://Scenes/PauseMenu.cs" id="1_emv3i"]
 [ext_resource type="Shader" uid="uid://ck2ry6bjvkq8p" path="res://Shaders/BlurFilter.gdshader" id="2_k0w1u"]
+[ext_resource type="FontFile" uid="uid://c2uhrftitcqsk" path="res://Fonts/OpenDyslexicMono-Regular.otf" id="3_1och7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1och7"]
 shader = ExtResource("2_k0w1u")
@@ -20,270 +21,6 @@ tracks/0/keys = {
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.8, -0.16666667, -0.13333334, 0, 0),
 "times": PackedFloat32Array(0, 1)
 }
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Resume:modulate:r")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Resume:modulate:g")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Resume:modulate:b")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Resume:modulate:a")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.16666667, -0.16666667, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Options:modulate:r")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(2, 0),
-"points": PackedFloat32Array(1, 0, 0, 0.16666667, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/6/type = "bezier"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Options:modulate:g")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"handle_modes": PackedInt32Array(2, 0),
-"points": PackedFloat32Array(1, 0, 0, 0.16666667, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/7/type = "bezier"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Options:modulate:b")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"handle_modes": PackedInt32Array(2, 0),
-"points": PackedFloat32Array(1, 0, 0, 0.16666667, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/8/type = "bezier"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("Options:modulate:a")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"handle_modes": PackedInt32Array(2, 0),
-"points": PackedFloat32Array(0, 0, 0, 0.16666667, 0.16666667, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/9/type = "bezier"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("MainMenu:modulate:r")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/10/type = "bezier"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("MainMenu:modulate:g")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/11/type = "bezier"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("MainMenu:modulate:b")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/12/type = "bezier"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("MainMenu:modulate:a")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.16666667, -0.16666667, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/13/type = "bezier"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("Options:self_modulate:r")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"handle_modes": PackedInt32Array(2, 0, 2),
-"points": PackedFloat32Array(1, 0, 0, 0.011666667, 0, 1, -0.25, 0, 0.25, 0, 1, -0.155, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.07, 1)
-}
-tracks/14/type = "bezier"
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/path = NodePath("Options:self_modulate:g")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
-"handle_modes": PackedInt32Array(2, 0, 2),
-"points": PackedFloat32Array(1, 0, 0, 0.011666667, 0, 1, -0.25, 0, 0.25, 0, 1, -0.155, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.07, 1)
-}
-tracks/15/type = "bezier"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("Options:self_modulate:b")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
-"handle_modes": PackedInt32Array(2, 0, 2),
-"points": PackedFloat32Array(1, 0, 0, 0.011666667, 0, 1, -0.25, 0, 0.25, 0, 1, -0.155, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.07, 1)
-}
-tracks/16/type = "bezier"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("Options:self_modulate:a")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/keys = {
-"handle_modes": PackedInt32Array(2, 0, 2),
-"points": PackedFloat32Array(0, 0, 0, 0.011666667, 0, 0, -0.25, 0, 0.25, 0, 1, -0.155, -0.16666667, 0, 0),
-"times": PackedFloat32Array(0, 0.07, 1)
-}
-tracks/17/type = "bezier"
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/path = NodePath("Quit:modulate:r")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/18/type = "bezier"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("Quit:modulate:g")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/19/type = "bezier"
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/path = NodePath("Quit:modulate:b")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/20/type = "bezier"
-tracks/20/imported = false
-tracks/20/enabled = true
-tracks/20/path = NodePath("Quit:modulate:a")
-tracks/20/interp = 1
-tracks/20/loop_wrap = true
-tracks/20/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.16666667, -0.16666667, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/21/type = "bezier"
-tracks/21/imported = false
-tracks/21/enabled = true
-tracks/21/path = NodePath("Quit:self_modulate:r")
-tracks/21/interp = 1
-tracks/21/loop_wrap = true
-tracks/21/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/22/type = "bezier"
-tracks/22/imported = false
-tracks/22/enabled = true
-tracks/22/path = NodePath("Quit:self_modulate:g")
-tracks/22/interp = 1
-tracks/22/loop_wrap = true
-tracks/22/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/23/type = "bezier"
-tracks/23/imported = false
-tracks/23/enabled = true
-tracks/23/path = NodePath("Quit:self_modulate:b")
-tracks/23/interp = 1
-tracks/23/loop_wrap = true
-tracks/23/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
-tracks/24/type = "bezier"
-tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("Quit:self_modulate:a")
-tracks/24/interp = 1
-tracks/24/loop_wrap = true
-tracks/24/keys = {
-"handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.16666667, -0.16666667, 0, 0),
-"times": PackedFloat32Array(0, 1)
-}
 
 [sub_resource type="Animation" id="Animation_vmyb1"]
 length = 0.001
@@ -298,276 +35,36 @@ tracks/0/keys = {
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Resume:modulate:r")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Resume:modulate:g")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Resume:modulate:b")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Resume:modulate:a")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/5/type = "bezier"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Options:modulate:r")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/6/type = "bezier"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Options:modulate:g")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/7/type = "bezier"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Options:modulate:b")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/8/type = "bezier"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("Options:modulate:a")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/9/type = "bezier"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("MainMenu:modulate:r")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/10/type = "bezier"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("MainMenu:modulate:g")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/11/type = "bezier"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("MainMenu:modulate:b")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/12/type = "bezier"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("MainMenu:modulate:a")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/13/type = "bezier"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("Options:self_modulate:r")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/14/type = "bezier"
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/path = NodePath("Options:self_modulate:g")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/15/type = "bezier"
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/path = NodePath("Options:self_modulate:b")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/16/type = "bezier"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("Options:self_modulate:a")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/17/type = "bezier"
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/path = NodePath("Quit:modulate:r")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/18/type = "bezier"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("Quit:modulate:g")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/19/type = "bezier"
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/path = NodePath("Quit:modulate:b")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/20/type = "bezier"
-tracks/20/imported = false
-tracks/20/enabled = true
-tracks/20/path = NodePath("Quit:modulate:a")
-tracks/20/interp = 1
-tracks/20/loop_wrap = true
-tracks/20/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/21/type = "bezier"
-tracks/21/imported = false
-tracks/21/enabled = true
-tracks/21/path = NodePath("Quit:self_modulate:r")
-tracks/21/interp = 1
-tracks/21/loop_wrap = true
-tracks/21/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/22/type = "bezier"
-tracks/22/imported = false
-tracks/22/enabled = true
-tracks/22/path = NodePath("Quit:self_modulate:g")
-tracks/22/interp = 1
-tracks/22/loop_wrap = true
-tracks/22/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/23/type = "bezier"
-tracks/23/imported = false
-tracks/23/enabled = true
-tracks/23/path = NodePath("Quit:self_modulate:b")
-tracks/23/interp = 1
-tracks/23/loop_wrap = true
-tracks/23/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/24/type = "bezier"
-tracks/24/imported = false
-tracks/24/enabled = true
-tracks/24/path = NodePath("Quit:self_modulate:a")
-tracks/24/interp = 1
-tracks/24/loop_wrap = true
-tracks/24/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_myy0f"]
 _data = {
 &"PauseAnimation": SubResource("Animation_bpi0q"),
 &"RESET": SubResource("Animation_vmyb1")
 }
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bpi0q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vmyb1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_myy0f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sjs17"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u8tnp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_stj27"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ix48p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_524vl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0fi7f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uscpe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_taale"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q7fiq"]
 
 [node name="PauseMenu" type="Control" unique_id=765613216 node_paths=PackedStringArray("ResumeButton", "OptionsButton", "QuitButton", "MainMenuButton", "AnimationPlayer")]
 process_mode = 3
@@ -599,45 +96,77 @@ libraries/ = SubResource("AnimationLibrary_myy0f")
 
 [node name="Resume" type="Button" parent="." unique_id=218381727]
 process_mode = 3
-modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 879.0
-offset_top = 369.0
-offset_right = 1019.0
-offset_bottom = 400.0
+offset_top = 359.0
+offset_right = 1075.0
+offset_bottom = 395.0
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../Options")
+theme_override_colors/font_color = Color(0.6156863, 0.12156863, 0.84313726, 1)
+theme_override_colors/font_focus_color = Color(0.79607844, 0.4392157, 0.9843137, 1)
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("3_1och7")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_bpi0q")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_vmyb1")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_myy0f")
 text = "Resume"
 
 [node name="Options" type="Button" parent="." unique_id=1145623136]
 process_mode = 3
-self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 879.0
-offset_top = 436.0
-offset_right = 1019.0
-offset_bottom = 467.0
+offset_top = 393.0
+offset_right = 1075.0
+offset_bottom = 429.0
+focus_neighbor_top = NodePath("../Resume")
+focus_neighbor_bottom = NodePath("../MainMenu")
+theme_override_colors/font_color = Color(0.6156863, 0.12156863, 0.84313726, 1)
+theme_override_colors/font_focus_color = Color(0.79607844, 0.4392157, 0.9843137, 1)
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("3_1och7")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_sjs17")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_u8tnp")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_stj27")
 text = "Options
 "
 
 [node name="MainMenu" type="Button" parent="." unique_id=81384567]
 process_mode = 3
-modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 879.0
-offset_top = 403.0
-offset_right = 1019.0
-offset_bottom = 434.0
+offset_top = 432.0
+offset_right = 1075.0
+offset_bottom = 468.0
+focus_neighbor_top = NodePath("../Options")
+focus_neighbor_bottom = NodePath("../Quit")
+theme_override_colors/font_color = Color(0.6156863, 0.12156863, 0.84313726, 1)
+theme_override_colors/font_focus_color = Color(0.79607844, 0.4392157, 0.9843137, 1)
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("3_1och7")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ix48p")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_524vl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0fi7f")
 text = "Main Menu
 "
+icon_alignment = 1
 
 [node name="Quit" type="Button" parent="." unique_id=1853944488]
 process_mode = 3
-modulate = Color(1, 1, 1, 0)
-self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 879.0
-offset_top = 469.0
-offset_right = 1019.0
-offset_bottom = 500.0
+offset_top = 470.0
+offset_right = 1075.0
+offset_bottom = 506.0
+focus_neighbor_top = NodePath("../MainMenu")
+focus_neighbor_bottom = NodePath("../Resume")
+theme_override_colors/font_color = Color(0.6156863, 0.12156863, 0.84313726, 1)
+theme_override_colors/font_focus_color = Color(0.79607844, 0.4392157, 0.9843137, 1)
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("3_1och7")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_uscpe")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_taale")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_q7fiq")
 text = "Quit Application"
 
 [connection signal="pressed" from="Resume" to="." method="_on_resume_pressed"]
