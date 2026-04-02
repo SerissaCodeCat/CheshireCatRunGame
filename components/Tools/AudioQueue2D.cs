@@ -8,6 +8,8 @@ public partial class AudioQueue2D : Node
 {
 	[Export]
 	public int maxNumberOfConcurrentSounds { get; set; } = 1;
+	[Export]
+	public int percievedDistanceMultiplier = 5;
 	
 	private int _nextToPlay = 0;
 	private List<AudioStreamPlayer2D> _audioStreamPlayers = new List<AudioStreamPlayer2D>();
@@ -54,13 +56,14 @@ public partial class AudioQueue2D : Node
 	{
 		if(!_audioStreamPlayers[_nextToPlay].Playing)
 		{
-			GD.Print("Camera World X :" + MessageManager.instance.GetCameraCurrentPosition().X + "Sound World X : " + x);
-			GD.Print("Camera World Y :" + MessageManager.instance.GetCameraCurrentPosition().Y + "Sound World Y : " + y);
-			var tmp = new Vector2(x - MessageManager.instance.GetCameraCurrentPosition().X, y - MessageManager.instance.GetCameraCurrentPosition().Y);
-			GD.Print("Sound Calculated Offset X " + tmp.X);
-			GD.Print("Sound Calculated Offset Y " + tmp.Y);
-			_audioStreamPlayers[_nextToPlay].GlobalPosition = tmp;
-			_audioStreamPlayers[_nextToPlay].Play();
+			var cameraWorldPos = new Vector2(MessageManager.instance.GetCameraCurrentPosition().X, MessageManager.instance.GetCameraCurrentPosition().Y);
+			
+			var tmp = new Vector2(
+                x > cameraWorldPos.X ? x - cameraWorldPos.X : cameraWorldPos.X - x,
+                y > cameraWorldPos.Y ? y - cameraWorldPos.Y : cameraWorldPos.Y - y);
+            _audioStreamPlayers[_nextToPlay].GlobalPosition = tmp * percievedDistanceMultiplier;
+            _audioStreamPlayers[_nextToPlay].Play();
+
 		}
 		_nextToPlay++;
 		if(_nextToPlay == maxNumberOfConcurrentSounds)

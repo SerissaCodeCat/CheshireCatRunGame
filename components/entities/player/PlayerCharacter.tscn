@@ -479,7 +479,6 @@ shape = SubResource("RectangleShape2D_2gwwv")
 disabled = true
 
 [node name="ShapeCast2DCeilingCheck" type="ShapeCast2D" parent="." unique_id=1619678466]
-visible = false
 scale = Vector2(1, 0.8)
 shape = SubResource("RectangleShape2D_rqb5r")
 target_position = Vector2(0, -4.045)
@@ -508,3 +507,4 @@ collision_mask = 8
 collide_with_areas = true
 
 [node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=1522980788]
+current = true
