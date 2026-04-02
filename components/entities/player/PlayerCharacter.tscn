@@ -506,3 +506,5 @@ target_position = Vector2(15, 0)
 max_results = 2
 collision_mask = 8
 collide_with_areas = true
+
+[node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=1522980788]

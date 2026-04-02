@@ -38,6 +38,7 @@ public partial class PlayerCharacter : CharacterBody2D
     private CollisionShape2D CrouchingCollision;
     private ShapeCast2D ShapeCastCeilingCheck;
     private ShapeCast2D ShapeCastWallCheck;
+    private AudioListener2D soundListener;
 
 
     /// <Floats>
@@ -117,11 +118,13 @@ public partial class PlayerCharacter : CharacterBody2D
         aimingLynchpin = GetNode<Node2D>($"aimingLynchpin");
         aimingDirrection = GetNode<Node2D>($"aimingLynchpin/aimingDirection");
         aimingSprite = GetNode<Sprite2D>($"aimingLynchpin/aimingSprite");
+        soundListener = GetNode<AudioListener2D>($"AudioListener2D");
         aimingSprite.Visible = false;
         damagable = true;
         cyoteTimer = CyoteTime;
         teleportTimer = teleportTimerReset;
         clingTimer = clingTimerReset;
+        soundListener.MakeCurrent();
         MessageManager.instance.addPlayerToMessageManager(this);
 
     }

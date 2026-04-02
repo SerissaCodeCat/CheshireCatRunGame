@@ -54,7 +54,12 @@ public partial class AudioQueue2D : Node
 	{
 		if(!_audioStreamPlayers[_nextToPlay].Playing)
 		{
-			_audioStreamPlayers[_nextToPlay].GlobalPosition = new Vector2(x,y);
+			GD.Print("Camera World X :" + MessageManager.instance.GetCameraCurrentPosition().X + "Sound World X : " + x);
+			GD.Print("Camera World Y :" + MessageManager.instance.GetCameraCurrentPosition().Y + "Sound World Y : " + y);
+			var tmp = new Vector2(x - MessageManager.instance.GetCameraCurrentPosition().X, y - MessageManager.instance.GetCameraCurrentPosition().Y);
+			GD.Print("Sound Calculated Offset X " + tmp.X);
+			GD.Print("Sound Calculated Offset Y " + tmp.Y);
+			_audioStreamPlayers[_nextToPlay].GlobalPosition = tmp;
 			_audioStreamPlayers[_nextToPlay].Play();
 		}
 		_nextToPlay++;

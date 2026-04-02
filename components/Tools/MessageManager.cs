@@ -180,6 +180,10 @@ public partial class MessageManager : Node2D
         cameraLink.moveToPosition(playerMessagerLink.Position);
         cameraLink.SetCameraTarget(playerMessagerLink);
     }
+    public Vector2 GetCameraCurrentPosition()
+    {
+        return cameraLink.GlobalPosition;
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     ///////////////// SHADER UPDATES //////////////////////////////////////////
