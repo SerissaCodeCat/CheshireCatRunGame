@@ -26,3 +26,4 @@ Label/constants/outline_size = 11
 Label/font_sizes/font_size = 20
 Label/fonts/font = ExtResource("1_r6poe")
 Label/styles/focus = SubResource("StyleBoxEmpty_f1s52")
+OptionButton/constants/modulate_arrow = 1
