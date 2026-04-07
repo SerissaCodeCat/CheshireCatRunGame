@@ -1,16 +1,16 @@
 [gd_scene format=3 uid="uid://tmboyrfs5335"]
 
-[ext_resource type="Shader" uid="uid://d4nv3ky80umn5" path="res://Shaders/ViewportWholePixelOnlyMovement.gdshader" id="1_kln2b"]
-[ext_resource type="Script" uid="uid://20rxdomqqrku" path="res://Scenes/SubViewportContainer.cs" id="2_rgh2o"]
-[ext_resource type="PackedScene" uid="uid://bpylpk2tc85yo" path="res://Scenes/pause_menu.tscn" id="3_50glp"]
-[ext_resource type="Script" uid="uid://dye5b51gpj33n" path="res://Scenes/UIControl.cs" id="4_50glp"]
-[ext_resource type="Texture2D" uid="uid://c5hnkcyj1dqgi" path="res://Images/Static/UIComponents/HealthBarBase.png" id="4_rgh2o"]
-[ext_resource type="Texture2D" uid="uid://ch1ng5acyompo" path="res://Images/Static/UIComponents/HealthBarSegmentFill.png" id="5_v1gob"]
-[ext_resource type="Texture2D" uid="uid://c21odw7pscp35" path="res://Images/Static/UIComponents/HealthBarSegmant.png" id="6_jw32o"]
-[ext_resource type="Texture2D" uid="uid://so7wwqyce3ef" path="res://Images/Static/UIComponents/EnergyBarFill.png" id="8_vy5pj"]
+[ext_resource type="Shader" uid="uid://d4nv3ky80umn5" path="res://Shaders/ViewportWholePixelOnlyMovement.gdshader" id="1_wl6jr"]
+[ext_resource type="Script" uid="uid://20rxdomqqrku" path="res://Scenes/GameViewerComponentsAndSettings/SubViewportContainer.cs" id="2_qtlik"]
+[ext_resource type="Script" uid="uid://dye5b51gpj33n" path="res://Scenes/GameViewerComponentsAndSettings/UIControl.cs" id="3_r2ga3"]
+[ext_resource type="Texture2D" uid="uid://c5hnkcyj1dqgi" path="res://Images/Static/UIComponents/HealthBarBase.png" id="4_oa2gu"]
+[ext_resource type="Texture2D" uid="uid://ch1ng5acyompo" path="res://Images/Static/UIComponents/HealthBarSegmentFill.png" id="5_l6dd2"]
+[ext_resource type="Texture2D" uid="uid://c21odw7pscp35" path="res://Images/Static/UIComponents/HealthBarSegmant.png" id="6_oytqj"]
+[ext_resource type="Texture2D" uid="uid://so7wwqyce3ef" path="res://Images/Static/UIComponents/EnergyBarFill.png" id="7_y6xwa"]
+[ext_resource type="PackedScene" uid="uid://bpylpk2tc85yo" path="res://Scenes/GameViewerComponentsAndSettings/pause_menu.tscn" id="8_wl6jr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pbw6q"]
-shader = ExtResource("1_kln2b")
+shader = ExtResource("1_wl6jr")
 shader_parameter/camera_offset = Vector2(0, 0)
 
 [node name="Main" type="Node2D" unique_id=1255911885]
@@ -20,18 +20,16 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_pbw6q")
 custom_minimum_size = Vector2(640, 360)
 layout_direction = 2
-offset_left = -3.0
-offset_top = -3.0
-offset_right = 641.0
-offset_bottom = 361.0
 scale = Vector2(3, 3)
+size_flags_horizontal = 0
+size_flags_vertical = 0
 stretch = true
-script = ExtResource("2_rgh2o")
+script = ExtResource("2_qtlik")
 startingLevelPath = "res://Scenes/Levels/PlayGroundLevel.tscn"
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1110212667]
 handle_input_locally = false
-size = Vector2i(644, 364)
+size = Vector2i(640, 360)
 render_target_update_mode = 4
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=319553014]
@@ -46,14 +44,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = 5.0
-offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
-script = ExtResource("4_50glp")
+script = ExtResource("3_r2ga3")
 
 [node name="HealthPipOne" type="TextureRect" parent="GUI/UIControl" unique_id=101746323]
 z_index = 2
@@ -61,9 +55,11 @@ z_as_relative = false
 texture_filter = 1
 texture_repeat = 1
 layout_mode = 0
-offset_right = 199.0
-offset_bottom = 99.0
-texture = ExtResource("4_rgh2o")
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 209.0
+offset_bottom = 109.0
+texture = ExtResource("4_oa2gu")
 stretch_mode = 4
 
 [node name="HealthPipOneFill" type="TextureRect" parent="GUI/UIControl/HealthPipOne" unique_id=1148144996]
@@ -75,7 +71,7 @@ offset_left = 69.0
 offset_top = 30.0
 offset_right = 126.0
 offset_bottom = 68.0
-texture = ExtResource("5_v1gob")
+texture = ExtResource("5_l6dd2")
 stretch_mode = 4
 
 [node name="HealthPipTwo" type="TextureRect" parent="GUI/UIControl" unique_id=1086004863]
@@ -84,11 +80,11 @@ z_as_relative = false
 texture_filter = 1
 texture_repeat = 1
 layout_mode = 0
-offset_left = 120.0
-offset_top = 29.0
-offset_right = 180.0
-offset_bottom = 69.0
-texture = ExtResource("6_jw32o")
+offset_left = 130.0
+offset_top = 39.0
+offset_right = 190.0
+offset_bottom = 79.0
+texture = ExtResource("6_oytqj")
 stretch_mode = 4
 
 [node name="HealthPipTwoFill" type="TextureRect" parent="GUI/UIControl/HealthPipTwo" unique_id=511892709]
@@ -100,7 +96,7 @@ offset_left = 1.0
 offset_top = 1.0
 offset_right = 58.0
 offset_bottom = 39.0
-texture = ExtResource("5_v1gob")
+texture = ExtResource("5_l6dd2")
 stretch_mode = 4
 
 [node name="HealthPipThree" type="TextureRect" parent="GUI/UIControl" unique_id=1046802538]
@@ -110,11 +106,11 @@ texture_filter = 1
 texture_repeat = 1
 layout_direction = 2
 layout_mode = 0
-offset_left = 172.0
-offset_top = 29.0
-offset_right = 232.0
-offset_bottom = 69.0
-texture = ExtResource("6_jw32o")
+offset_left = 182.0
+offset_top = 39.0
+offset_right = 242.0
+offset_bottom = 79.0
+texture = ExtResource("6_oytqj")
 stretch_mode = 4
 
 [node name="HealthPipThreeFill" type="TextureRect" parent="GUI/UIControl/HealthPipThree" unique_id=1147239342]
@@ -125,7 +121,7 @@ offset_left = 1.0
 offset_top = 1.0
 offset_right = 58.0
 offset_bottom = 39.0
-texture = ExtResource("5_v1gob")
+texture = ExtResource("5_l6dd2")
 
 [node name="EnergyBarFill" type="TextureRect" parent="GUI/UIControl" unique_id=1491324255]
 show_behind_parent = true
@@ -134,14 +130,14 @@ texture_repeat = 1
 clip_contents = true
 layout_direction = 2
 layout_mode = 0
-offset_left = 68.0
-offset_top = 71.0
-offset_right = 198.0
-offset_bottom = 83.0
-texture = ExtResource("8_vy5pj")
+offset_left = 78.0
+offset_top = 81.0
+offset_right = 208.0
+offset_bottom = 93.0
+texture = ExtResource("7_y6xwa")
 expand_mode = 2
 stretch_mode = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1343167864]
 
-[node name="PauseMenu" parent="CanvasLayer" unique_id=765613216 instance=ExtResource("3_50glp")]
+[node name="PauseMenu" parent="CanvasLayer" unique_id=765613216 instance=ExtResource("8_wl6jr")]

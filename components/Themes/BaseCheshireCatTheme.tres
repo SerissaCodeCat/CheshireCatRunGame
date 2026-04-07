@@ -1,0 +1,28 @@
+[gd_resource type="Theme" format=3 uid="uid://c2m76mplwpoly"]
+
+[ext_resource type="FontFile" uid="uid://c2uhrftitcqsk" path="res://Fonts/OpenDyslexicMono-Regular.otf" id="1_r6poe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r6poe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1cmsn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a6dx5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w4ang"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f1s52"]
+
+[resource]
+Button/colors/font_color = Color(0.6156863, 0.12156863, 0.84313726, 1)
+Button/colors/font_focus_color = Color(0.79607844, 0.4392157, 0.9843137, 1)
+Button/constants/outline_size = 11
+Button/fonts/font = ExtResource("1_r6poe")
+Button/styles/disabled = SubResource("StyleBoxEmpty_r6poe")
+Button/styles/focus = SubResource("StyleBoxEmpty_1cmsn")
+Button/styles/hover = SubResource("StyleBoxEmpty_a6dx5")
+Button/styles/normal = SubResource("StyleBoxEmpty_w4ang")
+Label/colors/font_color = Color(0.6156863, 0.12156863, 0.84313726, 1)
+Label/constants/outline_size = 11
+Label/font_sizes/font_size = 13
+Label/fonts/font = ExtResource("1_r6poe")
+Label/styles/focus = SubResource("StyleBoxEmpty_f1s52")

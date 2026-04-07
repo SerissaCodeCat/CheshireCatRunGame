@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://31wy7m0y7ews"]
+
+[ext_resource type="Theme" uid="uid://c2m76mplwpoly" path="res://components/Themes/BaseCheshireCatTheme.tres" id="1_7ifq0"]
+
+[node name="SettingsMenu" type="Control" unique_id=246042119]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="." unique_id=943640538]
+layout_mode = 0
+offset_left = 155.0
+offset_top = 94.0
+offset_right = 449.0
+offset_bottom = 118.0
+theme = ExtResource("1_7ifq0")
+theme_type_variation = &"DefaultCheshireCatTheme"
+text = "Volume"
+
+[node name="HSlider" type="HSlider" parent="." unique_id=1525439748]
+layout_mode = 0
+offset_left = 154.0
+offset_top = 119.0
+offset_right = 1754.0
+offset_bottom = 135.0

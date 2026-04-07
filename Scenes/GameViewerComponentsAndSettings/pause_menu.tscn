@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bpylpk2tc85yo"]
 
-[ext_resource type="Script" uid="uid://boawtqc76n35p" path="res://Scenes/PauseMenu.cs" id="1_emv3i"]
+[ext_resource type="Script" uid="uid://boawtqc76n35p" path="res://Scenes/GameViewerComponentsAndSettings/PauseMenu.cs" id="1_emv3i"]
 [ext_resource type="Shader" uid="uid://ck2ry6bjvkq8p" path="res://Shaders/BlurFilter.gdshader" id="2_k0w1u"]
-[ext_resource type="FontFile" uid="uid://c2uhrftitcqsk" path="res://Fonts/OpenDyslexicMono-Regular.otf" id="3_1och7"]
+[ext_resource type="Theme" uid="uid://c2m76mplwpoly" path="res://components/Themes/BaseCheshireCatTheme.tres" id="3_8qhq6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1och7"]
 shader = ExtResource("2_k0w1u")
@@ -394,46 +394,6 @@ _data = {
 &"RESET": SubResource("Animation_vmyb1")
 }
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bpi0q"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vmyb1"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_myy0f"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1och7"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6wqnn"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sjs17"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u8tnp"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_stj27"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1ymcx"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h7ojb"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ix48p"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_524vl"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0fi7f"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wqpeb"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tekra"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uscpe"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_taale"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q7fiq"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8flw2"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c8xnj"]
-
 [node name="PauseMenu" type="Control" unique_id=765613216 node_paths=PackedStringArray("ResumeButton", "OptionsButton", "QuitButton", "MainMenuButton", "AnimationPlayer")]
 process_mode = 3
 layout_mode = 3
@@ -472,15 +432,7 @@ offset_right = 1075.0
 offset_bottom = 395.0
 focus_neighbor_top = NodePath("../Quit")
 focus_neighbor_bottom = NodePath("../Options")
-theme_override_colors/font_color = Color(0.6156863, 0.12156863, 0.84313726, 1)
-theme_override_colors/font_focus_color = Color(0.79607844, 0.4392157, 0.9843137, 1)
-theme_override_constants/outline_size = 11
-theme_override_fonts/font = ExtResource("3_1och7")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_bpi0q")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_vmyb1")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_myy0f")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_1och7")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_6wqnn")
+theme = ExtResource("3_8qhq6")
 text = "Resume"
 
 [node name="Options" type="Button" parent="." unique_id=1145623136]
@@ -492,15 +444,7 @@ offset_right = 1075.0
 offset_bottom = 429.0
 focus_neighbor_top = NodePath("../Resume")
 focus_neighbor_bottom = NodePath("../MainMenu")
-theme_override_colors/font_color = Color(0.6156863, 0.12156863, 0.84313726, 1)
-theme_override_colors/font_focus_color = Color(0.79607844, 0.4392157, 0.9843137, 1)
-theme_override_constants/outline_size = 11
-theme_override_fonts/font = ExtResource("3_1och7")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_sjs17")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_u8tnp")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_stj27")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_1ymcx")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_h7ojb")
+theme = ExtResource("3_8qhq6")
 text = "Options
 "
 
@@ -513,15 +457,7 @@ offset_right = 1075.0
 offset_bottom = 468.0
 focus_neighbor_top = NodePath("../Options")
 focus_neighbor_bottom = NodePath("../Quit")
-theme_override_colors/font_color = Color(0.6156863, 0.12156863, 0.84313726, 1)
-theme_override_colors/font_focus_color = Color(0.79607844, 0.4392157, 0.9843137, 1)
-theme_override_constants/outline_size = 11
-theme_override_fonts/font = ExtResource("3_1och7")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ix48p")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_524vl")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_0fi7f")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_wqpeb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tekra")
+theme = ExtResource("3_8qhq6")
 text = "Main Menu
 "
 icon_alignment = 1
@@ -535,15 +471,7 @@ offset_right = 1075.0
 offset_bottom = 506.0
 focus_neighbor_top = NodePath("../MainMenu")
 focus_neighbor_bottom = NodePath("../Resume")
-theme_override_colors/font_color = Color(0.6156863, 0.12156863, 0.84313726, 1)
-theme_override_colors/font_focus_color = Color(0.79607844, 0.4392157, 0.9843137, 1)
-theme_override_constants/outline_size = 11
-theme_override_fonts/font = ExtResource("3_1och7")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_uscpe")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_taale")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_q7fiq")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_8flw2")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_c8xnj")
+theme = ExtResource("3_8qhq6")
 text = "Quit Application"
 
 [connection signal="pressed" from="Resume" to="." method="_on_resume_pressed"]

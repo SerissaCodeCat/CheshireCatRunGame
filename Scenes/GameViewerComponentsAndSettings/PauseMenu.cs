@@ -26,9 +26,13 @@ public partial class PauseMenu : Control
 		MainMenuButton.Pressed += mainMenu;
 
 		ResumeButton.Disabled = true;
+		ResumeButton.Modulate = new Color(1.0f, 1.0f, 1.0f, 0.0f);
 		OptionsButton.Disabled = true;
+		OptionsButton.Modulate = new Color(1.0f, 1.0f, 1.0f, 0.0f);
 		QuitButton.Disabled = true;
+		QuitButton.Modulate = new Color(1.0f, 1.0f, 1.0f, 0.0f);
 		MainMenuButton.Disabled = true;
+		MainMenuButton.Modulate = new Color(1.0f, 1.0f, 1.0f, 0.0f);
 		//resume();
 	}
 
