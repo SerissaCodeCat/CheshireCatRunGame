@@ -2,6 +2,7 @@
 
 using Godot;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 [Tool]
 public partial class AudioQueue2D : Node
@@ -10,6 +11,8 @@ public partial class AudioQueue2D : Node
 	public int maxNumberOfConcurrentSounds { get; set; } = 1;
 	[Export]
 	public int percievedDistanceMultiplier = 5;
+	[Export]
+	public int volume = 100;
 	
 	private int _nextToPlay = 0;
 	private List<AudioStreamPlayer2D> _audioStreamPlayers = new List<AudioStreamPlayer2D>();
@@ -33,7 +36,6 @@ public partial class AudioQueue2D : Node
 			}
 		}
 	}
-
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
