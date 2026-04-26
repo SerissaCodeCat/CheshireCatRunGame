@@ -1,14 +1,21 @@
 [gd_scene format=3 uid="uid://31wy7m0y7ews"]
 
+[ext_resource type="Script" uid="uid://mggjtbvlb2hg" path="res://Scenes/GameViewerComponentsAndSettings/SettingsMenu.cs" id="1_2skj5"]
 [ext_resource type="Theme" uid="uid://c2m76mplwpoly" path="res://components/Themes/BaseCheshireCatTheme.tres" id="1_7ifq0"]
 
-[node name="SettingsMenu" type="Control" unique_id=246042119]
+[node name="SettingsMenu" type="Control" unique_id=246042119 node_paths=PackedStringArray("master", "music", "dialogue", "soundEffects", "quips")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_2skj5")
+master = NodePath("MasterVolumeSlider")
+music = NodePath("MusicVolumeSlider")
+dialogue = NodePath("DialogueVolumeSlider")
+soundEffects = NodePath("SoundEffectsVolumeSlider")
+quips = NodePath("QuipsVolumeSlider")
 
 [node name="MasterVolumeLabel" type="Label" parent="." unique_id=943640538]
 layout_mode = 0
@@ -27,6 +34,9 @@ offset_top = 118.0
 offset_right = 1750.0
 offset_bottom = 134.0
 theme = ExtResource("1_7ifq0")
+tick_count = 10
+ticks_on_borders = true
+ticks_position = 3
 
 [node name="MusicVolumeLabel" type="Label" parent="." unique_id=1186016969]
 layout_mode = 0
@@ -45,6 +55,9 @@ offset_top = 168.0
 offset_right = 1750.0
 offset_bottom = 184.0
 theme = ExtResource("1_7ifq0")
+tick_count = 10
+ticks_on_borders = true
+ticks_position = 3
 
 [node name="SoundEffectsVolumeLabel" type="Label" parent="." unique_id=1021869451]
 layout_mode = 0
@@ -63,8 +76,11 @@ offset_top = 218.0
 offset_right = 1750.0
 offset_bottom = 234.0
 theme = ExtResource("1_7ifq0")
+tick_count = 10
+ticks_on_borders = true
+ticks_position = 3
 
-[node name="UIVolumeLabel" type="Label" parent="." unique_id=1975868631]
+[node name="DialogueVolumeLabel" type="Label" parent="." unique_id=1975868631]
 layout_mode = 0
 offset_left = 150.0
 offset_top = 230.0
@@ -72,31 +88,55 @@ offset_right = 444.0
 offset_bottom = 265.0
 theme = ExtResource("1_7ifq0")
 theme_type_variation = &"DefaultCheshireCatTheme"
-text = "UI Volume"
+text = "Dialogue Volume"
 
-[node name="UIVolumeSlider" type="HSlider" parent="." unique_id=1669615346]
+[node name="DialogueVolumeSlider" type="HSlider" parent="." unique_id=1669615346]
 layout_mode = 0
 offset_left = 150.0
 offset_top = 265.0
 offset_right = 1750.0
 offset_bottom = 281.0
 theme = ExtResource("1_7ifq0")
+tick_count = 10
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="QuipsVolumeLabel" type="Label" parent="." unique_id=1136769692]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 283.0
+offset_right = 444.0
+offset_bottom = 318.0
+theme = ExtResource("1_7ifq0")
+theme_type_variation = &"DefaultCheshireCatTheme"
+text = "Quips Volume"
+
+[node name="QuipsVolumeSlider" type="HSlider" parent="." unique_id=1295284170]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 318.0
+offset_right = 1750.0
+offset_bottom = 334.0
+theme = ExtResource("1_7ifq0")
+tick_count = 10
+ticks_on_borders = true
+ticks_position = 3
 
 [node name="ResolutionLabel" type="Label" parent="." unique_id=824582586]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 280.0
-offset_right = 297.0
-offset_bottom = 315.0
+offset_left = 153.0
+offset_top = 334.0
+offset_right = 300.0
+offset_bottom = 369.0
 theme = ExtResource("1_7ifq0")
 text = "Resolution"
 
 [node name="OptionButton" type="OptionButton" parent="." unique_id=1383841898]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 310.0
-offset_right = 354.0
-offset_bottom = 352.0
+offset_left = 153.0
+offset_top = 364.0
+offset_right = 357.0
+offset_bottom = 406.0
 theme = ExtResource("1_7ifq0")
 selected = 0
 item_count = 4

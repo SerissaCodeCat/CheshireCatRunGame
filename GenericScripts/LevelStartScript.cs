@@ -7,5 +7,10 @@ public partial class LevelStartScript : Node
     {
         MessageManager.instance.setPlayerSpawnPosition(new Vector2(20, 190));
         MessageManager.instance.SetCameraStartPosition();
+        SoundManager.instance.playMusicByName("testMusic");
+        
+        //allow physics processes to begin!
+        GetTree().Paused = false;
+
     }
 }

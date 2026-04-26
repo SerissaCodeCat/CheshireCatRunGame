@@ -3,10 +3,25 @@ using System.Collections.Generic;
 
 public partial class SoundManager : Node2D
 {
-	public static SoundManager instance { get; private set; }	// Called when the node enters the scene tree for the first time.
+	//set up a singleton so that everything can access this by quick refferance.
+	public static SoundManager instance { get; private set; }
+	/*Pools are used to create a variety of noises for the same incident. 
+	 IE a variation in the sound of a slingshot bullet hitting something to reduce player fatigue with the same audio
+	 or different potential dialogue quips for character in a situation.
+	*/
 	private Dictionary<string, SoundPool2d> SoundEffectPoolByName = new Dictionary<string, SoundPool2d>();
-	private Dictionary<string, AudioStreamPlayer> DialoguePoolByName = new Dictionary<string, AudioStreamPlayer>();
+
+	//dialogue for varied quips has it's own pool to allow the audio to be adjusted seperatly to sound effects, music and significant dialogue
+	private Dictionary<string, SoundPool2d> QuipsPoolByName = new Dictionary<string, SoundPool2d>();
+	//Significant dialogue is stored by name only, and does not have randomly accessable varients.
+	private Dictionary<string, AudioStreamPlayer> DialogueByName = new Dictionary<string, AudioStreamPlayer>();
 	private Dictionary<string, AudioStreamPlayer> musicByName = new Dictionary<string, AudioStreamPlayer>();
+
+	int MasterBusIndex = AudioServer.GetBusIndex("Master");
+	int SoundEffectsBusIndex = AudioServer.GetBusIndex("SoundEffects");
+	int QuipsBusIndex = AudioServer.GetBusIndex("Quips");
+	int DialogueBusIndex = AudioServer.GetBusIndex("Dialogue");
+	int MusicBusIndex = AudioServer.GetBusIndex("Music");
 	public override void _Ready()
 	{
 		instance = this;
@@ -14,11 +29,13 @@ public partial class SoundManager : Node2D
 		//add sound effect pools here
 		SoundEffectPoolByName.Add("bulletImpact", GetNode<SoundPool2d>("bulletImpactSoundPool"));
 
-		//add dialogue sound pool here
-		//DialoguePoolByName.Add("exampleDialogueTitle", GetNode<SoundPool2d>("pathToDialogueLocation"));
-		
+		//add quips sound pool here
+		//QuipsPoolByName.Add("exampleDialogueTitle", GetNode<SoundPool2d>("exampleCharacterEventPoolName"));
+
+		//add significant dialogue here
+		//musicByName.Add("testMusic", GetNode<AudioStreamPlayer>("AudioStreamPlayerTestMusic"));
 		//add music here
-		//musicByName.Add("ExampleSongName", GetNode<AudioStreamPlayer>("pathToMusicLocation"));
+		musicByName.Add("testMusic", GetNode<AudioStreamPlayer>("AudioStreamPlayerTestMusic"));
 	}
 
 	public void playPossitionalAudio(string name, float x, float y)
@@ -44,26 +61,50 @@ public partial class SoundManager : Node2D
 			GD.Print("WARNING: " + name + "Not found in list of music");
 		}
 	}
+	public void stopAllMusic()
+	{
+		foreach(var x in musicByName.Values)
+		{
+			if(x.Playing == true)
+			x.Stop();
+		}
+	}
+	public void stopMusicByName(string name)
+	{
+		if(musicByName.ContainsKey(name))
+		{
+			musicByName[name].Stop();
+		}
+		else
+		{
+			GD.Print("WARNING: " + name + "Not found in list of music");
+		}
+	}
 
-	int MasterBusIndex = AudioServer.GetBusIndex("Master");
-	int SoundEffectsBusIndex = AudioServer.GetBusIndex("SoundEffects");
-	int DialogueBusIndex = AudioServer.GetBusIndex("Dialogue");
-	int MusicBusIndex = AudioServer.GetBusIndex("Music");
-	public void changeMasterVolume(float incomingValue)
+	public void changeMasterVolume(double incomingValue)
 	{
-		AudioServer.SetBusVolumeDb(MasterBusIndex, Mathf.LinearToDb(incomingValue));
+		AudioServer.SetBusVolumeDb(MasterBusIndex, (float)Mathf.LinearToDb(incomingValue));
+		GD.Print("Master Volume set to: " + incomingValue);
 	}
-	public void changeMusicVolume(float incomingValue)
+	public void changeMusicVolume(double incomingValue)
 	{
-		AudioServer.SetBusVolumeDb(MusicBusIndex, Mathf.LinearToDb(incomingValue));
+		AudioServer.SetBusVolumeDb(MusicBusIndex, (float)Mathf.LinearToDb(incomingValue));
+		GD.Print("Music Volume set to: " + incomingValue);
 	}
-	public void changeSoundEffectsVolume(float incomingValue)
+	public void changeSoundEffectsVolume(double incomingValue)
 	{
-		AudioServer.SetBusVolumeDb(SoundEffectsBusIndex, Mathf.LinearToDb(incomingValue));
+		AudioServer.SetBusVolumeDb(SoundEffectsBusIndex, (float)Mathf.LinearToDb(incomingValue));
+		GD.Print("SoundFX Volume set to: " + incomingValue);
 	}
-	public void changeDialogueVolume(float incomingValue)
+	public void changeDialogueVolume(double incomingValue)
 	{
-		AudioServer.SetBusVolumeDb(DialogueBusIndex, Mathf.LinearToDb(incomingValue));
+		AudioServer.SetBusVolumeDb(DialogueBusIndex, (float)Mathf.LinearToDb(incomingValue));
+		GD.Print("Dialogue Volume set to: " + incomingValue);
+	}
+	public void changeQuipsVolume(double incomingValue)
+	{
+		AudioServer.SetBusVolumeDb(QuipsBusIndex, (float)Mathf.LinearToDb(incomingValue));
+		GD.Print("Quips Volume set to: " + incomingValue);
 	}
 
 }

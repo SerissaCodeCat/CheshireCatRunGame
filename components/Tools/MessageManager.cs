@@ -197,6 +197,9 @@ public partial class MessageManager : Node2D
     ///////////////////////////////////////////////////////////////////////////
     public void LoadLevelWithPath(String levelPath)
     {
+        //pause all physics based processes!
+        GetTree().Paused = true;
+        
         GD.Print("Freeing message manager lists & identifiers");
         flushLevelData();
         GD.Print("LEVEL TO LOAD = "+levelPath);
