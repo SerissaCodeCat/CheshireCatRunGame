@@ -16,10 +16,15 @@ public partial class SettingsMenu : Control
 	public override void _Ready()
 	{
 		master.ValueChanged += changeMasterVolume; 
+		master.SetValueNoSignal(SoundManager.instance.getMasterVolume());
 		music.ValueChanged += changeMusicVolume;
-		dialogue.ValueChanged += changeDialogueVolume; 
+		music.SetValueNoSignal(SoundManager.instance.getMusicVolume());
+		dialogue.ValueChanged += changeDialogueVolume;
+		dialogue.SetValueNoSignal(SoundManager.instance.getDialogueVolume()); 
 		soundEffects.ValueChanged += changeSoundEffectsVolume;
+		soundEffects.SetValueNoSignal(SoundManager.instance.getSoundEffectsVolume());
 		quips.ValueChanged += changeQuipsVolume;
+		quips.SetValueNoSignal(SoundManager.instance.getQuipVolume());
 	}
 	private void changeMasterVolume(double incomingValue)
 	{		

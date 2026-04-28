@@ -86,25 +86,45 @@ public partial class SoundManager : Node2D
 		AudioServer.SetBusVolumeDb(MasterBusIndex, (float)Mathf.LinearToDb(incomingValue));
 		GD.Print("Master Volume set to: " + incomingValue);
 	}
+	public double getMasterVolume()
+	{
+		return AudioServer.GetBusVolumeLinear(MasterBusIndex);
+	}
 	public void changeMusicVolume(double incomingValue)
 	{
 		AudioServer.SetBusVolumeDb(MusicBusIndex, (float)Mathf.LinearToDb(incomingValue));
 		GD.Print("Music Volume set to: " + incomingValue);
+	}
+	public double getMusicVolume()
+	{
+		return AudioServer.GetBusVolumeLinear(MusicBusIndex);
 	}
 	public void changeSoundEffectsVolume(double incomingValue)
 	{
 		AudioServer.SetBusVolumeDb(SoundEffectsBusIndex, (float)Mathf.LinearToDb(incomingValue));
 		GD.Print("SoundFX Volume set to: " + incomingValue);
 	}
+	public double getSoundEffectsVolume()
+	{
+		return AudioServer.GetBusVolumeLinear(SoundEffectsBusIndex);
+	}
 	public void changeDialogueVolume(double incomingValue)
 	{
 		AudioServer.SetBusVolumeDb(DialogueBusIndex, (float)Mathf.LinearToDb(incomingValue));
 		GD.Print("Dialogue Volume set to: " + incomingValue);
 	}
+	public double getDialogueVolume()
+	{
+		return AudioServer.GetBusVolumeLinear(DialogueBusIndex);
+	}
 	public void changeQuipsVolume(double incomingValue)
 	{
 		AudioServer.SetBusVolumeDb(QuipsBusIndex, (float)Mathf.LinearToDb(incomingValue));
 		GD.Print("Quips Volume set to: " + incomingValue);
+	}
+	public double getQuipVolume()
+	{
+		return AudioServer.GetBusVolumeLinear(QuipsBusIndex);
 	}
 
 }
