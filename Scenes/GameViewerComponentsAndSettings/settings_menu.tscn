@@ -3,7 +3,108 @@
 [ext_resource type="Script" uid="uid://mggjtbvlb2hg" path="res://Scenes/GameViewerComponentsAndSettings/SettingsMenu.cs" id="1_2skj5"]
 [ext_resource type="Theme" uid="uid://c2m76mplwpoly" path="res://components/Themes/BaseCheshireCatTheme.tres" id="1_7ifq0"]
 
+[sub_resource type="Animation" id="Animation_2skj5"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:modulate:a")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_4fxag"]
+resource_name = "Transition"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate:r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate:g")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate:b")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:modulate:a")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.16666667, -0.16666667, 0, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gd0sm"]
+_data = {
+&"RESET": SubResource("Animation_2skj5"),
+&"Transition": SubResource("Animation_4fxag")
+}
+
 [node name="SettingsMenu" type="Control" unique_id=246042119 node_paths=PackedStringArray("master", "music", "dialogue", "soundEffects", "quips")]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,6 +117,14 @@ music = NodePath("MusicVolumeSlider")
 dialogue = NodePath("DialogueVolumeSlider")
 soundEffects = NodePath("SoundEffectsVolumeSlider")
 quips = NodePath("QuipsVolumeSlider")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1886906304]
+layout_mode = 0
+offset_left = 127.0
+offset_top = 78.0
+offset_right = 1777.0
+offset_bottom = 1003.0
+color = Color(0.060566284, 0.001468397, 0.10062028, 1)
 
 [node name="MasterVolumeLabel" type="Label" parent="." unique_id=943640538]
 layout_mode = 0
@@ -141,7 +250,7 @@ offset_bottom = 369.0
 theme = ExtResource("1_7ifq0")
 text = "Resolution"
 
-[node name="OptionButton" type="OptionButton" parent="." unique_id=1383841898]
+[node name="ResolutionOptionButton" type="OptionButton" parent="." unique_id=1383841898]
 layout_mode = 0
 offset_left = 153.0
 offset_top = 364.0
@@ -158,3 +267,6 @@ popup/item_2/text = "1280 x 720"
 popup/item_2/id = 1
 popup/item_3/text = "640 x 360"
 popup/item_3/id = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=153609597]
+libraries/ = SubResource("AnimationLibrary_gd0sm")

@@ -11,13 +11,14 @@ public partial class MessageManager : Node2D
     private PixelPerfectCamera cameraLink = null;
     private SubViewportContainer viewportLink = null;
     private UIControl UIControlLink = null;
+    private SettingsMenu SettingsMenuLink = null;
 
     public override void _Ready()
     {
         instance = this; //ensure that this is the ONLY message manager
     }
 
-    //set up the Dictionaries for messages to be handled by the manager
+    //set up the Dictionaries and links for messages to be handled by the manager
     public void addToEnemyDictionary(EnemyPatrol enemyInstance)
     {
         enemies.Add(enemyInstance.GetInstanceId(), enemyInstance);
@@ -45,9 +46,6 @@ public partial class MessageManager : Node2D
             cameraLink = Camera;
         }
     }
-
-
-    //used to transition player values between scenes
     public void addPlayerToMessageManager(PlayerCharacter player)
     {
         if (playerMessagerLink == null)
@@ -63,7 +61,6 @@ public partial class MessageManager : Node2D
         }
         GD.Print("player added to message manager with IDvalue of: " + playerMessagerLink.GetInstanceId());
     }
-
     public void flushLevelData()
     {
         playerMessagerLink = null;
@@ -76,9 +73,8 @@ public partial class MessageManager : Node2D
         {
             removeFromEnemyDictionary(y);
         }
-        enemies = new System.Collections.Generic.Dictionary<ulong, EnemyPatrol>();
+        enemies = new Dictionary<ulong, EnemyPatrol>();
     }
-    //part of the pixel perfect camera sytem
     public void addViewportToMessager(SubViewportContainer incomingViewport)
     {
         viewportLink = incomingViewport;
@@ -90,7 +86,13 @@ public partial class MessageManager : Node2D
             UIControlLink = incomingUIControl;
         }
     }
-
+    public void addSettingsMenuToMessageManager(SettingsMenu incomingSettingsMenu)
+    {
+        if (SettingsMenuLink == null)
+        {
+            SettingsMenuLink = incomingSettingsMenu;
+        }
+    }
     ////////////////////////////////////////////////////////////////////////////
     //////////////// MESSGES TO PLAYER Node ////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
@@ -141,8 +143,6 @@ public partial class MessageManager : Node2D
     {
         enemies[ID].SwitchToStunState();
     }
-
-
     ///////////////////////////////////////////////////////////////////////////
     //// MESSAGES TO INTERACTABLE ELEMENTS ////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
@@ -150,8 +150,6 @@ public partial class MessageManager : Node2D
     {
         interactables[ID].Activate();
     }
-
-
     ////////////////////////////////////////////////////////////////////////////
     /////////////////MESSAGES TO CAMERA ////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
@@ -206,6 +204,8 @@ public partial class MessageManager : Node2D
         viewportLink.SetNextLevelPath(levelPath);
         viewportLink.LoadLevel();
     }
+
+    
 
     ///////////////////////////////////////////////////////////////////////////
     ///////// DEBUGGING AND CRASH HANDLERS ////////////////////////////////////

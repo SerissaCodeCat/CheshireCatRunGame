@@ -5,6 +5,7 @@ using Godot.Collections;
 
 public partial class SubViewportContainer : Godot.SubViewportContainer
 {
+	public static SubViewportContainer instance {get; private set;}
 	private Node currentLevel = null;
 	[Export]
 	public SubViewport viewportLink {get; set;} = null;
@@ -28,11 +29,12 @@ public partial class SubViewportContainer : Godot.SubViewportContainer
 
 	public override void _Ready()
 	{
+		instance = this;
 		if (startingLevelPath == null)
 		{
 			startingLevelPath = "res://Scenes/TestLevel.tscn";
 		}
-		MessageManager.instance.addViewportToMessager(this);
+		MessageManager.instance.addViewportToMessager(instance);
 		material = (ShaderMaterial)this.Material;
 		viewportLink = this.GetChild<SubViewport>(0);
 		LoadLevel();
