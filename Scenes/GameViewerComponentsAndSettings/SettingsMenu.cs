@@ -16,7 +16,14 @@ public partial class SettingsMenu : Control
 	[Export]
 	private OptionButton resolution;
 	[Export]
+	private Godot.Button backButton;
+	[Export]
 	private AnimationPlayer AnimationPlayer;
+	private enum settingsMenuAccessedFrom
+	{
+		pause,
+		main,
+	}
 	public override void _Ready()
 	{
 		master.Editable = false;
@@ -40,6 +47,12 @@ public partial class SettingsMenu : Control
 		quips.SetValueNoSignal(SoundManager.instance.getQuipVolume());
 
 		resolution.Disabled = true;
+
+		backButton.Disabled = true;
+		backButton.Pressed += goBackToPauseMenu;
+
+		//Allow message Manager to access this settings menu
+		MessageManager.instance.addSettingsMenuToMessageManager(this);
 	}
 
 
@@ -52,6 +65,7 @@ public partial class SettingsMenu : Control
 		soundEffects.Editable = true;
 		quips.Editable = true;
 		resolution.Disabled = false;
+		backButton.Disabled = false;
 	}
 	public void hideAndDisableMenu()
 	{
@@ -62,6 +76,12 @@ public partial class SettingsMenu : Control
 		soundEffects.Editable = false;
 		quips.Editable = false;
 		resolution.Disabled = true;
+		backButton.Disabled = true;
+	}
+	public void goBackToPauseMenu()
+	{
+		hideAndDisableMenu();
+		MessageManager.instance.ShowPauseMenu();
 	}
 	private void changeMasterVolume(double incomingValue)
 	{		

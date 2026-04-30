@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ch1ng5acyompo" path="res://Images/Static/UIComponents/HealthBarSegmentFill.png" id="5_l6dd2"]
 [ext_resource type="Texture2D" uid="uid://c21odw7pscp35" path="res://Images/Static/UIComponents/HealthBarSegmant.png" id="6_oytqj"]
 [ext_resource type="Texture2D" uid="uid://so7wwqyce3ef" path="res://Images/Static/UIComponents/EnergyBarFill.png" id="7_y6xwa"]
+[ext_resource type="PackedScene" uid="uid://31wy7m0y7ews" path="res://Scenes/GameViewerComponentsAndSettings/settings_menu.tscn" id="8_qtlik"]
 [ext_resource type="PackedScene" uid="uid://bpylpk2tc85yo" path="res://Scenes/GameViewerComponentsAndSettings/pause_menu.tscn" id="8_wl6jr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pbw6q"]
@@ -139,5 +140,7 @@ expand_mode = 2
 stretch_mode = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1343167864]
+
+[node name="SettingsMenu" parent="CanvasLayer" unique_id=246042119 instance=ExtResource("8_qtlik")]
 
 [node name="PauseMenu" parent="CanvasLayer" unique_id=765613216 instance=ExtResource("8_wl6jr")]

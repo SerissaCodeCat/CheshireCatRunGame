@@ -19,6 +19,7 @@ public partial class PauseMenu : Control
 	////////////////////////////////
 	public override void _Ready()
 	{
+		MessageManager.instance.addPauseMenuToMessageManager(this);
 		ResumeButton.Pressed += resume;
 		ResumeButton.GrabFocus(); // makes the resume button be the default highlighted button
 		OptionsButton.Pressed += options;
@@ -72,9 +73,26 @@ public partial class PauseMenu : Control
 		QuitButton.Disabled = false;
 		MainMenuButton.Disabled = false;
 	}
+	public void hide()
+	{
+		ResumeButton.Disabled = true;
+		OptionsButton.Disabled = true;
+		QuitButton.Disabled = true;
+		MainMenuButton.Disabled = true;
+		this.Visible = false;
+	}
+	public void show()
+	{
+		ResumeButton.Disabled = false;
+		OptionsButton.Disabled = false;
+		QuitButton.Disabled = false;
+		MainMenuButton.Disabled = false;
+		this.Visible = true;
+	}
 	public void options()
 	{
-		//INSERT OPTIONS MENU HERE
+		hide();
+		MessageManager.instance.ShowSettingsPage();
 	}
 	public void quit()
 	{

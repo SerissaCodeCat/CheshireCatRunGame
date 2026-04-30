@@ -12,6 +12,7 @@ public partial class MessageManager : Node2D
     private SubViewportContainer viewportLink = null;
     private UIControl UIControlLink = null;
     private SettingsMenu SettingsMenuLink = null;
+    private PauseMenu pauseMenuLink = null;
 
     public override void _Ready()
     {
@@ -84,6 +85,13 @@ public partial class MessageManager : Node2D
         if (UIControlLink == null)
         {
             UIControlLink = incomingUIControl;
+        }
+    }
+    public void addPauseMenuToMessageManager(PauseMenu incomingPauseMenu)
+    {
+        if(pauseMenuLink == null)
+        {
+            pauseMenuLink = incomingPauseMenu;
         }
     }
     public void addSettingsMenuToMessageManager(SettingsMenu incomingSettingsMenu)
@@ -193,6 +201,27 @@ public partial class MessageManager : Node2D
     ///////////////////////////////////////////////////////////////////////////
     ///////////////// MESSAGES TO Viewport ////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
+    public void ShowSettingsPage()
+    {
+        if(SettingsMenuLink != null)
+        {
+            SettingsMenuLink.showAndEnableMenu();
+        }
+    }
+    public void HideSettingsPage()
+    {
+        if(SettingsMenuLink != null)
+        {
+            SettingsMenuLink.hideAndDisableMenu();
+        }
+    }
+    public void ShowPauseMenu()
+    {
+        if(pauseMenuLink != null)
+        {
+            pauseMenuLink.show();
+        }
+    }
     public void LoadLevelWithPath(String levelPath)
     {
         //pause all physics based processes!
@@ -204,8 +233,6 @@ public partial class MessageManager : Node2D
         viewportLink.SetNextLevelPath(levelPath);
         viewportLink.LoadLevel();
     }
-
-    
 
     ///////////////////////////////////////////////////////////////////////////
     ///////// DEBUGGING AND CRASH HANDLERS ////////////////////////////////////

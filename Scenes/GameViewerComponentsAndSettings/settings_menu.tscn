@@ -103,7 +103,8 @@ _data = {
 &"Transition": SubResource("Animation_4fxag")
 }
 
-[node name="SettingsMenu" type="Control" unique_id=246042119 node_paths=PackedStringArray("master", "music", "dialogue", "soundEffects", "quips")]
+[node name="SettingsMenu" type="Control" unique_id=246042119 node_paths=PackedStringArray("master", "music", "dialogue", "soundEffects", "quips", "resolution", "backButton", "AnimationPlayer")]
+process_mode = 3
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 15
@@ -117,6 +118,9 @@ music = NodePath("MusicVolumeSlider")
 dialogue = NodePath("DialogueVolumeSlider")
 soundEffects = NodePath("SoundEffectsVolumeSlider")
 quips = NodePath("QuipsVolumeSlider")
+resolution = NodePath("ResolutionOptionButton")
+backButton = NodePath("BackButton")
+AnimationPlayer = NodePath("AnimationPlayer")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1886906304]
 layout_mode = 0
@@ -270,3 +274,13 @@ popup/item_3/id = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=153609597]
 libraries/ = SubResource("AnimationLibrary_gd0sm")
+
+[node name="BackButton" type="Button" parent="." unique_id=1842222987]
+layout_mode = 0
+offset_left = 1539.0
+offset_top = 848.0
+offset_right = 1739.0
+offset_bottom = 971.0
+theme = ExtResource("1_7ifq0")
+theme_override_font_sizes/font_size = 57
+text = "BACK"
