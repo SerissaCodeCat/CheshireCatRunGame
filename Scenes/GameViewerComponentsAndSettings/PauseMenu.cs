@@ -20,7 +20,7 @@ public partial class PauseMenu : Control
 	public override void _Ready()
 	{
 		MessageManager.instance.addPauseMenuToMessageManager(this);
-		ResumeButton.Pressed += resume;
+		ResumeButton.Pressed += ResumePressed;
 		ResumeButton.GrabFocus(); // makes the resume button be the default highlighted button
 		OptionsButton.Pressed += options;
 		QuitButton.Pressed += quit;
@@ -37,7 +37,8 @@ public partial class PauseMenu : Control
 		//resume();
 	}
 
-	public override void _Process(double delta)
+	//we should never need to hit the process function. this was useful for testing, but this should be initiated through the MessageManager.
+	/*public override void _Process(double delta)
 	{
 		if(Input.IsActionJustPressed("Escape"))
 		{
@@ -50,23 +51,28 @@ public partial class PauseMenu : Control
 				pause();
 			}
 		}
-	}
+	}*/
 
 	//////////////////////////////////
 	/// BUTTON FUNCTIONS /////////////
 	//////////////////////////////////
-	public void resume()
+	
+	private void ResumePressed()
 	{
-		GetTree().Paused = false;
+		MessageManager.instance.menuNavigationOnEscapeOrBack();
+	}
+	//resumes game from where we left off. 
+	public void Resume()
+	{
 		AnimationPlayer.PlayBackwards("PauseAnimation");
 		ResumeButton.Disabled = true;
 		OptionsButton.Disabled = true;
 		QuitButton.Disabled = true;
 		MainMenuButton.Disabled = true;
 	}
-	public void pause()
+	public void Pause()
 	{
-		GetTree().Paused = true;
+		ResumeButton.GrabFocus(); // makes the resume button be the default highlighted button
 		AnimationPlayer.Play("PauseAnimation");
 		ResumeButton.Disabled = false;
 		OptionsButton.Disabled = false;
@@ -83,6 +89,7 @@ public partial class PauseMenu : Control
 	}
 	public void show()
 	{
+		ResumeButton.GrabFocus(); // makes the resume button be the default highlighted button
 		ResumeButton.Disabled = false;
 		OptionsButton.Disabled = false;
 		QuitButton.Disabled = false;

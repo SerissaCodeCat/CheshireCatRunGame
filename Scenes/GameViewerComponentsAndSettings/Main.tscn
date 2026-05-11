@@ -15,8 +15,10 @@ shader = ExtResource("1_wl6jr")
 shader_parameter/camera_offset = Vector2(0, 0)
 
 [node name="Main" type="Node2D" unique_id=1255911885]
+process_mode = 3
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1238419890]
+process_mode = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_pbw6q")
 custom_minimum_size = Vector2(640, 360)
@@ -140,6 +142,7 @@ expand_mode = 2
 stretch_mode = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1343167864]
+process_mode = 3
 
 [node name="SettingsMenu" parent="CanvasLayer" unique_id=246042119 instance=ExtResource("8_qtlik")]
 

@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://dek32e4do55ij" path="res://Audio/Music/testMusic/wildlyInaproprietMusicTrackRoyalytFree.mp3" id="7_eybwt"]
 
 [node name="SoundManager" type="Node2D" unique_id=1379158155]
+process_mode = 3
 script = ExtResource("1_4y1a0")
 
 [node name="bulletImpactSoundPool" parent="." unique_id=330491651 instance=ExtResource("2_1xhrk")]

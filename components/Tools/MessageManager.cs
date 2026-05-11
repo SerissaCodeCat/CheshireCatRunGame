@@ -4,6 +4,14 @@ using System.Collections.Generic;
 
 public partial class MessageManager : Node2D
 {
+    private enum MenuState
+    {
+        closed,
+        pauseMenu,
+        settingsMenu,
+        mainMenu,
+    }
+    private MenuState currentMenuState;
     public static MessageManager instance { get; private set; }
     private Dictionary<ulong, EnemyPatrol> enemies = new System.Collections.Generic.Dictionary<ulong, EnemyPatrol>();
     private Dictionary<ulong, Button> interactables = new System.Collections.Generic.Dictionary<ulong, Button>();
@@ -17,8 +25,8 @@ public partial class MessageManager : Node2D
     public override void _Ready()
     {
         instance = this; //ensure that this is the ONLY message manager
+        this.ProcessMode = ProcessModeEnum.Always; //set the message manager to ALWAYS be active
     }
-
     //set up the Dictionaries and links for messages to be handled by the manager
     public void addToEnemyDictionary(EnemyPatrol enemyInstance)
     {
@@ -101,6 +109,52 @@ public partial class MessageManager : Node2D
             SettingsMenuLink = incomingSettingsMenu;
         }
     }
+
+    /// <summary>
+    /// ////////////////////////////////////////////////////////////////////////
+    /// //////////// MESSAGES TO MENU SYSTEM ///////////////////////////////////
+    /// ////////////////////////////////////////////////////////////////////////
+    public override void _Input(InputEvent @event)
+    {
+        if (@event.IsActionPressed("Escape"))
+        {
+            menuNavigationOnEscapeOrBack();
+        }
+    }
+
+    public void menuNavigationOnEscapeOrBack()
+    {
+        if(currentMenuState == MenuState.closed)
+            {
+                if(pauseMenuLink != null)
+                {
+                    GetTree().Paused = true;
+                    pauseMenuLink.Pause();
+                    currentMenuState = MenuState.pauseMenu;
+                    GD.Print("menu state set to PAUSE");
+                }
+            }
+        else if(currentMenuState == MenuState.pauseMenu)
+        {
+            if (pauseMenuLink != null)
+            {
+                pauseMenuLink.Resume();
+                GetTree().Paused = false;
+                currentMenuState = MenuState.closed;
+                GD.Print("menu state set to CLOSED");
+            }
+        }
+        else if(currentMenuState == MenuState.settingsMenu)
+        {
+            if(SettingsMenuLink != null)
+            {
+                SettingsMenuLink.goBackToPauseMenu();
+                currentMenuState = MenuState.pauseMenu;
+                GD.Print("menu state set to PAUSE");
+            }
+        }
+    } 
+    
     ////////////////////////////////////////////////////////////////////////////
     //////////////// MESSGES TO PLAYER Node ////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
@@ -206,6 +260,8 @@ public partial class MessageManager : Node2D
         if(SettingsMenuLink != null)
         {
             SettingsMenuLink.showAndEnableMenu();
+            currentMenuState = MenuState.settingsMenu;
+            GD.Print("menu state set to SETTINGS");
         }
     }
     public void HideSettingsPage()
@@ -213,6 +269,8 @@ public partial class MessageManager : Node2D
         if(SettingsMenuLink != null)
         {
             SettingsMenuLink.hideAndDisableMenu();
+            currentMenuState = MenuState.pauseMenu;
+            GD.Print("menu state set to PAUSE");
         }
     }
     public void ShowPauseMenu()
@@ -220,6 +278,8 @@ public partial class MessageManager : Node2D
         if(pauseMenuLink != null)
         {
             pauseMenuLink.show();
+            currentMenuState = MenuState.pauseMenu;
+            GD.Print("menu state set to PAUSE");
         }
     }
     public void LoadLevelWithPath(String levelPath)
