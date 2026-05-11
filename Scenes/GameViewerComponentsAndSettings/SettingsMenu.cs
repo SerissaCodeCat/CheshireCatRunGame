@@ -47,6 +47,7 @@ public partial class SettingsMenu : Control
 		quips.SetValueNoSignal(SoundManager.instance.getQuipVolume());
 
 		resolution.Disabled = true;
+		resolution.ItemSelected += resolutionChanged;
 
 		backButton.Disabled = true;
 		backButton.Pressed += goBackToPauseMenu;
@@ -66,6 +67,7 @@ public partial class SettingsMenu : Control
 		quips.Editable = true;
 		resolution.Disabled = false;
 		backButton.Disabled = false;
+		master.GrabFocus();
 	}
 	public void hideAndDisableMenu()
 	{
@@ -102,6 +104,22 @@ public partial class SettingsMenu : Control
 	private void changeQuipsVolume(double incomingValue)
 	{		
 		SoundManager.instance.changeQuipsVolume(incomingValue);
+	}
+	private void resolutionChanged(long index)
+	{
+		switch (index)
+		{
+			case 0: DisplayServer.WindowSetSize(new Vector2I(1920,1080));
+				break;
+			case 1: DisplayServer.WindowSetSize(new Vector2I(1366,768));
+				break;
+			case 2: DisplayServer.WindowSetSize(new Vector2I(1280,720));
+				break;
+			case 3: DisplayServer.WindowSetSize(new Vector2I(640,360));
+				break;
+			default: 
+				break;
+		}
 	}
 
 }

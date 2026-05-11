@@ -10,7 +10,63 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w4ang"]
 
+[sub_resource type="DPITexture" id="DPITexture_r6poe"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#fefefe\" fill-opacity=\".75\"/></svg>
+"
+
+[sub_resource type="DPITexture" id="DPITexture_1cmsn"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#fefefe\" fill-opacity=\".37\"/></svg>
+"
+
+[sub_resource type="DPITexture" id="DPITexture_a6dx5"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#fefefe\"/></svg>
+"
+
+[sub_resource type="DPITexture" id="DPITexture_w4ang"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"4\" height=\"8\"><path fill=\"#fff\" fill-opacity=\".25\" d=\"M1 0h2v16H1z\"/></svg>
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1s52"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.4)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d8md7"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ytutp"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 6
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f1s52"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4cy0d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n2tq0"]
 
 [resource]
 Button/colors/font_color = Color(0.6156863, 0.12156863, 0.84313726, 1)
@@ -21,9 +77,23 @@ Button/styles/disabled = SubResource("StyleBoxEmpty_r6poe")
 Button/styles/focus = SubResource("StyleBoxEmpty_1cmsn")
 Button/styles/hover = SubResource("StyleBoxEmpty_a6dx5")
 Button/styles/normal = SubResource("StyleBoxEmpty_w4ang")
+HSlider/constants/center_grabber = 0
+HSlider/constants/grabber_offset = 0
+HSlider/constants/tick_offset = 0
+HSlider/icons/grabber = SubResource("DPITexture_r6poe")
+HSlider/icons/grabber_disabled = SubResource("DPITexture_1cmsn")
+HSlider/icons/grabber_highlight = SubResource("DPITexture_a6dx5")
+HSlider/icons/tick = SubResource("DPITexture_w4ang")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_f1s52")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_d8md7")
+HSlider/styles/slider = SubResource("StyleBoxFlat_ytutp")
 Label/colors/font_color = Color(0.6156863, 0.12156863, 0.84313726, 1)
 Label/constants/outline_size = 11
 Label/font_sizes/font_size = 20
 Label/fonts/font = ExtResource("1_r6poe")
 Label/styles/focus = SubResource("StyleBoxEmpty_f1s52")
 OptionButton/constants/modulate_arrow = 1
+OptionButton/font_sizes/font_size = 20
+OptionButton/fonts/font = ExtResource("1_r6poe")
+OptionButton/styles/normal = SubResource("StyleBoxEmpty_4cy0d")
+OptionButton/styles/normal_mirrored = SubResource("StyleBoxEmpty_n2tq0")
