@@ -18,6 +18,10 @@ public partial class SettingsMenu : Control
 	[Export]
 	private Godot.Button backButton;
 	[Export]
+	private Godot.CheckButton fullScreenCheckButton;
+	[Export]
+	private Godot.CheckButton borderlessCheckButton;
+	[Export]
 	private AnimationPlayer AnimationPlayer;
 	private enum settingsMenuAccessedFrom
 	{
@@ -49,6 +53,14 @@ public partial class SettingsMenu : Control
 		resolution.Disabled = true;
 		resolution.ItemSelected += resolutionChanged;
 
+		fullScreenCheckButton.Disabled = true;
+		fullScreenCheckButton.Pressed += EnableDisableFullScreen;
+		fullScreenCheckButton.SetPressedNoSignal(DisplayServer.WindowGetMode() == DisplayServer.WindowMode.Fullscreen);
+
+		borderlessCheckButton.Disabled = true;
+		borderlessCheckButton.Pressed += EnableBorderlessWindow;
+		borderlessCheckButton.SetPressedNoSignal (GetWindow().Borderless == true);
+
 		backButton.Disabled = true;
 		backButton.Pressed += goBackToPauseMenu;
 
@@ -66,6 +78,8 @@ public partial class SettingsMenu : Control
 		soundEffects.Editable = true;
 		quips.Editable = true;
 		resolution.Disabled = false;
+		fullScreenCheckButton.Disabled = false;
+		borderlessCheckButton.Disabled = false;
 		backButton.Disabled = false;
 		master.GrabFocus();
 	}
@@ -78,6 +92,8 @@ public partial class SettingsMenu : Control
 		soundEffects.Editable = false;
 		quips.Editable = false;
 		resolution.Disabled = true;
+		fullScreenCheckButton.Disabled = true;
+		borderlessCheckButton.Disabled = true;
 		backButton.Disabled = true;
 	}
 	public void goBackToPauseMenu()
@@ -121,5 +137,55 @@ public partial class SettingsMenu : Control
 				break;
 		}
 	}
+	private void EnableDisableFullScreen()
+	{
+		if(DisplayServer.WindowGetMode() == DisplayServer.WindowMode.Windowed)
+		{
+			DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
+			//double checks that the button is updated correctly. not nessisary but a good sanity check
+			fullScreenCheckButton.SetPressedNoSignal(true);
+			borderlessCheckButton.SetPressedNoSignal(false);
+			var window = GetWindow();
+			window.Borderless = true;
+		}
+		else
+		{
+			DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+			//double checks that the button is updated correctly. not nessisary but a good sanity check
+			fullScreenCheckButton.SetPressedNoSignal(false);
+		}
 
+	}
+	private void EnableBorderlessWindow()
+	{
+		var window = GetWindow();
+            
+		if (borderlessCheckButton.ButtonPressed == true)
+		{
+			GD.Print("Borderless Activated");
+			if(DisplayServer.WindowGetMode() == DisplayServer.WindowMode.Fullscreen)
+			{
+				GD.Print("Detected full screen currently active");
+				EnableDisableFullScreen();
+			}
+			if ( window.Borderless == false)
+			{
+				GD.Print("window currently borderless. ACTIVATE THE BORDERS");
+				window.Borderless = true;
+			}
+			borderlessCheckButton.SetPressedNoSignal(true);
+		}
+		else
+		{
+			if(DisplayServer.WindowGetMode() == DisplayServer.WindowMode.Fullscreen)
+			{
+				EnableDisableFullScreen();
+			}
+			if ( window.Borderless == true)
+			{
+				window.Borderless = false;
+			}	
+			borderlessCheckButton.SetPressedNoSignal(false);
+		}
+	}
 }

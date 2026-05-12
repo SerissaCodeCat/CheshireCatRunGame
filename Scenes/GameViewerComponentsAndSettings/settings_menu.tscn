@@ -103,7 +103,7 @@ _data = {
 &"Transition": SubResource("Animation_4fxag")
 }
 
-[node name="SettingsMenu" type="Control" unique_id=246042119 node_paths=PackedStringArray("master", "music", "dialogue", "soundEffects", "quips", "resolution", "backButton", "AnimationPlayer")]
+[node name="SettingsMenu" type="Control" unique_id=246042119 node_paths=PackedStringArray("master", "music", "dialogue", "soundEffects", "quips", "resolution", "backButton", "fullScreenCheckButton", "borderlessCheckButton", "AnimationPlayer")]
 process_mode = 3
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
@@ -120,6 +120,8 @@ soundEffects = NodePath("SoundEffectsVolumeSlider")
 quips = NodePath("QuipsVolumeSlider")
 resolution = NodePath("ResolutionOptionButton")
 backButton = NodePath("BackButton")
+fullScreenCheckButton = NodePath("FullScreenCheckButton")
+borderlessCheckButton = NodePath("BorderlessWindowCheckButton")
 AnimationPlayer = NodePath("AnimationPlayer")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1886906304]
@@ -280,6 +282,38 @@ popup/item_2/text = "1280 x 720"
 popup/item_2/id = 2
 popup/item_3/text = "640 x 360"
 popup/item_3/id = 3
+
+[node name="FullScreenLabel" type="Label" parent="." unique_id=1501399077]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 409.0
+offset_right = 315.0
+offset_bottom = 444.0
+theme = ExtResource("1_7ifq0")
+text = "Full Screen"
+
+[node name="FullScreenCheckButton" type="CheckButton" parent="." unique_id=339236263]
+layout_mode = 0
+offset_left = 325.0
+offset_top = 413.0
+offset_right = 369.0
+offset_bottom = 443.0
+
+[node name="BorderlessWindowLabel" type="Label" parent="." unique_id=664390679]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 449.0
+offset_right = 315.0
+offset_bottom = 484.0
+theme = ExtResource("1_7ifq0")
+text = "Borderless"
+
+[node name="BorderlessWindowCheckButton" type="CheckButton" parent="." unique_id=1452029508]
+layout_mode = 0
+offset_left = 325.0
+offset_top = 454.0
+offset_right = 369.0
+offset_bottom = 484.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=153609597]
 libraries/ = SubResource("AnimationLibrary_gd0sm")
