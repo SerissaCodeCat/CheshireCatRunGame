@@ -126,12 +126,16 @@ public partial class SettingsMenu : Control
 		switch (index)
 		{
 			case 0: DisplayServer.WindowSetSize(new Vector2I(1920,1080));
+					MessageManager.instance.SetViewportResolution(1920,1080);
 				break;
 			case 1: DisplayServer.WindowSetSize(new Vector2I(1366,768));
+					MessageManager.instance.SetViewportResolution(1366,768);
 				break;
 			case 2: DisplayServer.WindowSetSize(new Vector2I(1280,720));
+					MessageManager.instance.SetViewportResolution(1280,720);
 				break;
 			case 3: DisplayServer.WindowSetSize(new Vector2I(640,360));
+					MessageManager.instance.SetViewportResolution(640,360);
 				break;
 			default: 
 				break;

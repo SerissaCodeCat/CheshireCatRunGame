@@ -72,4 +72,8 @@ public partial class SubViewportContainer : Godot.SubViewportContainer
 		GD.Print("Level loaded successfully.");
 		MessageManager.instance.setPlayerAsCameraTarget();
 	}
+	public void setResolution(int incomingX = 1920, int incomingY = 1080)
+	{
+		this.SetSize(new Vector2(incomingX, incomingY));
+	}
 }

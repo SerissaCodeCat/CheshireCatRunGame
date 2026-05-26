@@ -294,6 +294,11 @@ public partial class MessageManager : Node2D
         viewportLink.LoadLevel();
     }
 
+    public void SetViewportResolution(int incomingX = 1920, int incomingY = 1080)
+    {
+        viewportLink.setResolution(incomingX, incomingY);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     ///////// DEBUGGING AND CRASH HANDLERS ////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////

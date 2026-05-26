@@ -17,17 +17,25 @@ shader_parameter/camera_offset = Vector2(0, 0)
 [node name="Main" type="Node2D" unique_id=1255911885]
 process_mode = 3
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1238419890]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1238419890 node_paths=PackedStringArray("viewportLink")]
 process_mode = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_pbw6q")
 custom_minimum_size = Vector2(640, 360)
 layout_direction = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
 scale = Vector2(3, 3)
-size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 stretch = true
 script = ExtResource("2_qtlik")
+viewportLink = NodePath("SubViewport")
 startingLevelPath = "res://Scenes/Levels/PlayGroundLevel.tscn"
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1110212667]
@@ -36,6 +44,7 @@ handle_input_locally = false
 canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
 size = Vector2i(640, 360)
+size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=319553014]
@@ -50,6 +59,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -958.0
+offset_bottom = -541.5
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
@@ -150,3 +161,11 @@ process_mode = 3
 [node name="SettingsMenu" parent="CanvasLayer" unique_id=246042119 instance=ExtResource("8_qtlik")]
 
 [node name="PauseMenu" parent="CanvasLayer" unique_id=765613216 instance=ExtResource("8_wl6jr")]
+offset_left = -7.0
+offset_top = 6.0
+offset_right = -7.0
+offset_bottom = 6.0
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=619503854]
+position = Vector2(960, 540)
+limit_enabled = false
