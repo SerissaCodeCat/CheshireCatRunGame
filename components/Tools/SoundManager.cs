@@ -43,7 +43,7 @@ public partial class SoundManager : Node2D
 		if(SoundEffectPoolByName.ContainsKey(name))
 		{
 			SoundEffectPoolByName[name].playAtLocation(x,y);
-			GD.Print("Playing: " + name );
+			//GD.Print("Playing: " + name );
 		}
 		else
 		{
@@ -84,7 +84,7 @@ public partial class SoundManager : Node2D
 	public void changeMasterVolume(double incomingValue)
 	{
 		AudioServer.SetBusVolumeDb(MasterBusIndex, (float)Mathf.LinearToDb(incomingValue));
-		GD.Print("Master Volume set to: " + incomingValue);
+		//GD.Print("Master Volume set to: " + incomingValue);
 	}
 	public double getMasterVolume()
 	{
@@ -93,7 +93,7 @@ public partial class SoundManager : Node2D
 	public void changeMusicVolume(double incomingValue)
 	{
 		AudioServer.SetBusVolumeDb(MusicBusIndex, (float)Mathf.LinearToDb(incomingValue));
-		GD.Print("Music Volume set to: " + incomingValue);
+		//GD.Print("Music Volume set to: " + incomingValue);
 	}
 	public double getMusicVolume()
 	{
@@ -102,7 +102,7 @@ public partial class SoundManager : Node2D
 	public void changeSoundEffectsVolume(double incomingValue)
 	{
 		AudioServer.SetBusVolumeDb(SoundEffectsBusIndex, (float)Mathf.LinearToDb(incomingValue));
-		GD.Print("SoundFX Volume set to: " + incomingValue);
+		//GD.Print("SoundFX Volume set to: " + incomingValue);
 	}
 	public double getSoundEffectsVolume()
 	{
@@ -111,7 +111,7 @@ public partial class SoundManager : Node2D
 	public void changeDialogueVolume(double incomingValue)
 	{
 		AudioServer.SetBusVolumeDb(DialogueBusIndex, (float)Mathf.LinearToDb(incomingValue));
-		GD.Print("Dialogue Volume set to: " + incomingValue);
+		//GD.Print("Dialogue Volume set to: " + incomingValue);
 	}
 	public double getDialogueVolume()
 	{
@@ -120,7 +120,7 @@ public partial class SoundManager : Node2D
 	public void changeQuipsVolume(double incomingValue)
 	{
 		AudioServer.SetBusVolumeDb(QuipsBusIndex, (float)Mathf.LinearToDb(incomingValue));
-		GD.Print("Quips Volume set to: " + incomingValue);
+		//GD.Print("Quips Volume set to: " + incomingValue);
 	}
 	public double getQuipVolume()
 	{

@@ -128,6 +128,11 @@ public partial class PlayerCharacter : CharacterBody2D
         MessageManager.instance.addPlayerToMessageManager(this);
 
     }
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        GD.Print("player with ID of " + this.GetInstanceId() + " has been removed");
+    }
     public override void _PhysicsProcess(double delta)
     {
         finalVelocity = Velocity;
@@ -624,7 +629,7 @@ public partial class PlayerCharacter : CharacterBody2D
     private void enterAirbornState()
     {
         JumpHangingTimeTimer = JumpHangingTime;    
-        GD.Print("Setting JumpHangingTimeTimer to " + JumpHangingTime);    
+        //GD.Print("Setting JumpHangingTimeTimer to " + JumpHangingTime);    
         PlayerState = playerStates.airborn;
     }
     public bool setValues(int incomingHealth = startingHealth)
@@ -655,14 +660,14 @@ public partial class PlayerCharacter : CharacterBody2D
                 //work out the inverse dirrection that the damage is coming from, as a normalized Vector
                 //var tmpVelocity = new Godot.Vector2((this.Position.X - DamageOriginX), (this.Position.Y + DamageOriginY)).Normalized();
                 int tmpx = this.Position.X > DamageOriginX ? 1 : -1;
-                GD.Print("tmpx = " + tmpx);
+                //GD.Print("tmpx = " + tmpx);
                 int tmpy = this.Position.Y > DamageOriginY ? 1 : -1;
                 //if player is on floor always bounce upwards
                 if(IsOnFloor())
                 {
                     tmpy = -1;
                 }
-                GD.Print("tmpy = " + tmpy);
+                //GD.Print("tmpy = " + tmpy);
                 Godot.Vector2 tmpVelocity = new Godot.Vector2(tmpx * HorizontalDamageReboundForce, tmpy * VerticalDamageReboundForce);             
                 Velocity = tmpVelocity;
             }
@@ -670,7 +675,7 @@ public partial class PlayerCharacter : CharacterBody2D
     }
     public void KillPlayer()
     {
-        GD.Print("Player killed by KillZone");
+        //GD.Print("Player killed by KillZone");
         Health = 0;
         MessageManager.instance.sendNewHealthTotalToUI(Health);
         ResetPlayerToSpawnPosition();

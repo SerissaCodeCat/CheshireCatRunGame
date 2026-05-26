@@ -21,7 +21,7 @@ public partial class AudioQueue2D : Node
 	{
 		if(GetChildCount() == 0)
 		{
-			GD.Print("no AudioStreamPlayer2D pressent.");
+			//GD.Print("no AudioStreamPlayer2D pressent.");
 			return;
 		}
 		var child = GetChild(0);

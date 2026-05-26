@@ -281,10 +281,10 @@ public partial class EnemyPatrol : CharacterBody2D
     {
         if (JumpDetectionCast1.IsColliding())
         {
-            GD.Print("jump DetectionCast 1 Colliding");
+            //GD.Print("jump DetectionCast 1 Colliding");
             if (!JumpDetectionCast2.IsColliding())
             {
-                GD.Print("Entering Jump State");
+                //GD.Print("Entering Jump State");
                 CurrentState = CurrentState.jumping;
                 incomingVelocity = new Godot.Vector2(0, -jumpForce);
                 return true;

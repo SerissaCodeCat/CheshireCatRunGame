@@ -34,9 +34,6 @@ buttonLinksTo = NodePath("../Door")
 texture_filter = 1
 position = Vector2(1455, -446)
 
-[node name="Player" parent="." unique_id=701165504 instance=ExtResource("5_hxr1x")]
-position = Vector2(-82, -441)
-
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=375735650]
 texture_filter = 1
 position = Vector2(-113, -623)
@@ -44,10 +41,10 @@ tile_map_data = PackedByteArray("AAADAA0AAAAHAAAAAAAEAA0AAAAHAAAAAAAFAA0AAAAHAAA
 tile_set = ExtResource("6_tqwjp")
 
 [node name="PixelPerfectCamera" parent="." unique_id=1334939066 instance=ExtResource("7_t7rg1")]
-position = Vector2(-61, -480)
+position = Vector2(742, -457)
 
 [node name="Enemy" parent="." unique_id=1093834458 instance=ExtResource("8_fk1me")]
-position = Vector2(364, -431)
+position = Vector2(63, -436)
 
 [node name="Checkpoint" parent="." unique_id=1488813944 instance=ExtResource("9_8itdl")]
 position = Vector2(194, -471)
@@ -64,3 +61,6 @@ position = Vector2(1206, -191)
 [node name="LevelTransition" parent="." unique_id=1970810522 instance=ExtResource("12_qr068")]
 position = Vector2(1755, -447)
 LevelToTransitionTo = "res://Scenes/Levels/PlayGroundLevel.tscn"
+
+[node name="Player" parent="." unique_id=1334160596 instance=ExtResource("5_hxr1x")]
+position = Vector2(-95, -433)

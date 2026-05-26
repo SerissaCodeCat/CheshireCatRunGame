@@ -166,15 +166,15 @@ public partial class SettingsMenu : Control
             
 		if (borderlessCheckButton.ButtonPressed == true)
 		{
-			GD.Print("Borderless Activated");
+			//GD.Print("Borderless Activated");
 			if(DisplayServer.WindowGetMode() == DisplayServer.WindowMode.Fullscreen)
 			{
-				GD.Print("Detected full screen currently active");
+				//GD.Print("Detected full screen currently active");
 				EnableDisableFullScreen();
 			}
 			if ( window.Borderless == false)
 			{
-				GD.Print("window currently borderless. ACTIVATE THE BORDERS");
+				//GD.Print("window currently borderless. ACTIVATE THE BORDERS");
 				window.Borderless = true;
 			}
 			borderlessCheckButton.SetPressedNoSignal(true);

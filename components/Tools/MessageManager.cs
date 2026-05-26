@@ -35,6 +35,7 @@ public partial class MessageManager : Node2D
     }
     public void removeFromEnemyDictionary(ulong enemyInstanceID)
     {
+        enemies[enemyInstanceID].Free();
         enemies.Remove(enemyInstanceID);
         GD.Print("Removed Enemy with ID of: " + enemyInstanceID);
     }
@@ -45,15 +46,13 @@ public partial class MessageManager : Node2D
     }
     public void removeFromInteractableDictionary(ulong buttonInstanceID)
     {
+        interactables[buttonInstanceID].Free();
         interactables.Remove(buttonInstanceID);
         GD.Print("Removed interactable with ID of: " + buttonInstanceID);
     }
     public void addCameraToMessager(PixelPerfectCamera Camera)
     {
-        if (cameraLink == null)
-        {
             cameraLink = Camera;
-        }
     }
     public void addPlayerToMessageManager(PlayerCharacter player)
     {
@@ -72,8 +71,8 @@ public partial class MessageManager : Node2D
     }
     public void flushLevelData()
     {
-        playerMessagerLink = null;
-        cameraLink = null;
+        playerMessagerLink.Free();
+        cameraLink.Free();
         foreach (var x in interactables.Keys)
         {
             removeFromInteractableDictionary(x);
@@ -82,7 +81,7 @@ public partial class MessageManager : Node2D
         {
             removeFromEnemyDictionary(y);
         }
-        enemies = new Dictionary<ulong, EnemyPatrol>();
+        //enemies = new Dictionary<ulong, EnemyPatrol>();
     }
     public void addViewportToMessager(SubViewportContainer incomingViewport)
     {
@@ -292,6 +291,7 @@ public partial class MessageManager : Node2D
         GD.Print("LEVEL TO LOAD = "+levelPath);
         viewportLink.SetNextLevelPath(levelPath);
         viewportLink.LoadLevel();
+        GetTree().Paused = false;
     }
 
     public void SetViewportResolution(int incomingX = 1920, int incomingY = 1080)

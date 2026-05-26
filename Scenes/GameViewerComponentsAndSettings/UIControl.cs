@@ -8,6 +8,7 @@ public partial class UIControl : Control
     private const float EnergyBarHeight = 12.0f;
     private const float EnergyBarMaxLength = 130.0f;
     private Vector2 tmp = new Vector2(EnergyBarHeight, EnergyBarMaxLength);
+    private int currentHealth = 3;
     public override void _Ready()
     {
 
@@ -18,10 +19,10 @@ public partial class UIControl : Control
         HealthPipFills.Add(GetNode<TextureRect>($"HealthPipOne/HealthPipOneFill"));
         HealthPipFills.Add(GetNode<TextureRect>($"HealthPipTwo/HealthPipTwoFill"));
         HealthPipFills.Add(GetNode<TextureRect>($"HealthPipThree/HealthPipThreeFill"));
-        MessageManager.instance.enquireCurrentHealthofPlayer();
 
         EnergyBarFill = GetNode<TextureRect>($"EnergyBarFill");
         setEnergyPercentageTo(MessageManager.instance.GetbulletTimePercentageOfPlayer());
+        setHealthTo(currentHealth);
     }
 
     public void setHealthTo(int incomingHealth)

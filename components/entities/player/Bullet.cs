@@ -105,7 +105,7 @@ public partial class Bullet : CharacterBody2D
                 }
                 else if (previousLocation != GlobalPosition && maxBounces > 0)
                 {
-                    GD.Print("Bouncey ball bounce!");
+                    //GD.Print("Bouncey ball bounce!");
                     //reflect velocity based on collision normal
                     Godot.Vector2 normal = GetSlideCollision(0).GetNormal();
                     currentVelocity = currentVelocity.Bounce(normal) * bounceyBallBounceDamping;
@@ -113,14 +113,14 @@ public partial class Bullet : CharacterBody2D
                 }
                 else if (previousLocation != GlobalPosition && maxBounces == 0)
                 {
-                    GD.Print("Standard bounce!");
+                    //GD.Print("Standard bounce!");
                     Godot.Vector2 normal = GetSlideCollision(0).GetNormal();
                     currentVelocity = currentVelocity.Bounce(normal) * standardBounceDamping;
                     SoundManager.instance.playPossitionalAudio("bulletImpact", GlobalPosition.X, GlobalPosition.Y);
                 }
                 
-                GD.Print("Current Velocity after bounce: " + currentVelocity.ToString());
-                GD.Print("calculated Velocity = " + Math.Abs((Math.Abs(previousLocation.X) - Math.Abs(GlobalPosition.X) + (Math.Abs(previousLocation.Y) - Math.Abs(GlobalPosition.Y)))));
+                //GD.Print("Current Velocity after bounce: " + currentVelocity.ToString());
+                //GD.Print("calculated Velocity = " + Math.Abs((Math.Abs(previousLocation.X) - Math.Abs(GlobalPosition.X) + (Math.Abs(previousLocation.Y) - Math.Abs(GlobalPosition.Y)))));
             }
             previousLocation = GlobalPosition;
             Velocity = currentVelocity;

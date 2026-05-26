@@ -11,7 +11,7 @@ public partial class PixelPerfectCamera : Camera2D
     }
     public void SetCameraTarget(Node2D incomingTarget)
     {
-        GD.Print("Taget Set to" + incomingTarget.Name);
+        GD.Print("Taget Set to" + incomingTarget.Name + "   ID: " + incomingTarget.GetInstanceId());
         Target = incomingTarget;
     }
     public void moveToPosition(Vector2 incomingPosition)
