@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://cxqikj3m1gri5"]
+
+[ext_resource type="Theme" uid="uid://c2m76mplwpoly" path="res://components/Themes/BaseCheshireCatTheme.tres" id="1_upufb"]
+
+[node name="InputButton" type="Button" unique_id=260815070]
+custom_minimum_size = Vector2(0, 18)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+focus_mode = 0
+theme = ExtResource("1_upufb")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=745834201]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_upufb")
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1122527162]
+layout_mode = 2
+
+[node name="LabelAction" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1522500582]
+layout_mode = 2
+mouse_filter = 1
+text = "Action Name"
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer" unique_id=422697057]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="LabelInput" type="Label" parent="MarginContainer/HBoxContainer" unique_id=331333455]
+layout_mode = 2
+mouse_filter = 1
+text = "Input Key"
+vertical_alignment = 1

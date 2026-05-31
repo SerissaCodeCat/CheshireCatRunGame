@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 public partial class SettingsMenu : Control
 {
@@ -23,13 +25,32 @@ public partial class SettingsMenu : Control
 	private Godot.CheckButton borderlessCheckButton;
 	[Export]
 	private AnimationPlayer AnimationPlayer;
+	[Export]
+	private PackedScene InputMappingButton;
+	[Export]
+	private VBoxContainer ActionList; 
+	private Dictionary<String, String> inputActions = new()
+	{
+		["left"] = "Move Left", 
+		["right"] = "Move Right",
+		["up"] = "Move Up",
+		["down"] = "Move Down",
+		["jump"] = "Jump",
+		["teleport"] = "Dash",
+		["crouch"] = "Sneak",
+		["fire"] = "Slingshot",
+	};
 	private enum settingsMenuAccessedFrom
 	{
 		pause,
 		main,
 	}
+	private bool isRemapping = false;
+	private string actionToRemap = null;
+	private Godot.Button remappingButton = null;
 	public override void _Ready()
 	{
+		createActionList();
 		master.Editable = false;
 		master.ValueChanged += changeMasterVolume; 
 		master.SetValueNoSignal(SoundManager.instance.getMasterVolume());
@@ -68,8 +89,79 @@ public partial class SettingsMenu : Control
 		MessageManager.instance.addSettingsMenuToMessageManager(this);
 	}
 
+    private void createActionList()
+	{
+		/////
+		/// following tutorial at:
+		/// https://www.youtube.com/watch?v=ZDPM45cHHlI
+		/////
+		InputMap.LoadFromProjectSettings();
+		foreach(Node x in ActionList.GetChildren())
+		{
+			//ensures action List does not contain any children.
+			x.QueueFree();
+		}
+		foreach(string ActionName in inputActions.Keys)
+		{
+			Node buttonScene = InputMappingButton.Instantiate();
+			Godot.Button actualButton = (Godot.Button)buttonScene;
+			Label actionLabel = buttonScene.GetNode<Label>("MarginContainer/HBoxContainer/LabelAction");
+			Label inputLabel = buttonScene.GetNode<Label>("MarginContainer/HBoxContainer/LabelInput");
 
-	public void showAndEnableMenu()
+			actionLabel.Text = inputActions[ActionName];
+
+			var events = InputMap.ActionGetEvents(ActionName);
+			if (events.Count > 0)
+			{
+				inputLabel.Text = events[0].AsText().TrimSuffix(" - Physical");
+			}
+			else
+			{
+				inputLabel.Text = "...";
+			}
+			ActionList.AddChild(buttonScene);
+			actualButton.Pressed += ()=> {onInputButtonPressed(actualButton, ActionName);};
+		}
+	}
+
+    public void onInputButtonPressed(Godot.Button button, string action)
+    {
+        if (isRemapping == false)
+		{
+			isRemapping = true;
+			actionToRemap = action;
+			remappingButton = button;
+			remappingButton.GetNode<Label>("MarginContainer/HBoxContainer/LabelInput").Text = "Listening For Key...";
+		}
+		//return ()=> {GD.Print("blep");};
+    }
+
+	   public override void _Input(InputEvent @event)
+    {
+        base._Input(@event);
+		if(isRemapping)
+		{
+			if(@event is InputEventKey || (@event is InputEventMouseButton && @event.IsPressed()))
+			{
+				InputMap.ActionEraseEvents(actionToRemap);
+				GD.Print("Erased actions for "+ actionToRemap);
+				InputMap.ActionAddEvent(actionToRemap, @event);
+				GD.Print("Added " +@event.ToString() + " as a trigger for " +actionToRemap);
+				updateActionList(remappingButton, @event);
+
+				isRemapping = false;
+				actionToRemap = null;
+				remappingButton = null;
+			}
+		}
+    }
+
+    private void updateActionList(Godot.Button button, InputEvent @event)
+    {
+        button.GetNode<Label>("MarginContainer/HBoxContainer/LabelInput").Text = @event.AsText().TrimSuffix(" - Physical");
+    }
+
+    public void showAndEnableMenu()
 	{
 		AnimationPlayer.Play("Transition");
 		master.Editable = true;

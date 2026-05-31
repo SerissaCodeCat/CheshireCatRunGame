@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://mggjtbvlb2hg" path="res://Scenes/GameViewerComponentsAndSettings/SettingsMenu.cs" id="1_2skj5"]
 [ext_resource type="Theme" uid="uid://c2m76mplwpoly" path="res://components/Themes/BaseCheshireCatTheme.tres" id="1_7ifq0"]
+[ext_resource type="PackedScene" uid="uid://cxqikj3m1gri5" path="res://Scenes/GameViewerComponentsAndSettings/inputMappingButton.tscn" id="2_4fxag"]
 
 [sub_resource type="Animation" id="Animation_2skj5"]
 length = 0.001
@@ -103,7 +104,7 @@ _data = {
 &"Transition": SubResource("Animation_4fxag")
 }
 
-[node name="SettingsMenu" type="Control" unique_id=246042119 node_paths=PackedStringArray("master", "music", "dialogue", "soundEffects", "quips", "resolution", "backButton", "fullScreenCheckButton", "borderlessCheckButton", "AnimationPlayer")]
+[node name="SettingsMenu" type="Control" unique_id=246042119 node_paths=PackedStringArray("master", "music", "dialogue", "soundEffects", "quips", "resolution", "backButton", "fullScreenCheckButton", "borderlessCheckButton", "AnimationPlayer", "ActionList")]
 process_mode = 3
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
@@ -123,6 +124,8 @@ backButton = NodePath("BackButton")
 fullScreenCheckButton = NodePath("FullScreenCheckButton")
 borderlessCheckButton = NodePath("BorderlessWindowCheckButton")
 AnimationPlayer = NodePath("AnimationPlayer")
+InputMappingButton = ExtResource("2_4fxag")
+ActionList = NodePath("PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1886906304]
 layout_mode = 0
@@ -298,6 +301,7 @@ offset_left = 325.0
 offset_top = 413.0
 offset_right = 369.0
 offset_bottom = 443.0
+theme = ExtResource("1_7ifq0")
 
 [node name="BorderlessWindowLabel" type="Label" parent="." unique_id=664390679]
 layout_mode = 0
@@ -314,6 +318,7 @@ offset_left = 325.0
 offset_top = 454.0
 offset_right = 369.0
 offset_bottom = 484.0
+theme = ExtResource("1_7ifq0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=153609597]
 libraries/ = SubResource("AnimationLibrary_gd0sm")
@@ -327,3 +332,29 @@ offset_bottom = 971.0
 theme = ExtResource("1_7ifq0")
 theme_override_font_sizes/font_size = 57
 text = "BACK"
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1341380109]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 496.0
+offset_right = 828.0
+offset_bottom = 946.0
+theme = ExtResource("1_7ifq0")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=987840541]
+layout_mode = 2
+theme = ExtResource("1_7ifq0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1337690223]
+layout_mode = 2
+theme = ExtResource("1_7ifq0")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=50351018]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_7ifq0")
+
+[node name="ActionList" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer" unique_id=2043280087]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_7ifq0")
