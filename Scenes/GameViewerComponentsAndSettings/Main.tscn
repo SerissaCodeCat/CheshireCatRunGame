@@ -22,7 +22,6 @@ process_mode = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_pbw6q")
 custom_minimum_size = Vector2(640, 360)
-layout_direction = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -41,10 +40,10 @@ startingLevelPath = "res://Scenes/Levels/PlayGroundLevel.tscn"
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1110212667]
 disable_3d = true
 handle_input_locally = false
+vrs_mode = 2
 canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
 size = Vector2i(640, 360)
-size_2d_override_stretch = true
 render_target_update_mode = 4
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=319553014]
@@ -165,7 +164,3 @@ offset_left = -7.0
 offset_top = 6.0
 offset_right = -7.0
 offset_bottom = 6.0
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=619503854]
-position = Vector2(960, 540)
-limit_enabled = false
