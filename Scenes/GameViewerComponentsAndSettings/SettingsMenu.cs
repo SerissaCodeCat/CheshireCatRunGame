@@ -28,6 +28,8 @@ public partial class SettingsMenu : Control
 	[Export]
 	private PackedScene InputMappingButton;
 	[Export]
+	private Godot.Button resetControlsButton;
+	[Export]
 	private VBoxContainer ActionList; 
 	private Dictionary<String, String> inputActions = new()
 	{
@@ -85,6 +87,16 @@ public partial class SettingsMenu : Control
 		backButton.Disabled = true;
 		backButton.Pressed += goBackToPauseMenu;
 
+		foreach(Node x in ActionList.GetChildren())
+		{
+			if(x is Godot.Button button)
+			{
+				button.Disabled = true;
+			}
+		}
+		resetControlsButton.Disabled = true;
+		resetControlsButton.Pressed += resetControlsToDefault;
+
 		//Allow message Manager to access this settings menu
 		MessageManager.instance.addSettingsMenuToMessageManager(this);
 	}
@@ -117,7 +129,7 @@ public partial class SettingsMenu : Control
 			}
 			else
 			{
-				inputLabel.Text = "...";
+				inputLabel.Text = "!!NONE!!";
 			}
 			ActionList.AddChild(buttonScene);
 			actualButton.Pressed += ()=> {onInputButtonPressed(actualButton, ActionName);};
@@ -133,8 +145,12 @@ public partial class SettingsMenu : Control
 			remappingButton = button;
 			remappingButton.GetNode<Label>("MarginContainer/HBoxContainer/LabelInput").Text = "Listening For Key...";
 		}
-		//return ()=> {GD.Print("blep");};
     }
+
+	private void resetControlsToDefault()
+	{
+		createActionList();
+	}
 
 	   public override void _Input(InputEvent @event)
     {
@@ -182,6 +198,15 @@ public partial class SettingsMenu : Control
 		fullScreenCheckButton.Disabled = false;
 		borderlessCheckButton.Disabled = false;
 		backButton.Disabled = false;
+		foreach(Node x in ActionList.GetChildren())
+		{
+			if(x is Godot.Button button)
+			{
+				button.Disabled = false;
+				GD.Print("Enabled remapping button for " + button.GetNode<Label>("MarginContainer/HBoxContainer/LabelAction").Text);
+			}
+		}
+		resetControlsButton.Disabled = false;
 		master.GrabFocus();
 	}
 	public void hideAndDisableMenu()
@@ -196,6 +221,16 @@ public partial class SettingsMenu : Control
 		fullScreenCheckButton.Disabled = true;
 		borderlessCheckButton.Disabled = true;
 		backButton.Disabled = true;
+		foreach(Node x in ActionList.GetChildren())
+		{
+			if(x is Godot.Button button)
+			{
+				button.Disabled = true;
+				GD.Print("Disabled remapping button for " + button.GetNode<Label>("MarginContainer/HBoxContainer/LabelAction").Text);
+			}
+		}
+		resetControlsButton.Disabled = true;
+
 	}
 	public void goBackToPauseMenu()
 	{
@@ -227,16 +262,17 @@ public partial class SettingsMenu : Control
 		switch (index)
 		{
 			case 0: DisplayServer.WindowSetSize(new Vector2I(1920,1080));
-					MessageManager.instance.SetViewportResolution(1920,1080);
+
+					//MessageManager.instance.SetViewportResolution(1920,1080);
 				break;
 			case 1: DisplayServer.WindowSetSize(new Vector2I(1366,768));
-					MessageManager.instance.SetViewportResolution(1366,768);
+					//MessageManager.instance.SetViewportResolution(1366,768);
 				break;
 			case 2: DisplayServer.WindowSetSize(new Vector2I(1280,720));
-					MessageManager.instance.SetViewportResolution(1280,720);
+					//MessageManager.instance.SetViewportResolution(1280,720);
 				break;
 			case 3: DisplayServer.WindowSetSize(new Vector2I(640,360));
-					MessageManager.instance.SetViewportResolution(640,360);
+					//MessageManager.instance.SetViewportResolution(640,360);
 				break;
 			default: 
 				break;

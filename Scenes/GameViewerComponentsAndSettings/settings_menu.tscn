@@ -104,7 +104,7 @@ _data = {
 &"Transition": SubResource("Animation_4fxag")
 }
 
-[node name="SettingsMenu" type="Control" unique_id=246042119 node_paths=PackedStringArray("master", "music", "dialogue", "soundEffects", "quips", "resolution", "backButton", "fullScreenCheckButton", "borderlessCheckButton", "AnimationPlayer", "ActionList")]
+[node name="SettingsMenu" type="Control" unique_id=246042119 node_paths=PackedStringArray("master", "music", "dialogue", "soundEffects", "quips", "resolution", "backButton", "fullScreenCheckButton", "borderlessCheckButton", "AnimationPlayer", "resetControlsButton", "ActionList")]
 process_mode = 3
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
@@ -125,6 +125,7 @@ fullScreenCheckButton = NodePath("FullScreenCheckButton")
 borderlessCheckButton = NodePath("BorderlessWindowCheckButton")
 AnimationPlayer = NodePath("AnimationPlayer")
 InputMappingButton = ExtResource("2_4fxag")
+resetControlsButton = NodePath("PanelContainer/MarginContainer/VBoxContainer/ResetButton")
 ActionList = NodePath("PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1886906304]
@@ -358,3 +359,8 @@ theme = ExtResource("1_7ifq0")
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1_7ifq0")
+
+[node name="ResetButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=488480025]
+layout_mode = 2
+focus_mode = 0
+text = "Reset To Default"
