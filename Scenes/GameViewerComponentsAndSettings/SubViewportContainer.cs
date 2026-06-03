@@ -10,8 +10,6 @@ public partial class SubViewportContainer : Godot.SubViewportContainer
 	[Export]
 	public SubViewport viewportLink {get; set;} = null;
 	[Export]
-	private Control UIControl;
-	[Export]
 	/*
 	starting level path exposed to the editor for easy setup
 	of the initial level to be loaded by the main scene.

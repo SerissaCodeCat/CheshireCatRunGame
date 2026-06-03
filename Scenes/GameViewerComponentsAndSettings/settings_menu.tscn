@@ -107,6 +107,7 @@ _data = {
 [node name="SettingsMenu" type="Control" unique_id=246042119 node_paths=PackedStringArray("master", "music", "dialogue", "soundEffects", "quips", "resolution", "backButton", "fullScreenCheckButton", "borderlessCheckButton", "AnimationPlayer", "resetControlsButton", "ActionList")]
 process_mode = 3
 modulate = Color(1, 1, 1, 0)
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -130,28 +131,26 @@ ActionList = NodePath("PanelContainer/MarginContainer/VBoxContainer/ScrollContai
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1886906304]
 layout_mode = 0
-offset_left = 127.0
-offset_top = 78.0
-offset_right = 1777.0
-offset_bottom = 1003.0
+offset_right = 640.0
+offset_bottom = 360.0
 color = Color(0.060566284, 0.001468397, 0.10062028, 1)
 
 [node name="MasterVolumeLabel" type="Label" parent="." unique_id=943640538]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 86.0
-offset_right = 444.0
-offset_bottom = 121.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 299.0
+offset_bottom = 25.0
 theme = ExtResource("1_7ifq0")
 theme_type_variation = &"DefaultCheshireCatTheme"
 text = "Master Volume"
 
 [node name="MasterVolumeSlider" type="HSlider" parent="." unique_id=1525439748]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 118.0
-offset_right = 1750.0
-offset_bottom = 134.0
+offset_left = 5.0
+offset_top = 24.0
+offset_right = 634.0
+offset_bottom = 40.0
 focus_neighbor_bottom = NodePath("../MusicVolumeSlider")
 theme = ExtResource("1_7ifq0")
 max_value = 1.0
@@ -162,20 +161,20 @@ ticks_position = 3
 
 [node name="MusicVolumeLabel" type="Label" parent="." unique_id=1186016969]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 136.0
-offset_right = 444.0
-offset_bottom = 171.0
+offset_left = 5.0
+offset_top = 40.0
+offset_right = 299.0
+offset_bottom = 60.0
 theme = ExtResource("1_7ifq0")
 theme_type_variation = &"DefaultCheshireCatTheme"
 text = "Music  Volume"
 
 [node name="MusicVolumeSlider" type="HSlider" parent="." unique_id=2103200660]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 168.0
-offset_right = 1750.0
-offset_bottom = 184.0
+offset_left = 5.0
+offset_top = 59.0
+offset_right = 634.0
+offset_bottom = 75.0
 focus_neighbor_top = NodePath("../MasterVolumeSlider")
 focus_neighbor_bottom = NodePath("../SoundEffectsVolumeSlider")
 theme = ExtResource("1_7ifq0")
@@ -187,20 +186,20 @@ ticks_position = 3
 
 [node name="SoundEffectsVolumeLabel" type="Label" parent="." unique_id=1021869451]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 185.0
-offset_right = 444.0
-offset_bottom = 220.0
+offset_left = 5.0
+offset_top = 74.0
+offset_right = 299.0
+offset_bottom = 94.0
 theme = ExtResource("1_7ifq0")
 theme_type_variation = &"DefaultCheshireCatTheme"
 text = "Sound Effects Volume"
 
 [node name="SoundEffectsVolumeSlider" type="HSlider" parent="." unique_id=659982810]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 218.0
-offset_right = 1750.0
-offset_bottom = 234.0
+offset_left = 5.0
+offset_top = 91.0
+offset_right = 634.0
+offset_bottom = 107.0
 focus_neighbor_top = NodePath("../MusicVolumeSlider")
 focus_neighbor_bottom = NodePath("../DialogueVolumeSlider")
 theme = ExtResource("1_7ifq0")
@@ -212,20 +211,20 @@ ticks_position = 3
 
 [node name="DialogueVolumeLabel" type="Label" parent="." unique_id=1975868631]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 230.0
-offset_right = 444.0
-offset_bottom = 265.0
+offset_left = 5.0
+offset_top = 107.0
+offset_right = 299.0
+offset_bottom = 127.0
 theme = ExtResource("1_7ifq0")
 theme_type_variation = &"DefaultCheshireCatTheme"
 text = "Dialogue Volume"
 
 [node name="DialogueVolumeSlider" type="HSlider" parent="." unique_id=1669615346]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 265.0
-offset_right = 1750.0
-offset_bottom = 281.0
+offset_left = 5.0
+offset_top = 126.0
+offset_right = 634.0
+offset_bottom = 142.0
 focus_neighbor_top = NodePath("../SoundEffectsVolumeSlider")
 focus_neighbor_bottom = NodePath("../QuipsVolumeSlider")
 theme = ExtResource("1_7ifq0")
@@ -237,20 +236,20 @@ ticks_position = 3
 
 [node name="QuipsVolumeLabel" type="Label" parent="." unique_id=1136769692]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 283.0
-offset_right = 444.0
-offset_bottom = 318.0
+offset_left = 5.0
+offset_top = 142.0
+offset_right = 299.0
+offset_bottom = 162.0
 theme = ExtResource("1_7ifq0")
 theme_type_variation = &"DefaultCheshireCatTheme"
 text = "Quips Volume"
 
 [node name="QuipsVolumeSlider" type="HSlider" parent="." unique_id=1295284170]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 318.0
-offset_right = 1750.0
-offset_bottom = 334.0
+offset_left = 4.0
+offset_top = 162.0
+offset_right = 634.0
+offset_bottom = 178.0
 focus_neighbor_top = NodePath("../DialogueVolumeSlider")
 focus_neighbor_bottom = NodePath("../ResolutionOptionButton")
 theme = ExtResource("1_7ifq0")
@@ -262,19 +261,19 @@ ticks_position = 3
 
 [node name="ResolutionLabel" type="Label" parent="." unique_id=824582586]
 layout_mode = 0
-offset_left = 153.0
-offset_top = 334.0
-offset_right = 300.0
-offset_bottom = 369.0
+offset_left = 5.0
+offset_top = 178.0
+offset_right = 152.0
+offset_bottom = 198.0
 theme = ExtResource("1_7ifq0")
 text = "Resolution"
 
 [node name="ResolutionOptionButton" type="OptionButton" parent="." unique_id=1383841898]
 layout_mode = 0
-offset_left = 153.0
-offset_top = 364.0
-offset_right = 357.0
-offset_bottom = 406.0
+offset_left = 6.0
+offset_top = 197.0
+offset_right = 210.0
+offset_bottom = 217.0
 theme = ExtResource("1_7ifq0")
 selected = 0
 item_count = 4
@@ -289,36 +288,36 @@ popup/item_3/id = 3
 
 [node name="FullScreenLabel" type="Label" parent="." unique_id=1501399077]
 layout_mode = 0
-offset_left = 153.0
-offset_top = 409.0
-offset_right = 315.0
-offset_bottom = 444.0
+offset_left = 9.0
+offset_top = 221.0
+offset_right = 171.0
+offset_bottom = 241.0
 theme = ExtResource("1_7ifq0")
 text = "Full Screen"
 
 [node name="FullScreenCheckButton" type="CheckButton" parent="." unique_id=339236263]
 layout_mode = 0
-offset_left = 325.0
-offset_top = 413.0
-offset_right = 369.0
-offset_bottom = 443.0
+offset_left = 107.0
+offset_top = 216.0
+offset_right = 151.0
+offset_bottom = 246.0
 theme = ExtResource("1_7ifq0")
 
 [node name="BorderlessWindowLabel" type="Label" parent="." unique_id=664390679]
 layout_mode = 0
-offset_left = 153.0
-offset_top = 449.0
-offset_right = 315.0
-offset_bottom = 484.0
+offset_left = 7.0
+offset_top = 241.0
+offset_right = 169.0
+offset_bottom = 261.0
 theme = ExtResource("1_7ifq0")
 text = "Borderless"
 
 [node name="BorderlessWindowCheckButton" type="CheckButton" parent="." unique_id=1452029508]
 layout_mode = 0
-offset_left = 325.0
-offset_top = 454.0
-offset_right = 369.0
-offset_bottom = 484.0
+offset_left = 107.0
+offset_top = 234.0
+offset_right = 151.0
+offset_bottom = 264.0
 theme = ExtResource("1_7ifq0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=153609597]
@@ -326,20 +325,19 @@ libraries/ = SubResource("AnimationLibrary_gd0sm")
 
 [node name="BackButton" type="Button" parent="." unique_id=1842222987]
 layout_mode = 0
-offset_left = 1539.0
-offset_top = 848.0
-offset_right = 1739.0
-offset_bottom = 971.0
+offset_left = 582.0
+offset_top = 324.0
+offset_right = 632.0
+offset_bottom = 354.0
 theme = ExtResource("1_7ifq0")
-theme_override_font_sizes/font_size = 57
 text = "BACK"
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1341380109]
 layout_mode = 0
-offset_left = 153.0
-offset_top = 496.0
-offset_right = 828.0
-offset_bottom = 946.0
+offset_left = 223.0
+offset_top = 186.0
+offset_right = 582.0
+offset_bottom = 352.0
 theme = ExtResource("1_7ifq0")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=987840541]

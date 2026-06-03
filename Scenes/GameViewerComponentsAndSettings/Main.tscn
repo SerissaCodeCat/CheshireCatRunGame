@@ -37,8 +37,6 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-stretch = true
-stretch_shrink = 3
 script = ExtResource("2_qtlik")
 viewportLink = NodePath("SubViewport")
 startingLevelPath = "res://Scenes/Levels/PlayGroundLevel.tscn"
@@ -47,7 +45,6 @@ startingLevelPath = "res://Scenes/Levels/PlayGroundLevel.tscn"
 disable_3d = true
 handle_input_locally = false
 vrs_mode = 2
-canvas_item_default_texture_filter = 0
 audio_listener_enable_2d = true
 size = Vector2i(640, 360)
 render_target_update_mode = 4
@@ -58,7 +55,11 @@ texture_filter = 1
 texture_repeat = 1
 layout_direction = 2
 layout_mode = 1
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("3_r2ga3")
 
 [node name="HealthPipOne" type="TextureRect" parent="UIControl" unique_id=101746323]
@@ -72,6 +73,7 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 412.0202
 offset_bottom = 210.0
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("4_oa2gu")
 expand_mode = 3
 
@@ -95,10 +97,11 @@ texture_filter = 1
 texture_repeat = 1
 layout_direction = 2
 layout_mode = 1
-offset_left = 252.0
-offset_top = 69.0
-offset_right = 372.0
-offset_bottom = 149.0
+offset_left = 82.0
+offset_top = 28.0
+offset_right = 202.0
+offset_bottom = 108.0
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("6_oytqj")
 expand_mode = 3
 
@@ -122,10 +125,11 @@ texture_filter = 1
 texture_repeat = 1
 layout_direction = 2
 layout_mode = 1
-offset_left = 355.0
-offset_top = 69.0
-offset_right = 475.0
-offset_bottom = 149.0
+offset_left = 113.0
+offset_top = 28.0
+offset_right = 233.0
+offset_bottom = 108.0
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("6_oytqj")
 expand_mode = 3
 
@@ -147,10 +151,11 @@ texture_filter = 1
 texture_repeat = 1
 layout_direction = 2
 layout_mode = 1
-offset_left = 148.0
-offset_top = 154.0
-offset_right = 408.0
-offset_bottom = 178.0
+offset_left = 52.0
+offset_top = 53.000004
+offset_right = 312.0
+offset_bottom = 77.0
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("7_y6xwa")
 expand_mode = 2
 
@@ -161,14 +166,3 @@ layout_mode = 1
 [node name="PauseMenu" parent="." unique_id=765613216 instance=ExtResource("8_wl6jr")]
 z_index = 2
 layout_mode = 1
-offset_left = 14.0
-offset_top = -1.0
-offset_right = 14.0
-offset_bottom = -1.0
-
-[node name="GUI" type="CanvasLayer" parent="." unique_id=319553014]
-process_mode = 3
-follow_viewport_scale = 0.001
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1343167864]
-process_mode = 3
