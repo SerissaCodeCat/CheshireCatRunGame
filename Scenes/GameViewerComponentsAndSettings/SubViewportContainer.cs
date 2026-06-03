@@ -10,6 +10,8 @@ public partial class SubViewportContainer : Godot.SubViewportContainer
 	[Export]
 	public SubViewport viewportLink {get; set;} = null;
 	[Export]
+	private Control UIControl;
+	[Export]
 	/*
 	starting level path exposed to the editor for easy setup
 	of the initial level to be loaded by the main scene.
@@ -74,6 +76,19 @@ public partial class SubViewportContainer : Godot.SubViewportContainer
 	}
 	public void setResolution(int incomingX = 1920, int incomingY = 1080)
 	{
-		this.SetSize(new Vector2(incomingX, incomingY));
+		this.GetParent<Control>().SetSize(new Vector2(incomingX, incomingY));
+		if (incomingX == 1920 && incomingY ==1080)
+		{
+			this.StretchShrink = 3;
+		}
+		if (incomingX == 1280 && incomingY ==720)
+		{
+			this.StretchShrink = 2;
+		}
+		if (incomingX == 640 && incomingY ==360)
+		{
+			this.StretchShrink = 1;
+		}
+		GetTree().Root.ContentScaleSize = new Vector2I(incomingX, incomingY);
 	}
 }

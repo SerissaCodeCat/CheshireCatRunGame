@@ -143,11 +143,20 @@ public partial class SettingsMenu : Control
 		{
 			if(@event is InputEventKey || (@event is InputEventMouseButton && @event.IsPressed()))
 			{
+				//learned somethign new here, compare an event to an event type WHILE assigning it to a variable.
+				if(@event is InputEventMouseButton mouseEvent )
+				{
+					if(mouseEvent.DoubleClick)
+					{
+						mouseEvent.DoubleClick = false;
+					}
+				}
 				InputMap.ActionEraseEvents(actionToRemap);
 				GD.Print("Erased actions for "+ actionToRemap);
 				InputMap.ActionAddEvent(actionToRemap, @event);
 				GD.Print("Added " +@event.ToString() + " as a trigger for " +actionToRemap);
 				updateActionList(remappingButton, @event);
+				AcceptEvent();
 
 				isRemapping = false;
 				actionToRemap = null;

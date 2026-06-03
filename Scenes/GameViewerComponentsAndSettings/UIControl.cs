@@ -5,8 +5,8 @@ public partial class UIControl : Control
 {
     private List<TextureRect> HealthPipFills;
     private TextureRect EnergyBarFill;
-    private const float EnergyBarHeight = 12.0f;
-    private const float EnergyBarMaxLength = 130.0f;
+    private const float EnergyBarHeight = 24.0f;
+    private const float EnergyBarMaxLength = 260.0f;
     private Vector2 tmp = new Vector2(EnergyBarHeight, EnergyBarMaxLength);
     private int currentHealth = 3;
     public override void _Ready()
@@ -46,12 +46,12 @@ public partial class UIControl : Control
     {
         if (incomingPercentageDecimal != 0.0d)
         {
-            tmp = new Vector2(EnergyBarHeight, EnergyBarMaxLength - (float)(EnergyBarMaxLength * (incomingPercentageDecimal)));
+            tmp = new Vector2(EnergyBarMaxLength - (float)(EnergyBarMaxLength * incomingPercentageDecimal), EnergyBarHeight);
         }
         else
         {
-            tmp = new Vector2(EnergyBarHeight, EnergyBarMaxLength);
+            tmp = new Vector2(EnergyBarMaxLength, EnergyBarHeight);
         }
-        EnergyBarFill.SetSize(tmp);
+        EnergyBarFill.SetSize(tmp, true);
     }
 }
