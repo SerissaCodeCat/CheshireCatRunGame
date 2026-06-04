@@ -5,8 +5,8 @@ public partial class UIControl : Control
 {
     private List<TextureRect> HealthPipFills;
     private TextureRect EnergyBarFill;
-    private const float EnergyBarHeight = 24.0f;
-    private const float EnergyBarMaxLength = 260.0f;
+    private const float EnergyBarHeight = 12.0f;
+    private const float EnergyBarMaxLength = 130.0f;
     private Vector2 tmp = new Vector2(EnergyBarHeight, EnergyBarMaxLength);
     private int currentHealth = 3;
     public override void _Ready()

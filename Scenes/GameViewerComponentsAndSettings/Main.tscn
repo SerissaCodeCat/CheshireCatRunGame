@@ -71,11 +71,9 @@ layout_direction = 2
 layout_mode = 1
 offset_left = 10.0
 offset_top = 10.0
-offset_right = 412.0202
-offset_bottom = 210.0
-scale = Vector2(0.3, 0.3)
+offset_right = 209.0
+offset_bottom = 109.0
 texture = ExtResource("4_oa2gu")
-expand_mode = 3
 
 [node name="HealthPipOneFill" type="TextureRect" parent="UIControl/HealthPipOne" unique_id=1148144996]
 z_as_relative = false
@@ -83,12 +81,11 @@ texture_filter = 1
 texture_repeat = 1
 layout_direction = 2
 layout_mode = 1
-offset_left = 141.0
-offset_top = 62.0
-offset_right = 255.0
-offset_bottom = 138.0
+offset_left = 70.0
+offset_top = 30.0
+offset_right = 127.0
+offset_bottom = 68.0
 texture = ExtResource("5_l6dd2")
-expand_mode = 3
 
 [node name="HealthPipTwo" type="TextureRect" parent="UIControl" unique_id=1086004863]
 z_index = 2
@@ -97,13 +94,11 @@ texture_filter = 1
 texture_repeat = 1
 layout_direction = 2
 layout_mode = 1
-offset_left = 82.0
-offset_top = 28.0
-offset_right = 202.0
-offset_bottom = 108.0
-scale = Vector2(0.3, 0.3)
+offset_left = 127.0
+offset_top = 39.0
+offset_right = 187.0
+offset_bottom = 79.0
 texture = ExtResource("6_oytqj")
-expand_mode = 3
 
 [node name="HealthPipTwoFill" type="TextureRect" parent="UIControl/HealthPipTwo" unique_id=511892709]
 z_as_relative = false
@@ -111,39 +106,36 @@ texture_filter = 1
 texture_repeat = 1
 layout_direction = 2
 layout_mode = 1
-offset_left = 2.0
-offset_top = 2.0
-offset_right = 116.0
-offset_bottom = 78.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 58.0
+offset_bottom = 39.0
 texture = ExtResource("5_l6dd2")
-expand_mode = 3
 
-[node name="HealthPipThree" type="TextureRect" parent="UIControl" unique_id=1046802538]
+[node name="HealthPipThree" type="TextureRect" parent="UIControl" unique_id=302715248]
 z_index = 2
 z_as_relative = false
 texture_filter = 1
 texture_repeat = 1
 layout_direction = 2
 layout_mode = 1
-offset_left = 113.0
-offset_top = 28.0
-offset_right = 233.0
-offset_bottom = 108.0
-scale = Vector2(0.3, 0.3)
+offset_left = 176.0
+offset_top = 39.0
+offset_right = 236.0
+offset_bottom = 79.0
 texture = ExtResource("6_oytqj")
-expand_mode = 3
 
-[node name="HealthPipThreeFill" type="TextureRect" parent="UIControl/HealthPipThree" unique_id=1147239342]
+[node name="HealthPipThreeFill" type="TextureRect" parent="UIControl/HealthPipThree" unique_id=1234724184]
+z_as_relative = false
 texture_filter = 1
 texture_repeat = 1
 layout_direction = 2
 layout_mode = 1
-offset_left = 2.0
-offset_top = 2.0
-offset_right = 116.0
-offset_bottom = 78.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 58.0
+offset_bottom = 39.0
 texture = ExtResource("5_l6dd2")
-expand_mode = 3
 
 [node name="EnergyBarFill" type="TextureRect" parent="UIControl" unique_id=1491324255]
 show_behind_parent = true
@@ -151,11 +143,10 @@ texture_filter = 1
 texture_repeat = 1
 layout_direction = 2
 layout_mode = 1
-offset_left = 52.0
-offset_top = 53.000004
-offset_right = 312.0
-offset_bottom = 77.0
-scale = Vector2(0.3, 0.3)
+offset_left = 78.0
+offset_top = 81.0
+offset_right = 208.0
+offset_bottom = 93.0
 texture = ExtResource("7_y6xwa")
 expand_mode = 2
 
