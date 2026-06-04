@@ -133,13 +133,14 @@ shader_parameter/LevelOfDistortion = 0.0
 [node name="PauseMenu" type="Control" unique_id=765613216 node_paths=PackedStringArray("ResumeButton", "OptionsButton", "QuitButton", "MainMenuButton", "AnimationPlayer")]
 process_mode = 3
 modulate = Color(1, 1, 1, 0)
-texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_emv3i")
 ResumeButton = NodePath("Resume")
 OptionsButton = NodePath("Options")
@@ -164,38 +165,41 @@ grow_vertical = 2
 [node name="Resume" type="Button" parent="." unique_id=218381727]
 process_mode = 3
 layout_mode = 0
-offset_left = 315.0
-offset_top = 98.0
-offset_right = 354.0
-offset_bottom = 112.0
+offset_left = 287.0
+offset_top = 79.0
+offset_right = 365.0
+offset_bottom = 107.0
 focus_neighbor_top = NodePath("../Quit")
 focus_neighbor_bottom = NodePath("../Options")
 theme = ExtResource("3_8qhq6")
+theme_override_font_sizes/font_size = 20
 text = "Resume"
 
 [node name="Options" type="Button" parent="." unique_id=1145623136]
 process_mode = 3
 layout_mode = 0
-offset_left = 315.0
-offset_top = 114.0
-offset_right = 354.0
-offset_bottom = 128.0
+offset_left = 288.0
+offset_top = 102.0
+offset_right = 365.0
+offset_bottom = 130.0
 focus_neighbor_top = NodePath("../Resume")
 focus_neighbor_bottom = NodePath("../MainMenu")
 theme = ExtResource("3_8qhq6")
+theme_override_font_sizes/font_size = 20
 text = "Options
 "
 
 [node name="MainMenu" type="Button" parent="." unique_id=81384567]
 process_mode = 3
 layout_mode = 0
-offset_left = 307.0
-offset_top = 129.0
-offset_right = 362.0
-offset_bottom = 143.0
+offset_left = 274.0
+offset_top = 121.0
+offset_right = 383.0
+offset_bottom = 149.0
 focus_neighbor_top = NodePath("../Options")
 focus_neighbor_bottom = NodePath("../Quit")
 theme = ExtResource("3_8qhq6")
+theme_override_font_sizes/font_size = 20
 text = "Main Menu
 "
 icon_alignment = 1
@@ -203,13 +207,14 @@ icon_alignment = 1
 [node name="Quit" type="Button" parent="." unique_id=1853944488]
 process_mode = 3
 layout_mode = 0
-offset_left = 295.0
-offset_top = 145.0
-offset_right = 374.0
-offset_bottom = 159.0
+offset_left = 249.0
+offset_top = 146.0
+offset_right = 406.0
+offset_bottom = 174.0
 focus_neighbor_top = NodePath("../MainMenu")
 focus_neighbor_bottom = NodePath("../Resume")
 theme = ExtResource("3_8qhq6")
+theme_override_font_sizes/font_size = 20
 text = "Quit Application"
 
 [connection signal="pressed" from="Resume" to="." method="_on_resume_pressed"]

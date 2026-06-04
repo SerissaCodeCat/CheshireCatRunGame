@@ -274,6 +274,11 @@ offset_left = 6.0
 offset_top = 197.0
 offset_right = 210.0
 offset_bottom = 217.0
+focus_neighbor_top = NodePath("../QuipsVolumeSlider")
+focus_neighbor_right = NodePath("../PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList")
+focus_neighbor_bottom = NodePath("../FullScreenCheckButton")
+focus_next = NodePath("../FullScreenCheckButton")
+focus_previous = NodePath("../QuipsVolumeSlider")
 theme = ExtResource("1_7ifq0")
 selected = 0
 item_count = 4
@@ -301,6 +306,11 @@ offset_left = 107.0
 offset_top = 216.0
 offset_right = 151.0
 offset_bottom = 246.0
+focus_neighbor_top = NodePath("../ResolutionOptionButton")
+focus_neighbor_right = NodePath("../PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList")
+focus_neighbor_bottom = NodePath("../BorderlessWindowCheckButton")
+focus_next = NodePath("../BorderlessWindowCheckButton")
+focus_previous = NodePath("../ResolutionOptionButton")
 theme = ExtResource("1_7ifq0")
 
 [node name="BorderlessWindowLabel" type="Label" parent="." unique_id=664390679]
@@ -318,6 +328,11 @@ offset_left = 107.0
 offset_top = 234.0
 offset_right = 151.0
 offset_bottom = 264.0
+focus_neighbor_top = NodePath("../FullScreenCheckButton")
+focus_neighbor_right = NodePath("../PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList")
+focus_neighbor_bottom = NodePath("../BackButton")
+focus_next = NodePath("../BackButton")
+focus_previous = NodePath("../FullScreenCheckButton")
 theme = ExtResource("1_7ifq0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=153609597]
@@ -325,10 +340,10 @@ libraries/ = SubResource("AnimationLibrary_gd0sm")
 
 [node name="BackButton" type="Button" parent="." unique_id=1842222987]
 layout_mode = 0
-offset_left = 582.0
-offset_top = 324.0
-offset_right = 632.0
-offset_bottom = 354.0
+offset_left = 10.0
+offset_top = 321.0
+offset_right = 60.0
+offset_bottom = 351.0
 theme = ExtResource("1_7ifq0")
 text = "BACK"
 

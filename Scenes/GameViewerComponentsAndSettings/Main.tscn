@@ -74,6 +74,7 @@ offset_top = 10.0
 offset_right = 209.0
 offset_bottom = 109.0
 texture = ExtResource("4_oa2gu")
+expand_mode = 1
 
 [node name="HealthPipOneFill" type="TextureRect" parent="UIControl/HealthPipOne" unique_id=1148144996]
 z_as_relative = false
