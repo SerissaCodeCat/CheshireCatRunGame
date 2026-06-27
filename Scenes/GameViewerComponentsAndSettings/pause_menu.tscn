@@ -177,6 +177,7 @@ text = "Resume"
 
 [node name="Options" type="Button" parent="." unique_id=1145623136]
 process_mode = 3
+texture_filter = 2
 layout_mode = 0
 offset_left = 288.0
 offset_top = 102.0
@@ -188,6 +189,7 @@ theme = ExtResource("3_8qhq6")
 theme_override_font_sizes/font_size = 20
 text = "Options
 "
+autowrap_trim_flags = 192
 
 [node name="MainMenu" type="Button" parent="." unique_id=81384567]
 process_mode = 3

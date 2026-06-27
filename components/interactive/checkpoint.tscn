@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bq8ku8833m08m"]
+[gd_scene format=3 uid="uid://bq8ku8833m08m"]
 
 [ext_resource type="Script" uid="uid://dhnex85bspmgc" path="res://components/interactive/CheckpointVersion1.cs" id="1_yqk2i"]
 [ext_resource type="Texture2D" uid="uid://chr5x4itl1h64" path="res://Images/Static/StaticScenery/catscratchCheckpointIcon.png" id="2_w4hu3"]
@@ -6,20 +6,23 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_018bq"]
 size = Vector2(66, 114)
 
-[node name="Checkpoint" type="Node2D"]
+[node name="Checkpoint" type="Node2D" unique_id=981709714]
 script = ExtResource("1_yqk2i")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2084964651]
 light_mask = 0
 visibility_layer = 2
 z_index = 4
 texture = ExtResource("2_w4hu3")
 
-[node name="ActivationDetectionBox" type="Area2D" parent="."]
+[node name="ActivationDetectionBox" type="Area2D" parent="." unique_id=1710317200]
 collision_layer = 0
 collision_mask = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationDetectionBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationDetectionBox" unique_id=396843817]
 texture_filter = 1
 position = Vector2(0, 7)
 shape = SubResource("RectangleShape2D_018bq")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1739955904]
+rect = Rect2(-34, -51, 68, 116)

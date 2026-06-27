@@ -314,6 +314,8 @@ focus_previous = NodePath("../ResolutionOptionButton")
 theme = ExtResource("1_7ifq0")
 
 [node name="BorderlessWindowLabel" type="Label" parent="." unique_id=664390679]
+texture_filter = 2
+texture_repeat = 1
 layout_mode = 0
 offset_left = 7.0
 offset_top = 241.0

@@ -19,3 +19,6 @@ collision_mask = 17
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationDetectionBox" unique_id=1906094560]
 position = Vector2(5.5, -0.5)
 shape = SubResource("RectangleShape2D_gckbm")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1672487769]
+rect = Rect2(-21, -31, 53, 62)

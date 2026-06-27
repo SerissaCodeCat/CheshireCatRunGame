@@ -143,7 +143,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wvsyj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }, {
@@ -166,7 +166,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_evpoc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"jumping",
 "speed": 5.0
 }, {
@@ -207,7 +207,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_brte2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walking",
 "speed": 5.0
 }]
@@ -292,3 +292,7 @@ rotation = -1.5707964
 shape = SubResource("RectangleShape2D_s0g8k")
 target_position = Vector2(-2.3841858e-07, 4)
 collision_mask = 40
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=678983262]
+position = Vector2(1, 6)
+rect = Rect2(-13, -16, 23, 27)

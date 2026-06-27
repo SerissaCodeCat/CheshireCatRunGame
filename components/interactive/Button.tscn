@@ -29,3 +29,5 @@ texture = ExtResource("1_0y6xt")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=852017264]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_wf5r1")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1883618021]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bexu47ev2tjf3"]
+[gd_scene format=3 uid="uid://bexu47ev2tjf3"]
 
 [ext_resource type="Texture2D" uid="uid://lvsj0sol8gnb" path="res://Images/Static/StaticScenery/SpikeTrapPlaceHolder.png" id="1_1g3ie"]
 [ext_resource type="Script" uid="uid://c7uo0tndh422i" path="res://components/interactive/SpikeTrap.cs" id="1_cg2an"]
@@ -9,25 +9,29 @@ size = Vector2(64, 22)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qqmwi"]
 size = Vector2(64, 20)
 
-[node name="Spike Trap" type="Node2D"]
+[node name="Spike Trap" type="Node2D" unique_id=1357004140]
 script = ExtResource("1_cg2an")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=191291190]
 position = Vector2(0, -32)
 texture = ExtResource("1_1g3ie")
 
-[node name="ActivationDetectionBox" type="Area2D" parent="."]
+[node name="ActivationDetectionBox" type="Area2D" parent="." unique_id=507759304]
 collision_layer = 0
 collision_mask = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationDetectionBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationDetectionBox" unique_id=1830971881]
 position = Vector2(0, -51)
 shape = SubResource("RectangleShape2D_cg2an")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2001181065]
 collision_layer = 8
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=2102897824]
 position = Vector2(0, -50)
 shape = SubResource("RectangleShape2D_qqmwi")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=479941696]
+position = Vector2(23, -9)
+rect = Rect2(-56, -54, 66, 64)
