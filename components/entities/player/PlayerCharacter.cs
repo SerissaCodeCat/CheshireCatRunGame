@@ -1,6 +1,4 @@
-using System.Runtime.CompilerServices;
 using Godot;
-using Godot.NativeInterop;
 
 public partial class PlayerCharacter : CharacterBody2D
 {
@@ -106,6 +104,8 @@ public partial class PlayerCharacter : CharacterBody2D
     private bool damagable;
 
     private Vector2 spawnPosition = new Vector2(0, 0);
+    private double previousPercentage;
+
     public override void _Ready()
     {
         base._Ready();
@@ -199,7 +199,12 @@ public partial class PlayerCharacter : CharacterBody2D
         {
             bulletTimer = 0.0d;
         }
-        MessageManager.instance.sendEnegyPercentageTotalToUI(GetbulletTimePercentageDecimal());
+        double percentage = GetbulletTimePercentageDecimal();
+        if (percentage != previousPercentage)
+        {
+            previousPercentage = percentage;
+            MessageManager.instance.sendEnegyPercentageTotalToUI(percentage);
+        }
         MoveAndSlide();
     }
     private void doGroundedPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
@@ -366,7 +371,7 @@ public partial class PlayerCharacter : CharacterBody2D
         //if touching ground, refresh cyote timer, if not, decrease it
         cyoteTimer = IsOnFloor() ? CyoteTime : -incomingDelta;
 
-        if (cyoteTimer == 0.0d)
+        if (cyoteTimer <= 0.0d)
         {
             teleportAvailiable = true;
             doubleJumpAvailiable = true;
@@ -705,7 +710,7 @@ public partial class PlayerCharacter : CharacterBody2D
     {
         for (int i = 0; i < GetSlideCollisionCount(); i++)
         {
-            if (GetSlideCollision(i).GetCollider().GetType().FullName == "Godot.TileMapLayer")
+            if (GetSlideCollision(i).GetCollider() is TileMapLayer)
             {
                 wallToRight = GetSlideCollision(i).GetNormal().X > 0 ? false : true;
                 //cast the wall detection ray out to the side that the wall is on

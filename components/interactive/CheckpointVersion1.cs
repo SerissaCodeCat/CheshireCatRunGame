@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class CheckpointVersion1 : Node2D
 {
@@ -10,11 +9,6 @@ public partial class CheckpointVersion1 : Node2D
 		detectionBox = GetNode<Area2D>($"ActivationDetectionBox");
         detectionBox.BodyEntered += (body) => PlayerEnteredDetectionBox(body);
     }
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 
 	private void PlayerEnteredDetectionBox(Node2D body)
     {

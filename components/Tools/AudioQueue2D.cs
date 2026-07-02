@@ -2,7 +2,6 @@
 
 using Godot;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 
 [Tool]
 public partial class AudioQueue2D : Node
@@ -35,10 +34,6 @@ public partial class AudioQueue2D : Node
 				_audioStreamPlayers.Add(duplicate); 
 			}
 		}
-	}
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
 	}
 
 	public override string[] _GetConfigurationWarnings()

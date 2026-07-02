@@ -76,23 +76,22 @@ public partial class Bullet : CharacterBody2D
                 currentVelocity.X = Mathf.MoveToward(currentVelocity.X, 0, deceleration);
             }
 
-            //Velocity = currentVelocity;
-            //MoveAndSlide();
+            Velocity = currentVelocity;
+            MoveAndSlide();
             int tempCollisionCount = GetSlideCollisionCount();
             if (tempCollisionCount != 0)
             {
                 for (int i = 0; i < tempCollisionCount; i++)
                 {
                     KinematicCollision2D tmp = GetSlideCollision(i);
-                    GD.Print("Hit " + (tmp.GetCollider() as Node2D).Name.ToString());
-                    if ((tmp.GetCollider() as Node2D).Name.ToString().Contains("Enemy"))
+                    if (tmp.GetCollider() is Node2D collider)
                     {
-                        MessageManager.instance.stunEnemyWithID(tmp.GetColliderId());
+                        string colliderName = collider.Name;
+                        if (colliderName.Contains("Enemy"))
+                            MessageManager.instance.stunEnemyWithID(tmp.GetColliderId());
+                        else if (colliderName.Contains("Button"))
+                            MessageManager.instance.activateInteractableWithID(tmp.GetColliderId());
                     }
-                    else if ((tmp.GetCollider() as Node2D).Name.ToString().Contains("Button"))
-                    {
-                        MessageManager.instance.activateInteractableWithID(tmp.GetColliderId());
-                    }             
                 }
 
                 if (Math.Abs((Math.Abs(previousLocation.X) - Math.Abs(GlobalPosition.X) + (Math.Abs(previousLocation.Y) - Math.Abs(GlobalPosition.Y)))) <= 0.2f)
@@ -123,8 +122,7 @@ public partial class Bullet : CharacterBody2D
                 //GD.Print("calculated Velocity = " + Math.Abs((Math.Abs(previousLocation.X) - Math.Abs(GlobalPosition.X) + (Math.Abs(previousLocation.Y) - Math.Abs(GlobalPosition.Y)))));
             }
             previousLocation = GlobalPosition;
-            Velocity = currentVelocity;
-            MoveAndSlide();
+
         }
         if ((timeAlive += delta) >= lifespan)
         {
