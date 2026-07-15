@@ -6,6 +6,7 @@
 
 [sub_resource type="Animation" id="Animation_bpi0q"]
 resource_name = "PauseAnimation"
+length = 0.25
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -13,9 +14,9 @@ tracks/0/path = NodePath("BlurFilter:material:shader_parameter/LevelOfDistortion
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 2),
+"handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.8, -0.16666667, -0.13333334, 0, 0),
-"times": PackedFloat32Array(0, 1)
+"times": PackedFloat32Array(0, 0.25)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
@@ -24,9 +25,9 @@ tracks/1/path = NodePath(".:modulate:r")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 2),
+"handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
+"times": PackedFloat32Array(0, 0.25)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
@@ -35,9 +36,9 @@ tracks/2/path = NodePath(".:modulate:g")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 2),
+"handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
+"times": PackedFloat32Array(0, 0.25)
 }
 tracks/3/type = "bezier"
 tracks/3/imported = false
@@ -46,9 +47,9 @@ tracks/3/path = NodePath(".:modulate:b")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"handle_modes": PackedInt32Array(0, 2),
+"handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.16666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 1)
+"times": PackedFloat32Array(0, 0.25)
 }
 tracks/4/type = "bezier"
 tracks/4/imported = false
@@ -57,9 +58,9 @@ tracks/4/path = NodePath(".:modulate:a")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"handle_modes": PackedInt32Array(0, 2),
+"handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.16666667, -0.16666667, 0, 0),
-"times": PackedFloat32Array(0, 1)
+"times": PackedFloat32Array(0, 0.25)
 }
 
 [sub_resource type="Animation" id="Animation_vmyb1"]
@@ -165,10 +166,10 @@ grow_vertical = 2
 [node name="Resume" type="Button" parent="." unique_id=218381727]
 process_mode = 3
 layout_mode = 0
-offset_left = 287.0
-offset_top = 79.0
-offset_right = 365.0
-offset_bottom = 107.0
+offset_left = 260.0
+offset_top = 101.0
+offset_right = 380.0
+offset_bottom = 129.0
 focus_neighbor_top = NodePath("../Quit")
 focus_neighbor_bottom = NodePath("../Options")
 theme = ExtResource("3_8qhq6")
@@ -179,10 +180,10 @@ text = "Resume"
 process_mode = 3
 texture_filter = 2
 layout_mode = 0
-offset_left = 288.0
-offset_top = 102.0
-offset_right = 365.0
-offset_bottom = 130.0
+offset_left = 250.0
+offset_top = 134.0
+offset_right = 390.0
+offset_bottom = 162.0
 focus_neighbor_top = NodePath("../Resume")
 focus_neighbor_bottom = NodePath("../MainMenu")
 theme = ExtResource("3_8qhq6")
@@ -194,10 +195,10 @@ autowrap_trim_flags = 192
 [node name="MainMenu" type="Button" parent="." unique_id=81384567]
 process_mode = 3
 layout_mode = 0
-offset_left = 274.0
-offset_top = 121.0
-offset_right = 383.0
-offset_bottom = 149.0
+offset_left = 230.0
+offset_top = 169.0
+offset_right = 410.0
+offset_bottom = 197.0
 focus_neighbor_top = NodePath("../Options")
 focus_neighbor_bottom = NodePath("../Quit")
 theme = ExtResource("3_8qhq6")
@@ -209,10 +210,10 @@ icon_alignment = 1
 [node name="Quit" type="Button" parent="." unique_id=1853944488]
 process_mode = 3
 layout_mode = 0
-offset_left = 249.0
-offset_top = 146.0
-offset_right = 406.0
-offset_bottom = 174.0
+offset_left = 160.0
+offset_top = 205.0
+offset_right = 480.0
+offset_bottom = 233.0
 focus_neighbor_top = NodePath("../MainMenu")
 focus_neighbor_bottom = NodePath("../Resume")
 theme = ExtResource("3_8qhq6")
