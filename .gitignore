@@ -1,2 +1,6 @@
 # Godot 4+ specific ignores
 .godot/
+
+# Temporary project file backups (e.g. from editor/SDK upgrades)
+*.csproj.old
+*.csproj.old.*
