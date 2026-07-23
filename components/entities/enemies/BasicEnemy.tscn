@@ -230,8 +230,8 @@ size = Vector2(21, 24)
 [node name="Enemy" type="CharacterBody2D" unique_id=1172901401]
 texture_filter = 1
 texture_repeat = 1
-collision_layer = 200
-collision_mask = 200
+collision_layer = 104
+collision_mask = 232
 floor_stop_on_slope = false
 script = ExtResource("1_2ofwc")
 Speed = 175.0

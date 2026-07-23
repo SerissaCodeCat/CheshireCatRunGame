@@ -18,7 +18,7 @@ texture = ExtResource("1_1g3ie")
 
 [node name="ActivationDetectionBox" type="Area2D" parent="." unique_id=507759304]
 collision_layer = 0
-collision_mask = 16
+collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationDetectionBox" unique_id=1830971881]
 position = Vector2(0, -51)

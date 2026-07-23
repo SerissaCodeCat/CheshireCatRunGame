@@ -36,7 +36,6 @@ public partial class PlayerCharacter : CharacterBody2D
     private CollisionShape2D CrouchingCollision;
     private ShapeCast2D ShapeCastCeilingCheck;
     private ShapeCast2D ShapeCastWallCheck;
-    private AudioListener2D soundListener;
 
 
     /// <Floats>
@@ -108,7 +107,6 @@ public partial class PlayerCharacter : CharacterBody2D
 
     public override void _Ready()
     {
-        MessageManager.instance.addPlayerToMessageManager(this);
         base._Ready();
         sprite_2d = GetNode<AnimatedSprite2D>($"Sprite2D");
         StandingCollision = GetNode<CollisionShape2D>($"CollisionShapeStanding");
@@ -119,13 +117,12 @@ public partial class PlayerCharacter : CharacterBody2D
         aimingLynchpin = GetNode<Node2D>($"aimingLynchpin");
         aimingDirrection = GetNode<Node2D>($"aimingLynchpin/aimingDirection");
         aimingSprite = GetNode<Sprite2D>($"aimingLynchpin/aimingSprite");
-        soundListener = GetNode<AudioListener2D>($"AudioListener2D");
         aimingSprite.Visible = false;
         damagable = true;
         cyoteTimer = CyoteTime;
         teleportTimer = teleportTimerReset;
         clingTimer = clingTimerReset;
-        soundListener.MakeCurrent();
+        MessageManager.instance.addPlayerToMessageManager(this);
     }
     public override void _ExitTree()
     {
