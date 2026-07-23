@@ -269,7 +269,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ijgwl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"crouching",
 "speed": 20.0
 }, {
@@ -307,7 +307,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wlq6q")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 20.0
 }, {
@@ -330,7 +330,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5sqv7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"doubleJump",
 "speed": 20.0
 }, {
@@ -356,7 +356,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b4ajq")
 }],
-"loop": true,
+"loop": 1,
 "name": &"endDashing",
 "speed": 10.0
 }, {
@@ -364,7 +364,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1_knf71")
 }],
-"loop": true,
+"loop": 1,
 "name": &"jumping",
 "speed": 5.0
 }, {
@@ -405,7 +405,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_84gyu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"running",
 "speed": 20.0
 }, {
@@ -431,7 +431,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hqclc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"startDashing",
 "speed": 10.0
 }]
@@ -447,10 +447,12 @@ size = Vector2(21, 14)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mfnvq"]
 
 [node name="Player" type="CharacterBody2D" unique_id=1334160596]
+light_mask = 64
+visibility_layer = 64
 texture_filter = 1
 texture_repeat = 1
-collision_layer = 16
-collision_mask = 232
+collision_layer = 32
+collision_mask = 200
 script = ExtResource("1_qa2ox")
 Speed = 200.0
 Acceleration = 5.0
@@ -505,6 +507,3 @@ target_position = Vector2(15, 0)
 max_results = 2
 collision_mask = 8
 collide_with_areas = true
-
-[node name="AudioListener2D" type="AudioListener2D" parent="." unique_id=1522980788]
-current = true

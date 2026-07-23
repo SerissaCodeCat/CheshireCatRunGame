@@ -43,7 +43,7 @@ tile_map_data = PackedByteArray("AAADAA0AAAAHAAAAAAAEAA0AAAAHAAAAAAAFAA0AAAAHAAA
 tile_set = ExtResource("6_gy3ny")
 
 [node name="PixelPerfectCamera" parent="." unique_id=1368281936 instance=ExtResource("7_ubr2o")]
-position = Vector2(106, -662)
+position = Vector2(846, -519)
 
 [node name="Checkpoint" parent="." unique_id=544731840 instance=ExtResource("9_ogptx")]
 position = Vector2(995, -513)

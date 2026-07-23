@@ -60,7 +60,6 @@ public partial class MessageManager : Node2D
         {
             playerMessagerLink = player;
             player.setValues(3);
-
         }
         else
         {
@@ -224,9 +223,17 @@ public partial class MessageManager : Node2D
             GD.Print("No player character to link camera to!");
     }
     //useful for zooming the camera to a point of interest
-    public void setCameraTarget(Node2D target)
+    public void setCameraTarget(Node2D target = null)
     {
-        cameraLink.SetCameraTarget(target);
+        if (target == null)
+        {
+            setPlayerAsCameraTarget();
+            GD.Print("No target to set camera to! Setting camera to player!");
+        }
+        else
+        {
+            cameraLink.SetCameraTarget(target);
+        }
     }
     //move camera instantly to location. no smoothing.
     public void SetCameraPosition(Vector2 incomingPosition)

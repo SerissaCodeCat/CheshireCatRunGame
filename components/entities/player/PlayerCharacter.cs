@@ -108,6 +108,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
     public override void _Ready()
     {
+        MessageManager.instance.addPlayerToMessageManager(this);
         base._Ready();
         sprite_2d = GetNode<AnimatedSprite2D>($"Sprite2D");
         StandingCollision = GetNode<CollisionShape2D>($"CollisionShapeStanding");
@@ -125,8 +126,6 @@ public partial class PlayerCharacter : CharacterBody2D
         teleportTimer = teleportTimerReset;
         clingTimer = clingTimerReset;
         soundListener.MakeCurrent();
-        MessageManager.instance.addPlayerToMessageManager(this);
-
     }
     public override void _ExitTree()
     {
