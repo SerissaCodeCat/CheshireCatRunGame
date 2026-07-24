@@ -248,13 +248,22 @@ position = Vector2(-0.5, 4)
 shape = SubResource("RectangleShape2D_qhpou")
 
 [node name="DetectionAreaRight" type="Area2D" parent="." unique_id=570073131]
-visible = false
 collision_layer = 0
 collision_mask = 32
 
 [node name="CollisionShapeSight" type="CollisionShape2D" parent="DetectionAreaRight" unique_id=1928272135]
 light_mask = 0
 position = Vector2(108.75, 2)
+shape = SubResource("RectangleShape2D_j2p43")
+
+[node name="DetectionAreaLeft" type="Area2D" parent="." unique_id=1539388555]
+collision_layer = 0
+collision_mask = 32
+monitoring = false
+
+[node name="CollisionShapeSight" type="CollisionShape2D" parent="DetectionAreaLeft" unique_id=140371340]
+light_mask = 0
+position = Vector2(-108.75, 2)
 shape = SubResource("RectangleShape2D_j2p43")
 
 [node name="HurtBox2D" type="Area2D" parent="." unique_id=1346467019]
@@ -266,31 +275,58 @@ collision_mask = 32
 position = Vector2(-0.5, 4)
 shape = SubResource("RectangleShape2D_g5khf")
 
-[node name="EdgeDetectionShapeCast2D" type="ShapeCast2D" parent="." unique_id=1455965491]
+[node name="EdgeDetectionShapeCast2DRight" type="ShapeCast2D" parent="." unique_id=1455965491]
 position = Vector2(15, 1)
 shape = SubResource("RectangleShape2D_d2e2n")
 target_position = Vector2(0, 10)
 collision_mask = 8
 
-[node name="JumpablePlatformShapeCast2D" type="ShapeCast2D" parent="." unique_id=499604832]
+[node name="JumpablePlatformShapeCast2DRight" type="ShapeCast2D" parent="." unique_id=499604832]
 position = Vector2(0, -19)
 rotation = -1.5707964
 shape = SubResource("RectangleShape2D_ibegj")
 target_position = Vector2(0, 28)
 collision_mask = 8
 
-[node name="JumpablePlatformShapeCast2D2" type="ShapeCast2D" parent="." unique_id=1677464256]
+[node name="JumpablePlatformShapeCast2D2Right" type="ShapeCast2D" parent="." unique_id=1677464256]
 position = Vector2(1, -43)
 rotation = -1.5707964
 shape = SubResource("RectangleShape2D_ibegj")
 target_position = Vector2(0, 28)
 collision_mask = 8
 
-[node name="WallDetectionShapeCast2D" type="ShapeCast2D" parent="." unique_id=1364444524]
+[node name="WallDetectionShapeCast2DRight" type="ShapeCast2D" parent="." unique_id=1364444524]
 position = Vector2(20, 1)
 rotation = -1.5707964
 shape = SubResource("RectangleShape2D_s0g8k")
 target_position = Vector2(-2.3841858e-07, 4)
+collision_mask = 72
+
+[node name="EdgeDetectionShapeCast2DLeft" type="ShapeCast2D" parent="." unique_id=192101241]
+position = Vector2(-15, 1)
+shape = SubResource("RectangleShape2D_d2e2n")
+target_position = Vector2(0, 10)
+collision_mask = 8
+
+[node name="JumpablePlatformShapeCast2DLeft" type="ShapeCast2D" parent="." unique_id=1367056432]
+position = Vector2(0, -19)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_ibegj")
+target_position = Vector2(0, -28)
+collision_mask = 8
+
+[node name="JumpablePlatformShapeCast2D2Left" type="ShapeCast2D" parent="." unique_id=516857202]
+position = Vector2(1, -43)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_ibegj")
+target_position = Vector2(0, -28)
+collision_mask = 8
+
+[node name="WallDetectionShapeCast2DLeft" type="ShapeCast2D" parent="." unique_id=1066248064]
+position = Vector2(-20, 1)
+rotation = -1.5707964
+shape = SubResource("RectangleShape2D_s0g8k")
+target_position = Vector2(0, -4)
 collision_mask = 72
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=678983262]

@@ -67,6 +67,7 @@ position = Vector2(345, -472)
 
 [node name="Enemy4" parent="." unique_id=1964040214 instance=ExtResource("8_2f6ep")]
 position = Vector2(945, -137)
+direction = false
 
 [node name="Enemy5" parent="." unique_id=308457700 instance=ExtResource("8_2f6ep")]
 position = Vector2(203, -474)

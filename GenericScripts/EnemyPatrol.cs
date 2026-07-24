@@ -40,6 +40,8 @@ public partial class EnemyPatrol : CharacterBody2D
     private bool canJump = false;
     [Export]
     private float jumpForce = 250.0f;
+    [Export]
+    private bool faceLeftAtStart = false;
 
     private const double changeDirectionTimer = 0.5d;
     private double changeDirectionTimerCurrent;
@@ -51,14 +53,18 @@ public partial class EnemyPatrol : CharacterBody2D
     private bool onBreak = false;
     private Godot.Vector2 Stop = new Godot.Vector2(0, 0);
     private CollisionShape2D CollisionBody;
-    private ShapeCast2D EdgeDetectionCast;
-    private ShapeCast2D WallDetectionCast;
-    private ShapeCast2D JumpDetectionCast1;
-    private ShapeCast2D JumpDetectionCast2;
+    private ShapeCast2D EdgeDetectionCastRight;
+    private ShapeCast2D WallDetectionCastRight;
+    private ShapeCast2D JumpDetectionCast1Right;
+    private ShapeCast2D JumpDetectionCast2Right;
+    private ShapeCast2D EdgeDetectionCastLeft;
+    private ShapeCast2D WallDetectionCastLeft;
+    private ShapeCast2D JumpDetectionCast1Left;
+    private ShapeCast2D JumpDetectionCast2Left;
     private Area2D AreaDetectionRight;
+    private Area2D AreaDetectionLeft;
     private Area2D HurtBox;
 
-    private Shape2D detectionShapeRight;
     public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
     private Random rnd = new Random();
     private AnimatedSprite2D sprite_2d;
@@ -73,7 +79,7 @@ public partial class EnemyPatrol : CharacterBody2D
     private bool stunned = false;
     private double stunTimer = 0.0d;
     private double flashTimer = 0.0d;
-    private Godot.Vector2 aboutFace;
+    //private Godot.Vector2 aboutFace;
 
     private bool PlayerInHurtbox;
 
@@ -83,25 +89,49 @@ public partial class EnemyPatrol : CharacterBody2D
     public override void _Ready()
     {
 
+        //initial set up to face right and monitor for players on the right.
         AreaDetectionRight = GetNode<Area2D>($"DetectionAreaRight");
         AreaDetectionRight.BodyEntered += (body) => DetectPlayer(body);
+        AreaDetectionLeft = GetNode<Area2D>($"DetectionAreaLeft");
+        AreaDetectionLeft.BodyEntered += (body) => DetectPlayer(body);
+        AreaDetectionLeft.Monitoring = false;
+        AreaDetectionRight.Monitoring = true;
+
         HurtBox = GetNode<Area2D>($"HurtBox2D");
         HurtBox.BodyEntered += (body) => PlayerEnteredHurtbox(body);
         PlayerInHurtbox = false;
         sprite_2d = GetNode<AnimatedSprite2D>($"Sprite2D");
         enemyNode = this;
-        aboutFace = new(-1, enemyNode.Scale.Y);
         CollisionBody = GetNode<CollisionShape2D>($"CollisionShapeStanding");
-        EdgeDetectionCast = GetNode<ShapeCast2D>($"EdgeDetectionShapeCast2D");
-        WallDetectionCast = GetNode<ShapeCast2D>($"WallDetectionShapeCast2D");
-        JumpDetectionCast1 = GetNode<ShapeCast2D>($"JumpablePlatformShapeCast2D");
-        JumpDetectionCast2 = GetNode<ShapeCast2D>($"JumpablePlatformShapeCast2D2");
+        //set up detection shapes for right and left sides
+        EdgeDetectionCastRight = GetNode<ShapeCast2D>($"EdgeDetectionShapeCast2DRight");
+        WallDetectionCastRight = GetNode<ShapeCast2D>($"WallDetectionShapeCast2DRight");
+        JumpDetectionCast1Right = GetNode<ShapeCast2D>($"JumpablePlatformShapeCast2DRight");
+        JumpDetectionCast2Right = GetNode<ShapeCast2D>($"JumpablePlatformShapeCast2D2Right");
+        EdgeDetectionCastLeft = GetNode<ShapeCast2D>($"EdgeDetectionShapeCast2DLeft");
+        WallDetectionCastLeft = GetNode<ShapeCast2D>($"WallDetectionShapeCast2DLeft");
+        JumpDetectionCast1Left = GetNode<ShapeCast2D>($"JumpablePlatformShapeCast2DLeft");
+        JumpDetectionCast2Left = GetNode<ShapeCast2D>($"JumpablePlatformShapeCast2D2Left");
+        //enable detection shapes, Right Side only at start.
+        EdgeDetectionCastRight.Enabled = true;
+        WallDetectionCastRight.Enabled = true;
+        JumpDetectionCast1Right.Enabled = true;
+        JumpDetectionCast2Right.Enabled = true;
+        EdgeDetectionCastLeft.Enabled = false;
+        WallDetectionCastLeft.Enabled = false;
+        JumpDetectionCast1Left.Enabled = false;
+        JumpDetectionCast2Left.Enabled = false;
+
         attacking = false;
         attackOn = 2.0d; //this will set the timer so that the enemy attacks after 2 seconds of being within range and detecting the player
         changeDirectionTimerCurrent = changeDirectionTimer;
         CurrentState = CurrentState.patroling;
         MessageManager.instance.addToEnemyDictionary(this);
         idleTimer = rnd.Next(45, 120);
+        if (faceLeftAtStart)
+        {
+            FlipEntity();
+        }
     }
 
     public override void _PhysicsProcess(double delta)
@@ -141,7 +171,8 @@ public partial class EnemyPatrol : CharacterBody2D
                 SwitchToBreakState();
             }
         }
-        if (WallDetectionCast.IsColliding())
+        if ((WallDetectionCastRight.IsColliding() && WallDetectionCastRight.Enabled == true)
+        || (WallDetectionCastLeft.IsColliding() && WallDetectionCastLeft.Enabled == true))
         {
             if(canJump)
             {
@@ -153,7 +184,8 @@ public partial class EnemyPatrol : CharacterBody2D
             Velocity = Godot.Vector2.Zero;
             FlipEntity();
         }
-        if(!EdgeDetectionCast.IsColliding())
+        if((!EdgeDetectionCastRight.IsColliding() && EdgeDetectionCastRight.Enabled == true)
+        || (!EdgeDetectionCastLeft.IsColliding() && EdgeDetectionCastLeft.Enabled == true))
         {
             Velocity = Godot.Vector2.Zero;
             FlipEntity();
@@ -211,13 +243,14 @@ public partial class EnemyPatrol : CharacterBody2D
 
     private void DetectPlayer(Node2D body)
     {
+        GD.Print("DetectPlayer: ", body.Name.ToString());
         if (body.Name.ToString() == "Player")
         {
             Player = body;
             idleTimer = rnd.Next(20, 120);
             if (canCharge)
             {
-                if(LineOfSightCheck(Player))
+                if (LineOfSightCheck(Player))
                 {
                     SwitchToChargeState();
                 }
@@ -263,10 +296,22 @@ public partial class EnemyPatrol : CharacterBody2D
         {
             return;
         }
-        enemyNode.Scale *= aboutFace;
+        //flip enemy sprite and change detection areas to monitor the other side.
+        sprite_2d.FlipH = !sprite_2d.FlipH;
         direction = !direction;
+        AreaDetectionRight.Monitoring = !AreaDetectionRight.Monitoring;
+        AreaDetectionLeft.Monitoring = !AreaDetectionLeft.Monitoring;
         changeDirectionTimerCurrent = changeDirectionTimer;
 
+        //swap navigation detection shapes.
+        EdgeDetectionCastRight.Enabled = !EdgeDetectionCastRight.Enabled;
+        WallDetectionCastRight.Enabled = !WallDetectionCastRight.Enabled;
+        JumpDetectionCast1Right.Enabled = !JumpDetectionCast1Right.Enabled;
+        JumpDetectionCast2Right.Enabled = !JumpDetectionCast2Right.Enabled;
+        EdgeDetectionCastLeft.Enabled = !EdgeDetectionCastLeft.Enabled;
+        WallDetectionCastLeft.Enabled = !WallDetectionCastLeft.Enabled;
+        JumpDetectionCast1Left.Enabled = !JumpDetectionCast1Left.Enabled;
+        JumpDetectionCast2Left.Enabled = !JumpDetectionCast2Left.Enabled;
     }
 
     private void SwitchToPatrolState()
@@ -279,10 +324,12 @@ public partial class EnemyPatrol : CharacterBody2D
     }
     private bool SwitchToJumpState(double incomingDelta, ref Godot.Vector2 incomingVelocity)
     {
-        if (JumpDetectionCast1.IsColliding())
+        if ((JumpDetectionCast1Right.IsColliding() && JumpDetectionCast1Right.Enabled == true)
+        || (JumpDetectionCast1Left.IsColliding() && JumpDetectionCast1Left.Enabled == true))
         {
             //GD.Print("jump DetectionCast 1 Colliding");
-            if (!JumpDetectionCast2.IsColliding())
+            if ((!JumpDetectionCast2Right.IsColliding() && JumpDetectionCast2Right.Enabled == true)
+            || (!JumpDetectionCast2Left.IsColliding() && JumpDetectionCast2Left.Enabled == true))
             {
                 //GD.Print("Entering Jump State");
                 CurrentState = CurrentState.jumping;
