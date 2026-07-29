@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cu588gfspjx5q"]
+
+[ext_resource type="Script" uid="uid://dpnx4tg7tcrnj" path="res://components/interactive/StealthItemDefault.cs" id="1_74sop"]
+[ext_resource type="Texture2D" uid="uid://kqk75h3nugsq" path="res://Images/Static/StaticScenery/StealthBushPlaceholder.png" id="1_n08pb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bj6ec"]
+size = Vector2(67, 42)
+
+[node name="StealthItemDefault" type="Node2D" unique_id=578661879 node_paths=PackedStringArray("detectionBox")]
+script = ExtResource("1_74sop")
+detectionBox = NodePath("Sprite2D/VisibleOnScreenEnabler2D/Area2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1641656995]
+texture = ExtResource("1_n08pb")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Sprite2D" unique_id=567677943]
+rect = Rect2(-54, -36, 114, 69)
+
+[node name="Area2D" type="Area2D" parent="Sprite2D/VisibleOnScreenEnabler2D" unique_id=1891501140]
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/VisibleOnScreenEnabler2D/Area2D" unique_id=1871507259]
+position = Vector2(-0.5, 11)
+shape = SubResource("RectangleShape2D_bj6ec")

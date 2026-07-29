@@ -231,7 +231,7 @@ size = Vector2(21, 24)
 texture_filter = 1
 texture_repeat = 1
 collision_layer = 104
-collision_mask = 232
+collision_mask = 104
 floor_stop_on_slope = false
 script = ExtResource("1_2ofwc")
 Speed = 175.0
@@ -331,4 +331,4 @@ collision_mask = 72
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=678983262]
 position = Vector2(1, 6)
-rect = Rect2(-13, -16, 23, 27)
+rect = Rect2(-25, -30, 50, 50)

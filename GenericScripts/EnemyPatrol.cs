@@ -85,7 +85,8 @@ public partial class EnemyPatrol : CharacterBody2D
 
     public CurrentState CurrentState;
 
-
+    private bool playerIsDetectable = false;
+    private int playerColissionLayer = 6;
     public override void _Ready()
     {
 
@@ -353,5 +354,25 @@ public partial class EnemyPatrol : CharacterBody2D
         flashTimer = stunTimer / 8;
         sprite_2d.Visible = false;
         CurrentState = CurrentState.stunned;
+    }
+
+    internal void SetPlayerDetection(bool v)
+    {
+        playerIsDetectable = v;
+        if (!playerIsDetectable)
+        {
+            this.SetCollisionLayerValue(playerColissionLayer, false); //turn off collision with player
+            AreaDetectionLeft.SetCollisionMaskValue(playerColissionLayer, false);
+            AreaDetectionRight.SetCollisionMaskValue(playerColissionLayer, false);
+            HurtBox.SetCollisionMaskValue(playerColissionLayer, false);
+        }
+        else
+        {
+            this.SetCollisionLayerValue(playerColissionLayer, true); //turn ON collision with player
+            AreaDetectionLeft.SetCollisionMaskValue(playerColissionLayer, true);
+            AreaDetectionRight.SetCollisionMaskValue(playerColissionLayer, true);
+            HurtBox.SetCollisionMaskValue(playerColissionLayer, true);
+        }
+        throw new NotImplementedException();
     }
 }

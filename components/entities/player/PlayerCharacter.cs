@@ -36,6 +36,7 @@ public partial class PlayerCharacter : CharacterBody2D
     private CollisionShape2D CrouchingCollision;
     private ShapeCast2D ShapeCastCeilingCheck;
     private ShapeCast2D ShapeCastWallCheck;
+    private byte StealthLayerCount = 0;
 
 
     /// <Floats>
@@ -620,6 +621,33 @@ public partial class PlayerCharacter : CharacterBody2D
         CrouchingCollision.Disabled = true;
         StandingCollision.Disabled = false;
         PlayerState = playerStates.grounded;
+    }
+    private void enterCrouchingState()
+    {
+        CrouchingCollision.Disabled = false;
+        StandingCollision.Disabled = true;
+        PlayerState = playerStates.crouching;
+        if (StealthLayerCount > 0)
+        {
+            MessageManager.instance.sendStealthStatusToSystem(true);
+        }
+    }
+    public void increaseStealthLayerCount()
+    {
+        StealthLayerCount++;
+        if (StealthLayerCount > 0 && PlayerState == playerStates.crouching)
+        {
+            MessageManager.instance.sendStealthStatusToSystem(true);
+        }
+    }
+    public void decreaseStealthLayerCount()
+    {
+        StealthLayerCount--;
+        if (StealthLayerCount <= 0)
+        {
+            MessageManager.instance.sendStealthStatusToSystem(false);
+            StealthLayerCount = 0;
+        }
     }
     private void enterClingingState()
     {

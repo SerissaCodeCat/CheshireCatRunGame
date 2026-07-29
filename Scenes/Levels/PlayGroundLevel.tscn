@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bwr7vhdi28fly" path="res://components/entities/enemies/BasicEnemy.tscn" id="8_2f6ep"]
 [ext_resource type="PackedScene" uid="uid://bq8ku8833m08m" path="res://components/interactive/checkpoint.tscn" id="9_ogptx"]
 [ext_resource type="PackedScene" uid="uid://dwqfmpt7ou3wa" path="res://components/interactive/LevelTransition.tscn" id="10_ert6t"]
+[ext_resource type="PackedScene" uid="uid://cu588gfspjx5q" path="res://components/interactive/StealthItemDefault.tscn" id="11_iegng"]
 
 [node name="TestLevel" type="Node" unique_id=1384232819]
 script = ExtResource("1_6hjy0")
@@ -67,7 +68,6 @@ position = Vector2(345, -472)
 
 [node name="Enemy4" parent="." unique_id=1964040214 instance=ExtResource("8_2f6ep")]
 position = Vector2(945, -137)
-direction = false
 
 [node name="Enemy5" parent="." unique_id=308457700 instance=ExtResource("8_2f6ep")]
 position = Vector2(203, -474)
@@ -75,3 +75,9 @@ position = Vector2(203, -474)
 [node name="LevelTransition" parent="." unique_id=1970810522 instance=ExtResource("10_ert6t")]
 position = Vector2(-146, -532)
 LevelToTransitionTo = "res://Scenes/Levels/TestLevel.tscn"
+
+[node name="StealthItemDefault" parent="." unique_id=578661879 instance=ExtResource("11_iegng")]
+position = Vector2(537, -533)
+
+[node name="StealthItemDefault2" parent="." unique_id=1027119062 instance=ExtResource("11_iegng")]
+position = Vector2(788, -614)

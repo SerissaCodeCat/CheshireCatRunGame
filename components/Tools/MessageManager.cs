@@ -196,6 +196,14 @@ public partial class MessageManager : Node2D
     {
         playerMessagerLink.ResetPlayerToSpawnPosition();
     }
+    public void increasePlayerStealthLayerCount()
+    {
+        playerMessagerLink.increaseStealthLayerCount();
+    }
+    public void decreasePlayerStealthLayerCount()
+    {
+        playerMessagerLink.decreaseStealthLayerCount();
+    }
     ////////////////////////////////////////////////////////////////////////////
     ///////////////////// MESSAGES TO NPSs /////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
@@ -306,6 +314,29 @@ public partial class MessageManager : Node2D
         viewportLink.setResolution(incomingX, incomingY);
     }
 
+    /// <summary>
+    /// ////////////////////////////////////////////////////////////////////////
+    /// //////////// MESSAGES TO WHOLE SYSTEM //////////////////////////////////
+    /// ////////////////////////////////////////////////////////////////////////
+
+    public void sendStealthStatusToSystem(bool isStealthed)
+    {
+        if (isStealthed)
+        {
+            foreach (var x in enemies.Values)
+            {
+                x.SetPlayerDetection(false);
+            }
+        }
+        else
+        {
+            foreach (var x in enemies.Values)
+            {
+                x.SetPlayerDetection(true);
+            }
+        }
+    }
+ 
     ///////////////////////////////////////////////////////////////////////////
     ///////// DEBUGGING AND CRASH HANDLERS ////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
