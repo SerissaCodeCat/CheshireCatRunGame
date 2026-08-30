@@ -95,6 +95,11 @@ public partial class PlayerCharacter : CharacterBody2D
     public int Health;
     public const int startingHealth = 3;
     public int MaxHealth = 3;
+    private const int NPCCollisionLayer = 7;
+    private const int NPCCollisionenabled = 8|16|64|128;
+    private const int NPCCollisiondisabled = 8|16|128;
+    private const int PlayerLayer = 32;
+    private const int RemoveAllLayers = 0;
     /// <Bools>
     /// ////////////////////////////////////////////////////////////////////////////////
     /// </Bools>
@@ -630,6 +635,9 @@ public partial class PlayerCharacter : CharacterBody2D
         if (StealthLayerCount > 0)
         {
             MessageManager.instance.sendStealthStatusToSystem(true);
+            this.SetCollisionMaskValue(NPCCollisionLayer, false);
+            this.CollisionMask = NPCCollisiondisabled;
+            this.CollisionLayer = RemoveAllLayers;
         }
     }
     public void increaseStealthLayerCount()
@@ -646,6 +654,9 @@ public partial class PlayerCharacter : CharacterBody2D
         if (StealthLayerCount <= 0)
         {
             MessageManager.instance.sendStealthStatusToSystem(false);
+            this.SetCollisionMaskValue(NPCCollisionLayer, true);
+            this.CollisionMask = NPCCollisionenabled;
+            this.CollisionLayer = PlayerLayer;
             StealthLayerCount = 0;
         }
     }

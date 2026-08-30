@@ -87,6 +87,11 @@ public partial class EnemyPatrol : CharacterBody2D
 
     private bool playerIsDetectable = false;
     private int playerColissionLayer = 6;
+
+    private const int playerCollisionEnabled = 8|32|64;
+    private const int playerCollisionDisabled = 8|64;
+    private const int RemoveAllLayers = 0;
+    private const int NPCLayer = 64;
     public override void _Ready()
     {
 
@@ -362,17 +367,21 @@ public partial class EnemyPatrol : CharacterBody2D
         if (!playerIsDetectable)
         {
             this.SetCollisionLayerValue(playerColissionLayer, false); //turn off collision with player
+            this.CollisionMask = playerCollisionDisabled;
+            this.CollisionLayer = 0;
             AreaDetectionLeft.SetCollisionMaskValue(playerColissionLayer, false);
             AreaDetectionRight.SetCollisionMaskValue(playerColissionLayer, false);
-            HurtBox.SetCollisionMaskValue(playerColissionLayer, false);
+            HurtBox.SetCollisionMaskValue(playerColissionLayer, false); 
         }
         else
         {
             this.SetCollisionLayerValue(playerColissionLayer, true); //turn ON collision with player
-            AreaDetectionLeft.SetCollisionMaskValue(playerColissionLayer, true);
+            this.CollisionMask = playerCollisionEnabled;
+            this.CollisionLayer = NPCLayer;
+            AreaDetectionLeft.SetCollisionMaskValue(playerColissionLayer, true); 
             AreaDetectionRight.SetCollisionMaskValue(playerColissionLayer, true);
             HurtBox.SetCollisionMaskValue(playerColissionLayer, true);
         }
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 }
