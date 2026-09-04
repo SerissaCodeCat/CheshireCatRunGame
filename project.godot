@@ -28,6 +28,7 @@ buses/default_bus_layout="uid://j5rt6edx1kgt"
 
 SoundManager="*res://components/Tools/SoundManager.tscn"
 MessageManager="*res://components/Tools/MessageManager.cs"
+Savemanager="*uid://f7l7tpvrgyyp"
 
 [display]
 
@@ -41,6 +42,11 @@ window/stretch/aspect="expand"
 [dotnet]
 
 project/assembly_name="CatRunnerGame"
+
+[global_group]
+
+player="the group that the player is a part of"
+persistThroughSave="an entity that is in this group will persist it's relevant data through a save / load cycle"
 
 [gui]
 

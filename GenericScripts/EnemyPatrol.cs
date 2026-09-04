@@ -366,7 +366,6 @@ public partial class EnemyPatrol : CharacterBody2D
         playerIsDetectable = v;
         if (!playerIsDetectable)
         {
-            this.SetCollisionLayerValue(playerColissionLayer, false); //turn off collision with player
             this.CollisionMask = playerCollisionDisabled;
             this.CollisionLayer = 0;
             AreaDetectionLeft.SetCollisionMaskValue(playerColissionLayer, false);
@@ -375,7 +374,6 @@ public partial class EnemyPatrol : CharacterBody2D
         }
         else
         {
-            this.SetCollisionLayerValue(playerColissionLayer, true); //turn ON collision with player
             this.CollisionMask = playerCollisionEnabled;
             this.CollisionLayer = NPCLayer;
             AreaDetectionLeft.SetCollisionMaskValue(playerColissionLayer, true); 
