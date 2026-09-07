@@ -92,9 +92,7 @@ public partial class PlayerCharacter : CharacterBody2D
     /// <Intergers>
     /// ////////////////////////////////////////////////////////////////////////////////
     /// </Intergers>
-    //public int Health;
-    //public const int startingHealth = 3;
-    //public int MaxHealth = 3;
+
     private const int NPCCollisionLayer = 7;
     private const int NPCCollisionenabled = 8|16|64|128;
     private const int NPCCollisiondisabled = 8|16|128;
@@ -669,69 +667,32 @@ public partial class PlayerCharacter : CharacterBody2D
     private void EnterAirbornState()
     {
         JumpHangingTimeTimer = JumpHangingTime;    
-        //GD.Print("Setting JumpHangingTimeTimer to " + JumpHangingTime);    
         PlayerState = playerStates.airborn;
     }
-    /*public bool setValues(int incomingHealth = startingHealth)
-    {
-        Health = incomingHealth;
-        //MessageManager.instance.sendNewHealthTotalToUI(Health);
-        return true;
-    }*/
     public void DamagePLayer(float DamageOriginX = 0.0f, float DamageOriginY = 0.0f, int damage = 1)
     {
         if (damagable)
         {
             //Health -= damage;
-            MessageManager.instance.DecreaseUIHealthBy(damage);
+            MessageManager.instance.DecreaseUICurrentHealthBy(damage);
             damagable = false;
             damageTimer = DamageRecoveryReset;
-            /*if (Health <= 0)
+            PlayerState = playerStates.damaged;
+
+            //work out the dirrection that the damage is coming from, 
+            //if the damage comes from the positive X direction, tmpX is the negative dirrection, and visa versa
+            int tmpx = this.Position.X > DamageOriginX ? 1 : -1;
+            //Same for the Y
+            int tmpy = this.Position.Y > DamageOriginY ? 1 : -1;
+            //if player is on floor always bounce upwards
+            if(IsOnFloor())
             {
-                Health = MaxHealth;
-                ResetPlayerToSpawnPosition();
-                MessageManager.instance.sendNewHealthTotalToUI(Health);
-
+                tmpy = -1; //Y -1 is UP
             }
-            else
-            {*/
-                PlayerState = playerStates.damaged;
-
-                //work out the inverse dirrection that the damage is coming from, as a normalized Vector
-                //var tmpVelocity = new Godot.Vector2((this.Position.X - DamageOriginX), (this.Position.Y + DamageOriginY)).Normalized();
-                int tmpx = this.Position.X > DamageOriginX ? 1 : -1;
-                //GD.Print("tmpx = " + tmpx);
-                int tmpy = this.Position.Y > DamageOriginY ? 1 : -1;
-                //if player is on floor always bounce upwards
-                if(IsOnFloor())
-                {
-                    tmpy = -1;
-                }
-                //GD.Print("tmpy = " + tmpy);
-                Godot.Vector2 tmpVelocity = new (tmpx * HorizontalDamageReboundForce, tmpy * VerticalDamageReboundForce);             
-                Velocity = tmpVelocity;
-            //}
+            //send player recoiling to the opposite quater to the damage's origin.
+            Godot.Vector2 tmpVelocity = new (tmpx * HorizontalDamageReboundForce, tmpy * VerticalDamageReboundForce);             
+            Velocity = tmpVelocity;
         }
-    }
-    public void KillPlayer()
-    {
-        //GD.Print("Player killed by KillZone / instant kill mechanic");
-        //Health = 0;
-        //TODO health stored in UI rather than in player. rather than shared responsibility.
-        MessageManager.instance.DecreaseUIHealthBy(3);
-        ResetPlayerToSpawnPosition();
-        //Health = MaxHealth;
-        //MessageManager.instance.sendNewHealthTotalToUI(Health);
-    }
-    public void HealPlayer(int healingAmount = 1) //health increase sent to UI can have multiple levels of heal / damage
-    {
-        //Health += amount;
-        //if (Health > MaxHealth)
-        //{
-        //    Health = MaxHealth;
-        //}
-        //TODO health stored in UI rather than in player. rather than shared responsibility.
-        MessageManager.instance.DecreaseUIHealthBy(3);
     }
     private void FlashPlayer()
     {
@@ -796,11 +757,6 @@ public partial class PlayerCharacter : CharacterBody2D
             return 0.0d;
         }
     }
-    /*public int EnquireCurrentHealth()
-    {
-        MessageManager.instance.sendNewHealthTotalToUI(Health);
-        return Health;
-    }*/
     private float Lerp(float firstPoint, float secondPoint, float percentageBetweenTheTwoPoints = 0.5f)
     {
         return firstPoint * (1 - percentageBetweenTheTwoPoints) + secondPoint * percentageBetweenTheTwoPoints;

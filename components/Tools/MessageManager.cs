@@ -161,22 +161,26 @@ public partial class MessageManager : Node2D
         playerMessagerLink.DamagePLayer(damageComingFrom.X, damageComingFrom.Y, damage);
     }
     public void KillPlayer()
-    {
-        GD.Print("Message Manager telling player to die");
-        playerMessagerLink.KillPlayer();
+    {   
+        UIControlLink.KillPlayer();
     }
     //damage without the bounce. usefull for environmental damage like gas / steam / heat  ect.
     public void SendPlayerNonePhysicalDamage(int damage = 1)
     {
-        throw NotImplementedException();
+        //skips the player body, effecting life dirrectly, and not triggering physical reactions / knockback
+        UIControlLink.DecreaseCurrentHealthBy(damage);
     }
     public double GetbulletTimePercentageOfPlayer()
     {
         return playerMessagerLink.GetbulletTimePercentageDecimal();
     }
-    public void DecreaseUIHealthBy(int incomingDamage)
+    public void DecreaseUICurrentHealthBy(int incomingDamage = 1)
     {
-        UIControlLink.DecreaseHealthBy(incomingDamage);
+        UIControlLink.DecreaseCurrentHealthBy(incomingDamage);
+    }
+    public void IncreaseUICurrentHealthBy(int incomingHealing = 1)
+    {
+        UIControlLink.IncreaseCurrentHealthBy(incomingHealing);
     }
     public void SendEnegyPercentageTotalToUI(double incomingPercentage)
     {

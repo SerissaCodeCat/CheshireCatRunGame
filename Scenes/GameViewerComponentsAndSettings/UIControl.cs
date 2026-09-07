@@ -1,6 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using System.Timers;
 
 public partial class UIControl : Control
 {
@@ -70,7 +71,7 @@ public partial class UIControl : Control
         }
         EnergyBarFill.SetSize(tmp, true);
     }
-    public void IncreaseHealthBy(int healthUp = 1)//if no specified Heal, basic Healing is 1.
+    public void IncreaseCurrentHealthBy(int healthUp = 1)//if no specified Heal, basic Healing is 1.
     {
         currentHealth += healthUp;
         if(currentHealth > currentMaxHealth)
@@ -79,25 +80,41 @@ public partial class UIControl : Control
         }
         SetHealthTo(currentHealth);
     }
-    public void DecreaseHealthBy(int healthDown = 1)//if no specified damage, basic damage is 1.
+    public void DecreaseCurrentHealthBy(int healthDown = 1)//if no specified damage, basic damage is 1.
     {
         currentHealth -= healthDown;
-        if (currentHealth <= 0)
+        if (currentHealth > 0)
+        {
+            SetHealthTo(currentHealth);
+        }
+        else
         {
             DecrementLifeCount();
             if (currentLifeCount >= 0)
             {
-                MessageManager.instance.KillPlayer();
+                MessageManager.instance.ResetPlayerToSpawnPosition();
                 currentHealth = currentMaxHealth;
             }
+
         }
+
+    }
+    public void KillPlayer()
+    {
+        DecreaseCurrentHealthBy(currentMaxHealth);
     }
     public void DecrementLifeCount()
     {
         currentLifeCount --;
         if (currentLifeCount < 0 )
         {
+            GD.Print("PLAYERR IS DEAD DEAD!");
             //TODO Game Over Screen
         }
     }
+    public void IncrementLifeCount()
+    {
+        currentLifeCount ++;
+    }
+
 }
