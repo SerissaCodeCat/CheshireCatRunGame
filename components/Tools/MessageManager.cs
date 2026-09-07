@@ -174,7 +174,7 @@ public partial class MessageManager : Node2D
     }
     public int enquireCurrentHealthofPlayer()
     {
-        return playerMessagerLink.enquireCurrentHealth();
+        return playerMessagerLink.EnquireCurrentHealth();
     }
     public double GetbulletTimePercentageOfPlayer()
     {
@@ -182,11 +182,11 @@ public partial class MessageManager : Node2D
     }
     public void sendNewHealthTotalToUI(int currentHealth)
     {
-        UIControlLink.setHealthTo(currentHealth);
+        UIControlLink.SetHealthTo(currentHealth);
     }
     public void sendEnegyPercentageTotalToUI(double incomingPercentage)
     {
-        UIControlLink.setEnergyPercentageTo(incomingPercentage);
+        UIControlLink.SetEnergyPercentageTo(incomingPercentage);
     }
     public void setPlayerSpawnPosition(Vector2 incomingPosition)
     {
@@ -198,11 +198,11 @@ public partial class MessageManager : Node2D
     }
     public void increasePlayerStealthLayerCount()
     {
-        playerMessagerLink.increaseStealthLayerCount();
+        playerMessagerLink.IncreaseStealthLayerCount();
     }
     public void decreasePlayerStealthLayerCount()
     {
-        playerMessagerLink.decreaseStealthLayerCount();
+        playerMessagerLink.DecreaseStealthLayerCount();
     }
     ////////////////////////////////////////////////////////////////////////////
     ///////////////////// MESSAGES TO NPSs /////////////////////////////////////

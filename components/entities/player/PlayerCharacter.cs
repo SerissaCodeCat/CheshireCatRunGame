@@ -19,13 +19,13 @@ public partial class PlayerCharacter : CharacterBody2D
     /// <External Class refferances>
     ///  //////////////////////////////////////////////////////////////////////////////////////////////////////
     /// </External Class refferances>
-    private Godot.Vector2 shotOffset = new Godot.Vector2(60.0f, 0.0f);
-    public PackedScene bullet { get; set; }
-    private Godot.Color semiTransparent = new Godot.Color(1, 1, 1, 0.5f);
-    private Godot.Color solid = new Godot.Color(1, 1, 1, 1f);
+    private Godot.Vector2 shotOffset = new (60.0f, 0.0f);
+    public PackedScene Bullet { get; set; }
+    private Godot.Color semiTransparent = new (1, 1, 1, 0.5f);
+    private Godot.Color solid = new (1, 1, 1, 1f);
     private Godot.Vector2 finalVelocity;
     private Godot.Vector2 direction;
-    private Godot.Vector2 Stop = new Godot.Vector2(0, 0);
+    private Godot.Vector2 Stop = new (0, 0);
 
     private AnimatedSprite2D sprite_2d;
     private Sprite2D aimingSprite;
@@ -92,9 +92,9 @@ public partial class PlayerCharacter : CharacterBody2D
     /// <Intergers>
     /// ////////////////////////////////////////////////////////////////////////////////
     /// </Intergers>
-    public int Health;
-    public const int startingHealth = 3;
-    public int MaxHealth = 3;
+    //public int Health;
+    //public const int startingHealth = 3;
+    //public int MaxHealth = 3;
     private const int NPCCollisionLayer = 7;
     private const int NPCCollisionenabled = 8|16|64|128;
     private const int NPCCollisiondisabled = 8|16|128;
@@ -108,7 +108,7 @@ public partial class PlayerCharacter : CharacterBody2D
     private bool wallToRight = false;
     private bool damagable;
 
-    private Vector2 spawnPosition = new Vector2(0, 0);
+    private Vector2 spawnPosition = new(0, 0);
     private double previousPercentage;
 
     public override void _Ready()
@@ -119,7 +119,7 @@ public partial class PlayerCharacter : CharacterBody2D
         CrouchingCollision = GetNode<CollisionShape2D>($"CollisionShapeCrouching");
         ShapeCastCeilingCheck = GetNode<ShapeCast2D>("ShapeCast2DCeilingCheck");
         ShapeCastWallCheck = GetNode<ShapeCast2D>("ShapeCast2DWallCheck");
-        bullet = GD.Load<PackedScene>("res://components/entities/player/Bullet.tscn");
+        Bullet = GD.Load<PackedScene>("res://components/entities/player/Bullet.tscn");
         aimingLynchpin = GetNode<Node2D>($"aimingLynchpin");
         aimingDirrection = GetNode<Node2D>($"aimingLynchpin/aimingDirection");
         aimingSprite = GetNode<Sprite2D>($"aimingLynchpin/aimingSprite");
@@ -163,7 +163,7 @@ public partial class PlayerCharacter : CharacterBody2D
                 if (flashTimer <= 0.0d)
                 {
                     flashTimer = damageTimer / 8;
-                    flashPlayer();
+                    FlashPlayer();
                 }
             }
         }
@@ -171,22 +171,22 @@ public partial class PlayerCharacter : CharacterBody2D
         switch (PlayerState)
         {
             case playerStates.grounded:
-                doGroundedPhysics(ref finalVelocity, delta);
+                DoGroundedPhysics(ref finalVelocity, delta);
                 break;
             case playerStates.airborn:
-                doAirbornPhysics(ref finalVelocity, delta);
+                DoAirbornPhysics(ref finalVelocity, delta);
                 break;
             case playerStates.clinging:
-                doClingingPhysics(ref finalVelocity, delta);
+                DoClingingPhysics(ref finalVelocity, delta);
                 break;
             case playerStates.teleporting:
-                doTeleportingPhysics(ref finalVelocity, delta);
+                DoTeleportingPhysics(delta);
                 break;
             case playerStates.crouching:
-                doCrouchingPhysics(ref finalVelocity, delta);
+                DoCrouchingPhysics(ref finalVelocity, delta);
                 break;
             case playerStates.damaged:
-                doDamagedPhysics(ref finalVelocity, delta);
+                DoDamagedPhysics(ref finalVelocity, delta);
                 break;
             default:
                 PlayerState = playerStates.grounded;
@@ -209,7 +209,7 @@ public partial class PlayerCharacter : CharacterBody2D
         }
         MoveAndSlide();
     }
-    private void doGroundedPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
+    private void DoGroundedPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
     {
         //add gravity
         //incomingVelocity.Y += gravity * (float)incomingDelta;
@@ -255,7 +255,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
         if (Input.IsActionJustPressed("jump"))
         {
-            enterAirbornState();
+            EnterAirbornState();
             doubleJumpAvailiable = true;
             teleportAvailiable = true;
             clingTimer = clingTimerReset;
@@ -267,7 +267,7 @@ public partial class PlayerCharacter : CharacterBody2D
             }
             else
             {
-                Godot.Vector2 tmp = new Vector2(this.Position.X, this.Position.Y + 10);
+                Godot.Vector2 tmp = new(this.Position.X, this.Position.Y + 10);
                 this.Position = tmp;
             }
             cyoteTimer = 0.0d;
@@ -350,7 +350,7 @@ public partial class PlayerCharacter : CharacterBody2D
         }
         else if (Input.IsActionJustReleased("fire"))
         {
-            fireBullet();
+            FireBullet();
         }
         else if (Input.IsActionJustPressed("crouch"))
         {
@@ -366,7 +366,7 @@ public partial class PlayerCharacter : CharacterBody2D
             sprite_2d.Animation = "default";
 
     }
-    private void doCrouchingPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
+    private void DoCrouchingPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
     {
         //add gravity
         incomingVelocity.Y += gravity * PlayerGravityMultiplier *  (float)incomingDelta;
@@ -386,7 +386,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
         if (Input.IsActionJustPressed("jump"))
         {
-            enterAirbornState();
+            EnterAirbornState();
             doubleJumpAvailiable = true;
             teleportAvailiable = true;
             clingTimer = clingTimerReset;
@@ -434,14 +434,14 @@ public partial class PlayerCharacter : CharacterBody2D
             }
             else
             {
-                enterGroundedState();
+                EnterGroundedState();
             }
         }
 
         sprite_2d.Animation = "crouching";
     }
 
-    private void doAirbornPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
+    private void DoAirbornPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
     {
         //add gravity
         //incomingVelocity.Y += gravity * (float)incomingDelta;
@@ -449,7 +449,7 @@ public partial class PlayerCharacter : CharacterBody2D
         firstClingTimer -= incomingDelta;
         if (IsOnFloor())
         {
-            enterGroundedState();
+            EnterGroundedState();
             return;
         }
         if (IsOnWall())
@@ -458,7 +458,7 @@ public partial class PlayerCharacter : CharacterBody2D
             {
                 if (!Input.IsActionPressed("down"))
                 {
-                    enterClingingState();
+                    EnterClingingState();
                     return;
                 }
                 else
@@ -521,18 +521,18 @@ public partial class PlayerCharacter : CharacterBody2D
             sprite_2d.Animation = "doubleJump";
     }
 
-    private void doClingingPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
+    private void DoClingingPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
     {
 
 
         if (IsOnFloor())
         {
-            enterGroundedState();
+            EnterGroundedState();
             return;
         }
         if (!ShapeCastWallCheck.IsColliding())
         {
-            enterAirbornState();
+            EnterAirbornState();
             return;
         }
         //add gravity at 1/3 the normal value due to cat claws stuck in the wall we are clinging to
@@ -543,7 +543,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
         if (Input.IsActionJustPressed("jump"))
         {
-            enterAirbornState();
+            EnterAirbornState();
             direction = Input.GetVector("left", "right", "up", "down");
             //push away from the wall slightly and become airborn
             if (Input.IsActionPressed("down"))
@@ -579,7 +579,7 @@ public partial class PlayerCharacter : CharacterBody2D
         }
     }
 
-    private void doTeleportingPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
+    private void DoTeleportingPhysics(double incomingDelta)
     {
         // do not add gravity. gravity does not apply to teleportation
 
@@ -599,24 +599,24 @@ public partial class PlayerCharacter : CharacterBody2D
             finalVelocity = Stop;
             if (IsOnFloor())
             {
-                enterGroundedState();
+                EnterGroundedState();
             }
             else if (IsOnWall())
             {
-                enterClingingState();
+                EnterClingingState();
             }
             else
             {
-                enterAirbornState();
+                EnterAirbornState();
             }
         }
     }
-    private void doDamagedPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
+    private void DoDamagedPhysics(ref Godot.Vector2 incomingVelocity, double incomingDelta)
     {
         incomingVelocity.Y += gravity * (float)incomingDelta;
     }
 
-    private void enterGroundedState()
+    private void EnterGroundedState()
     {
         cyoteTimer = CyoteTime;
         clingTimer = clingTimerReset;
@@ -627,7 +627,7 @@ public partial class PlayerCharacter : CharacterBody2D
         StandingCollision.Disabled = false;
         PlayerState = playerStates.grounded;
     }
-    private void enterCrouchingState()
+    private void EnterCrouchingState()
     {
         CrouchingCollision.Disabled = false;
         StandingCollision.Disabled = true;
@@ -640,7 +640,7 @@ public partial class PlayerCharacter : CharacterBody2D
             this.CollisionLayer = RemoveAllLayers;
         }
     }
-    public void increaseStealthLayerCount()
+    public void IncreaseStealthLayerCount()
     {
         StealthLayerCount++;
         if (StealthLayerCount > 0 && PlayerState == playerStates.crouching)
@@ -648,7 +648,7 @@ public partial class PlayerCharacter : CharacterBody2D
             MessageManager.instance.sendStealthStatusToSystem(true);
         }
     }
-    public void decreaseStealthLayerCount()
+    public void DecreaseStealthLayerCount()
     {
         StealthLayerCount--;
         if (StealthLayerCount <= 0)
@@ -660,33 +660,33 @@ public partial class PlayerCharacter : CharacterBody2D
             StealthLayerCount = 0;
         }
     }
-    private void enterClingingState()
+    private void EnterClingingState()
     {
-        determineDirrectionOfWall();
+        DetermineDirrectionOfWall();
         finalVelocity = Stop;
         PlayerState = playerStates.clinging;
     }
-    private void enterAirbornState()
+    private void EnterAirbornState()
     {
         JumpHangingTimeTimer = JumpHangingTime;    
         //GD.Print("Setting JumpHangingTimeTimer to " + JumpHangingTime);    
         PlayerState = playerStates.airborn;
     }
-    public bool setValues(int incomingHealth = startingHealth)
+    /*public bool setValues(int incomingHealth = startingHealth)
     {
         Health = incomingHealth;
         //MessageManager.instance.sendNewHealthTotalToUI(Health);
         return true;
-    }
+    }*/
     public void DamagePLayer(float DamageOriginX = 0.0f, float DamageOriginY = 0.0f, int damage = 1)
     {
         if (damagable)
         {
-            Health -= damage;
-            MessageManager.instance.sendNewHealthTotalToUI(Health);
+            //Health -= damage;
+            MessageManager.instance.sendNewHealthTotalToUI(damage);
             damagable = false;
             damageTimer = DamageRecoveryReset;
-            if (Health <= 0)
+            /*if (Health <= 0)
             {
                 Health = MaxHealth;
                 ResetPlayerToSpawnPosition();
@@ -694,7 +694,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
             }
             else
-            {
+            {*/
                 PlayerState = playerStates.damaged;
 
                 //work out the inverse dirrection that the damage is coming from, as a normalized Vector
@@ -708,29 +708,32 @@ public partial class PlayerCharacter : CharacterBody2D
                     tmpy = -1;
                 }
                 //GD.Print("tmpy = " + tmpy);
-                Godot.Vector2 tmpVelocity = new Godot.Vector2(tmpx * HorizontalDamageReboundForce, tmpy * VerticalDamageReboundForce);             
+                Godot.Vector2 tmpVelocity = new (tmpx * HorizontalDamageReboundForce, tmpy * VerticalDamageReboundForce);             
                 Velocity = tmpVelocity;
-            }
+            //}
         }
     }
     public void KillPlayer()
     {
-        //GD.Print("Player killed by KillZone");
-        Health = 0;
-        MessageManager.instance.sendNewHealthTotalToUI(Health);
+        //GD.Print("Player killed by KillZone / instant kill mechanic");
+        //Health = 0;
+        //TODO health stored in UI rather than in player. rather than shared responsibility.
+        MessageManager.instance.sendNewHealthTotalToUI(3);
         ResetPlayerToSpawnPosition();
-        Health = MaxHealth;
-        MessageManager.instance.sendNewHealthTotalToUI(Health);
+        //Health = MaxHealth;
+        //MessageManager.instance.sendNewHealthTotalToUI(Health);
     }
-    public void HealPlayer(int amount = 1)
+    public void HealPlayer(int healingAmount = 1) //health increase sent to UI can have multiple levels of heal / damage
     {
-        Health += amount;
-        if (Health > MaxHealth)
-        {
-            Health = MaxHealth;
-        }
+        //Health += amount;
+        //if (Health > MaxHealth)
+        //{
+        //    Health = MaxHealth;
+        //}
+        //TODO health stored in UI rather than in player. rather than shared responsibility.
+        MessageManager.instance.sendNewHealthTotalToUI(3);
     }
-    private void flashPlayer()
+    private void FlashPlayer()
     {
         if (sprite_2d.Modulate.A == 0.5f)
         {
@@ -741,13 +744,13 @@ public partial class PlayerCharacter : CharacterBody2D
             sprite_2d.Modulate = semiTransparent;
         }
     }
-    private void determineDirrectionOfWall()
+    private void DetermineDirrectionOfWall()
     {
         for (int i = 0; i < GetSlideCollisionCount(); i++)
         {
             if (GetSlideCollision(i).GetCollider() is TileMapLayer)
             {
-                wallToRight = GetSlideCollision(i).GetNormal().X > 0 ? false : true;
+                wallToRight = GetSlideCollision(i).GetNormal().X <= 0;
                 //cast the wall detection ray out to the side that the wall is on
                 if (wallToRight)
                 {
@@ -760,13 +763,13 @@ public partial class PlayerCharacter : CharacterBody2D
             }
         }
     }
-    private void fireBullet()
+    private void FireBullet()
     {
         if (bulletTimer <= 0.0d)
         {
-            Bullet shot = bullet.Instantiate<Bullet>();
-            shot.setup(lerp(aimingLynchpin.GlobalPosition, aimingDirrection.GlobalPosition, 0.5f),
-                aimingDirrection.GlobalPosition - aimingLynchpin.GlobalPosition, Bullet.bulletTypes.basic);
+            Bullet shot = Bullet.Instantiate<Bullet>();
+            shot.setup(Lerp(aimingLynchpin.GlobalPosition, aimingDirrection.GlobalPosition, 0.5f),
+                aimingDirrection.GlobalPosition - aimingLynchpin.GlobalPosition, global::Bullet.bulletTypes.basic);
             Owner.AddChild(shot);
             bulletTimer = BulletResetTime;
             aimingLynchpin.RotationDegrees = sprite_2d.FlipH ? 180.0f : 0.0f;
@@ -793,19 +796,19 @@ public partial class PlayerCharacter : CharacterBody2D
             return 0.0d;
         }
     }
-    public int enquireCurrentHealth()
+    /*public int EnquireCurrentHealth()
     {
         MessageManager.instance.sendNewHealthTotalToUI(Health);
         return Health;
-    }
-    private float lerp(float firstPoint, float secondPoint, float percentageBetweenTheTwoPoints = 0.5f)
+    }*/
+    private float Lerp(float firstPoint, float secondPoint, float percentageBetweenTheTwoPoints = 0.5f)
     {
         return firstPoint * (1 - percentageBetweenTheTwoPoints) + secondPoint * percentageBetweenTheTwoPoints;
     }
-    private Godot.Vector2 lerp(Godot.Vector2 firstPoint, Godot.Vector2 secondPoint, float percentageBetweenTheTwoPoints = 0.5f)
+    private Godot.Vector2 Lerp(Godot.Vector2 firstPoint, Godot.Vector2 secondPoint, float percentageBetweenTheTwoPoints = 0.5f)
     {
-        Godot.Vector2 result = new Godot.Vector2(lerp(firstPoint.X, secondPoint.X, percentageBetweenTheTwoPoints),
-            lerp(firstPoint.Y, secondPoint.Y, percentageBetweenTheTwoPoints));
+        Godot.Vector2 result = new (Lerp(firstPoint.X, secondPoint.X, percentageBetweenTheTwoPoints),
+            Lerp(firstPoint.Y, secondPoint.Y, percentageBetweenTheTwoPoints));
         return result;
     }
 }
