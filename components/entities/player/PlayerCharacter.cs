@@ -673,8 +673,7 @@ public partial class PlayerCharacter : CharacterBody2D
     {
         if (damagable)
         {
-            //Health -= damage;
-            MessageManager.instance.DecreaseUICurrentHealthBy(damage);
+            
             damagable = false;
             damageTimer = DamageRecoveryReset;
             PlayerState = playerStates.damaged;
@@ -692,6 +691,7 @@ public partial class PlayerCharacter : CharacterBody2D
             //send player recoiling to the opposite quater to the damage's origin.
             Godot.Vector2 tmpVelocity = new (tmpx * HorizontalDamageReboundForce, tmpy * VerticalDamageReboundForce);             
             Velocity = tmpVelocity;
+            MessageManager.instance.DecreaseUICurrentHealthBy(damage);
         }
     }
     private void FlashPlayer()
@@ -740,6 +740,8 @@ public partial class PlayerCharacter : CharacterBody2D
     public void ResetPlayerToSpawnPosition()
     {
         this.Position = spawnPosition;
+        damageTimer = 0.0f; //not damaged.
+        PlayerState = playerStates.grounded;
         Velocity = Stop;
     }
     public void SetSpawnPosition(Vector2 incomingPosition)

@@ -94,6 +94,7 @@ public partial class UIControl : Control
             {
                 MessageManager.instance.ResetPlayerToSpawnPosition();
                 currentHealth = currentMaxHealth;
+                SetHealthTo(currentHealth);
             }
 
         }
