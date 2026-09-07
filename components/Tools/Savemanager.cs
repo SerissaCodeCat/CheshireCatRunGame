@@ -20,8 +20,10 @@ public partial class Savemanager : Node
 		//Taken an modified from Godot documentation ////////////////////////////
 		// https://docs.godotengine.org/en/4.4/tutorials/io/saving_games.html ///
 		///////////////////////////////////////////////////////////////////////// 
-		using var saveFile = FileAccess.Open(GetFullSavePath(slot), FileAccess.ModeFlags.Write);
-		
+		/// "user://savegame.save"
+		//using var saveFile = FileAccess.Open(GetFullSavePath(slot), FileAccess.ModeFlags.Write);
+		using var saveFile = FileAccess.Open("user://savegame.save", FileAccess.ModeFlags.Write);
+
 		//if save file cannot be opened or created. return error.
 		if (saveFile == null)
 		{
@@ -68,11 +70,11 @@ public partial class Savemanager : Node
 	private string GetFullSavePath (int slot = 1)
 	{
 		//todo
-		return $"{savePath}/slot{slot}/{saveFileName}";
+		return $"{savePath}slot{slot}/{saveFileName}";
 	}
 	private string GetSaveDirectory (int slot = 1)
 	{
-		return $"{savePath}/slot{slot}";
+		return $"{savePath}slot{slot}";
 	}
 
 }

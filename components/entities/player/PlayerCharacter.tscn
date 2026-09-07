@@ -446,7 +446,7 @@ size = Vector2(21, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mfnvq"]
 
-[node name="Player" type="CharacterBody2D" unique_id=1334160596]
+[node name="Player" type="CharacterBody2D" unique_id=1334160596 groups=["persistThroughSave"]]
 light_mask = 64
 visibility_layer = 64
 texture_filter = 1

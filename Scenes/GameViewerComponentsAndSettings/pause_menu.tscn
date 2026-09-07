@@ -131,7 +131,7 @@ _data = {
 shader = ExtResource("2_k0w1u")
 shader_parameter/LevelOfDistortion = 0.0
 
-[node name="PauseMenu" type="Control" unique_id=765613216 node_paths=PackedStringArray("ResumeButton", "OptionsButton", "QuitButton", "MainMenuButton", "AnimationPlayer")]
+[node name="PauseMenu" type="Control" unique_id=765613216 node_paths=PackedStringArray("ResumeButton", "SaveButton", "LoadButton", "OptionsButton", "QuitButton", "MainMenuButton", "AnimationPlayer")]
 process_mode = 3
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
@@ -144,6 +144,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_emv3i")
 ResumeButton = NodePath("Resume")
+SaveButton = NodePath("Save")
+LoadButton = NodePath("Load")
 OptionsButton = NodePath("Options")
 QuitButton = NodePath("Quit")
 MainMenuButton = NodePath("MainMenu")

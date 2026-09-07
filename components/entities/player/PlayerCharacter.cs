@@ -5,7 +5,7 @@ public partial class PlayerCharacter : CharacterBody2D
     /// <State Machine enumerator>
     /// The enum that contains all the different states in which the player may be put.
     /// </State Machine enumerator>
-    public enum playerStates
+    public enum PlayerStates
     {
         grounded,
         airborn,
@@ -14,7 +14,7 @@ public partial class PlayerCharacter : CharacterBody2D
         crouching,
         damaged
     }
-    public playerStates PlayerState = playerStates.grounded;
+    public PlayerStates PlayerState = PlayerStates.grounded;
 
     /// <External Class refferances>
     ///  //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,6 +128,17 @@ public partial class PlayerCharacter : CharacterBody2D
         clingTimer = clingTimerReset;
         MessageManager.instance.AddPlayerToMessageManager(this);
     }
+    public Godot.Collections.Dictionary<string, Variant> Save()
+    {
+        //turn values to dictionary, SaveManager will turn this to Json
+        return new Godot.Collections.Dictionary<string, Variant>()
+        {
+                { "componentName", this.Name },
+                { "currentXLocation", this.Position.X},
+                { "currentYLocation", this.Position.Y},
+                { "curentState", this.PlayerState.ToString()}
+        };
+    } 
     public override void _ExitTree()
     {
         base._ExitTree();
@@ -147,11 +158,11 @@ public partial class PlayerCharacter : CharacterBody2D
                 flashTimer = 0.0d;
                 if (IsOnFloor())
                 {
-                    PlayerState = playerStates.grounded;
+                    PlayerState = PlayerStates.grounded;
                 }
                 else
                 {
-                    PlayerState = playerStates.airborn;
+                    PlayerState = PlayerStates.airborn;
                 }
             }
             else
@@ -168,26 +179,26 @@ public partial class PlayerCharacter : CharacterBody2D
 
         switch (PlayerState)
         {
-            case playerStates.grounded:
+            case PlayerStates.grounded:
                 DoGroundedPhysics(ref finalVelocity, delta);
                 break;
-            case playerStates.airborn:
+            case PlayerStates.airborn:
                 DoAirbornPhysics(ref finalVelocity, delta);
                 break;
-            case playerStates.clinging:
+            case PlayerStates.clinging:
                 DoClingingPhysics(ref finalVelocity, delta);
                 break;
-            case playerStates.teleporting:
+            case PlayerStates.teleporting:
                 DoTeleportingPhysics(delta);
                 break;
-            case playerStates.crouching:
+            case PlayerStates.crouching:
                 DoCrouchingPhysics(ref finalVelocity, delta);
                 break;
-            case playerStates.damaged:
+            case PlayerStates.damaged:
                 DoDamagedPhysics(ref finalVelocity, delta);
                 break;
             default:
-                PlayerState = playerStates.grounded;
+                PlayerState = PlayerStates.grounded;
                 break;
         }
         Velocity = finalVelocity;
@@ -220,7 +231,7 @@ public partial class PlayerCharacter : CharacterBody2D
             doubleJumpAvailiable = true;
             clingTimer = clingTimerReset;
 
-            PlayerState = playerStates.airborn;
+            PlayerState = PlayerStates.airborn;
             return;
         }
         // Get the input direction and handle the movement/deceleration.
@@ -261,7 +272,7 @@ public partial class PlayerCharacter : CharacterBody2D
             if (!Input.IsActionPressed("down"))
             {
                 incomingVelocity.Y = JumpVelocity;
-                PlayerState = playerStates.airborn;
+                PlayerState = PlayerStates.airborn;
             }
             else
             {
@@ -279,7 +290,7 @@ public partial class PlayerCharacter : CharacterBody2D
             doubleJumpAvailiable = true;
             clingTimer = clingTimerReset;
 
-            PlayerState = playerStates.teleporting;
+            PlayerState = PlayerStates.teleporting;
             teleportTimer = teleportTimerReset;
             return;
         }
@@ -355,7 +366,7 @@ public partial class PlayerCharacter : CharacterBody2D
 
             StandingCollision.Disabled = true;
             CrouchingCollision.Disabled = false;
-            PlayerState = playerStates.crouching;
+            PlayerState = PlayerStates.crouching;
         }
 
         if (incomingVelocity.X != 0.0f)
@@ -378,7 +389,7 @@ public partial class PlayerCharacter : CharacterBody2D
             clingTimer = clingTimerReset;
             StandingCollision.Disabled = false;
             CrouchingCollision.Disabled = true;
-            PlayerState = playerStates.airborn;
+            PlayerState = PlayerStates.airborn;
             return;
         }
 
@@ -390,7 +401,7 @@ public partial class PlayerCharacter : CharacterBody2D
             clingTimer = clingTimerReset;
             StandingCollision.Disabled = false;
             CrouchingCollision.Disabled = true;
-            PlayerState = playerStates.airborn;
+            PlayerState = PlayerStates.airborn;
             incomingVelocity.Y = JumpVelocity * 1.5f;
             cyoteTimer = 0.0d;
             return;
@@ -406,7 +417,7 @@ public partial class PlayerCharacter : CharacterBody2D
             StandingCollision.Disabled = false;
             CrouchingCollision.Disabled = true;
 
-            PlayerState = playerStates.teleporting;
+            PlayerState = PlayerStates.teleporting;
             teleportTimer = teleportTimerReset;
             return;
         }
@@ -483,7 +494,7 @@ public partial class PlayerCharacter : CharacterBody2D
         {
             if (teleportAvailiable)
             {
-                PlayerState = playerStates.teleporting;
+                PlayerState = PlayerStates.teleporting;
                 teleportAvailiable = false;
                 teleportTimer = teleportTimerReset;
                 return;
@@ -546,7 +557,7 @@ public partial class PlayerCharacter : CharacterBody2D
             //push away from the wall slightly and become airborn
             if (Input.IsActionPressed("down"))
             {
-                PlayerState = playerStates.airborn;
+                PlayerState = PlayerStates.airborn;
             }
             else if (Input.IsActionPressed("left"))
             {
@@ -559,7 +570,7 @@ public partial class PlayerCharacter : CharacterBody2D
                 {
                     incomingVelocity.X = -Speed;
                 }
-                PlayerState = playerStates.airborn;
+                PlayerState = PlayerStates.airborn;
             }
             else if (Input.IsActionPressed("right"))
             {
@@ -572,7 +583,7 @@ public partial class PlayerCharacter : CharacterBody2D
                 {
                     incomingVelocity.X = Speed;
                 }
-                PlayerState = playerStates.airborn;
+                PlayerState = PlayerStates.airborn;
             }
         }
     }
@@ -623,13 +634,13 @@ public partial class PlayerCharacter : CharacterBody2D
         teleportAvailiable = true;
         CrouchingCollision.Disabled = true;
         StandingCollision.Disabled = false;
-        PlayerState = playerStates.grounded;
+        PlayerState = PlayerStates.grounded;
     }
     private void EnterCrouchingState()
     {
         CrouchingCollision.Disabled = false;
         StandingCollision.Disabled = true;
-        PlayerState = playerStates.crouching;
+        PlayerState = PlayerStates.crouching;
         if (StealthLayerCount > 0)
         {
             MessageManager.instance.SendStealthStatusToSystem(true);
@@ -641,7 +652,7 @@ public partial class PlayerCharacter : CharacterBody2D
     public void IncreaseStealthLayerCount()
     {
         StealthLayerCount++;
-        if (StealthLayerCount > 0 && PlayerState == playerStates.crouching)
+        if (StealthLayerCount > 0 && PlayerState == PlayerStates.crouching)
         {
             MessageManager.instance.SendStealthStatusToSystem(true);
         }
@@ -662,12 +673,12 @@ public partial class PlayerCharacter : CharacterBody2D
     {
         DetermineDirrectionOfWall();
         finalVelocity = Stop;
-        PlayerState = playerStates.clinging;
+        PlayerState = PlayerStates.clinging;
     }
     private void EnterAirbornState()
     {
         JumpHangingTimeTimer = JumpHangingTime;    
-        PlayerState = playerStates.airborn;
+        PlayerState = PlayerStates.airborn;
     }
     public void DamagePLayer(float DamageOriginX = 0.0f, float DamageOriginY = 0.0f, int damage = 1)
     {
@@ -676,7 +687,7 @@ public partial class PlayerCharacter : CharacterBody2D
             
             damagable = false;
             damageTimer = DamageRecoveryReset;
-            PlayerState = playerStates.damaged;
+            PlayerState = PlayerStates.damaged;
 
             //work out the dirrection that the damage is coming from, 
             //if the damage comes from the positive X direction, tmpX is the negative dirrection, and visa versa
@@ -741,7 +752,7 @@ public partial class PlayerCharacter : CharacterBody2D
     {
         this.Position = spawnPosition;
         damageTimer = 0.0f; //not damaged.
-        PlayerState = playerStates.grounded;
+        PlayerState = PlayerStates.grounded;
         Velocity = Stop;
     }
     public void SetSpawnPosition(Vector2 incomingPosition)

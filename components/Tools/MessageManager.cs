@@ -289,7 +289,7 @@ public partial class MessageManager : Node2D
     {
         if(pauseMenuLink != null)
         {
-            pauseMenuLink.show();
+            pauseMenuLink.ShowPauseMenu();
             currentMenuState = MenuState.pauseMenu;
             GD.Print("menu state set to PAUSE");
         }
