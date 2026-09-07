@@ -88,9 +88,9 @@ public partial class Bullet : CharacterBody2D
                     {
                         string colliderName = collider.Name;
                         if (colliderName.Contains("Enemy"))
-                            MessageManager.instance.stunEnemyWithID(tmp.GetColliderId());
+                            MessageManager.instance.StunEnemyWithID(tmp.GetColliderId());
                         else if (colliderName.Contains("Button"))
-                            MessageManager.instance.activateInteractableWithID(tmp.GetColliderId());
+                            MessageManager.instance.ActivateInteractableWithID(tmp.GetColliderId());
                     }
                 }
 

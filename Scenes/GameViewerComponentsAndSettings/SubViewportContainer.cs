@@ -34,7 +34,7 @@ public partial class SubViewportContainer : Godot.SubViewportContainer
 		{
 			startingLevelPath = "res://Scenes/TestLevel.tscn";
 		}
-		MessageManager.instance.addViewportToMessager(instance);
+		MessageManager.instance.AddViewportToMessager(instance);
 		material = (ShaderMaterial)this.Material;
 		viewportLink = this.GetChild<SubViewport>(0);
 		LoadLevel();
@@ -70,7 +70,7 @@ public partial class SubViewportContainer : Godot.SubViewportContainer
 		currentLevel = levelScene.Instantiate();
 		viewportLink.AddChild(currentLevel);
 		GD.Print("Level loaded successfully.");
-		MessageManager.instance.setPlayerAsCameraTarget();
+		MessageManager.instance.SetPlayerAsCameraTarget();
 	}
 	public void setResolution(int incomingX = 1920, int incomingY = 1080)
 	{

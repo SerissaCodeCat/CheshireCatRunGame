@@ -98,7 +98,7 @@ public partial class SettingsMenu : Control
 		resetControlsButton.Pressed += resetControlsToDefault;
 
 		//Allow message Manager to access this settings menu
-		MessageManager.instance.addSettingsMenuToMessageManager(this);
+		MessageManager.instance.AddSettingsMenuToMessageManager(this);
 	}
 
     private void createActionList()

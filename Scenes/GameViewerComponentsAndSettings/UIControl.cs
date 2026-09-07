@@ -15,7 +15,7 @@ public partial class UIControl : Control
     public override void _Ready()
     {
 
-        MessageManager.instance.addUIControlToMessageManager(this);
+        MessageManager.instance.AddUIControlToMessageManager(this);
 
         HealthPipFills =
         [

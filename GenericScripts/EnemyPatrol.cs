@@ -132,7 +132,7 @@ public partial class EnemyPatrol : CharacterBody2D
         attackOn = 2.0d; //this will set the timer so that the enemy attacks after 2 seconds of being within range and detecting the player
         changeDirectionTimerCurrent = changeDirectionTimer;
         CurrentState = CurrentState.patroling;
-        MessageManager.instance.addToEnemyDictionary(this);
+        MessageManager.instance.AddToEnemyDictionary(this);
         idleTimer = rnd.Next(45, 120);
         if (faceLeftAtStart)
         {

@@ -19,7 +19,7 @@ public partial class PauseMenu : Control
 	////////////////////////////////
 	public override void _Ready()
 	{
-		MessageManager.instance.addPauseMenuToMessageManager(this);
+		MessageManager.instance.AddPauseMenuToMessageManager(this);
 		ResumeButton.Pressed += ResumePressed;
 		ResumeButton.GrabFocus(); // makes the resume button be the default highlighted button
 		OptionsButton.Pressed += options;
@@ -59,7 +59,7 @@ public partial class PauseMenu : Control
 	
 	private void ResumePressed()
 	{
-		MessageManager.instance.menuNavigationOnEscapeOrBack();
+		MessageManager.instance.MenuNavigationOnEscapeOrBack();
 	}
 	//resumes game from where we left off. 
 	public void Resume()

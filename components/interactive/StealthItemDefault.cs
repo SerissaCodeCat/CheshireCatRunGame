@@ -16,14 +16,14 @@ public partial class StealthItemDefault : Node2D
 	{
 		if (body.Name.ToString() == "Player")
 		{
-			MessageManager.instance.increasePlayerStealthLayerCount();
+			MessageManager.instance.IncreasePlayerStealthLayerCount();
 		}
 	}
 	private void PlayerLeftDetectionBox(Node2D body)
     {
 		if (body.Name.ToString() == "Player")
 		{
-			MessageManager.instance.decreasePlayerStealthLayerCount();
+			MessageManager.instance.DecreasePlayerStealthLayerCount();
 		}
     }
 }

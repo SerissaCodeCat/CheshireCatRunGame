@@ -28,79 +28,77 @@ public partial class MessageManager : Node2D
         this.ProcessMode = ProcessModeEnum.Always; //set the message manager to ALWAYS be active
     }
     //set up the Dictionaries and links for messages to be handled by the manager
-    public void addToEnemyDictionary(EnemyPatrol enemyInstance)
+    public void AddToEnemyDictionary(EnemyPatrol enemyInstance)
     {
         enemies.Add(enemyInstance.GetInstanceId(), enemyInstance);
         GD.Print("added Enemy with ID of: " + enemyInstance.GetInstanceId());
     }
-    public void removeFromEnemyDictionary(ulong enemyInstanceID)
+    public void RemoveFromEnemyDictionary(ulong enemyInstanceID)
     {
         enemies[enemyInstanceID].Free();
         enemies.Remove(enemyInstanceID);
         GD.Print("Removed Enemy with ID of: " + enemyInstanceID);
     }
-    public void addToInteractableDictionary(Button buttonInstance)
+    public void AddToInteractableDictionary(Button buttonInstance)
     {
         interactables.Add(buttonInstance.GetInstanceId(), buttonInstance);
         GD.Print("added Interactable with ID of: " + buttonInstance.GetInstanceId());
     }
-    public void removeFromInteractableDictionary(ulong buttonInstanceID)
+    public void RemoveFromInteractableDictionary(ulong buttonInstanceID)
     {
         interactables[buttonInstanceID].Free();
         interactables.Remove(buttonInstanceID);
         GD.Print("Removed interactable with ID of: " + buttonInstanceID);
     }
-    public void addCameraToMessager(PixelPerfectCamera Camera)
+    public void AddCameraToMessager(PixelPerfectCamera Camera)
     {
             cameraLink = Camera;
     }
-    public void addPlayerToMessageManager(PlayerCharacter player)
+    public void AddPlayerToMessageManager(PlayerCharacter player)
     {
         if (playerMessagerLink == null)
         {
             playerMessagerLink = player;
-            player.setValues(3);
         }
         else
         {
-            player.setValues(playerMessagerLink.Health);
             playerMessagerLink = player;
         }
         GD.Print("player added to message manager with IDvalue of: " + playerMessagerLink.GetInstanceId());
     }
-    public void flushLevelData()
+    public void FlushLevelData()
     {
         playerMessagerLink.Free();
         cameraLink.Free();
         foreach (var x in interactables.Keys)
         {
-            removeFromInteractableDictionary(x);
+            RemoveFromInteractableDictionary(x);
         }
         foreach (var y in enemies.Keys)
         {
-            removeFromEnemyDictionary(y);
+            RemoveFromEnemyDictionary(y);
         }
         //enemies = new Dictionary<ulong, EnemyPatrol>();
     }
-    public void addViewportToMessager(SubViewportContainer incomingViewport)
+    public void AddViewportToMessager(SubViewportContainer incomingViewport)
     {
         viewportLink = incomingViewport;
     }
-    public void addUIControlToMessageManager(UIControl incomingUIControl)
+    public void AddUIControlToMessageManager(UIControl incomingUIControl)
     {
         if (UIControlLink == null)
         {
             UIControlLink = incomingUIControl;
         }
     }
-    public void addPauseMenuToMessageManager(PauseMenu incomingPauseMenu)
+    public void AddPauseMenuToMessageManager(PauseMenu incomingPauseMenu)
     {
         if(pauseMenuLink == null)
         {
             pauseMenuLink = incomingPauseMenu;
         }
     }
-    public void addSettingsMenuToMessageManager(SettingsMenu incomingSettingsMenu)
+    public void AddSettingsMenuToMessageManager(SettingsMenu incomingSettingsMenu)
     {
         if (SettingsMenuLink == null)
         {
@@ -116,11 +114,11 @@ public partial class MessageManager : Node2D
     {
         if (@event.IsActionPressed("Escape"))
         {
-            menuNavigationOnEscapeOrBack();
+            MenuNavigationOnEscapeOrBack();
         }
     }
 
-    public void menuNavigationOnEscapeOrBack()
+    public void MenuNavigationOnEscapeOrBack()
     {
         if(currentMenuState == MenuState.closed)
             {
@@ -168,53 +166,49 @@ public partial class MessageManager : Node2D
         playerMessagerLink.KillPlayer();
     }
     //damage without the bounce. usefull for environmental damage like gas / steam / heat  ect.
-    public void sendPlayerNonePhysicalDamage(int damage = 1)
+    public void SendPlayerNonePhysicalDamage(int damage = 1)
     {
         throw NotImplementedException();
-    }
-    public int enquireCurrentHealthofPlayer()
-    {
-        return playerMessagerLink.EnquireCurrentHealth();
     }
     public double GetbulletTimePercentageOfPlayer()
     {
         return playerMessagerLink.GetbulletTimePercentageDecimal();
     }
-    public void sendNewHealthTotalToUI(int currentHealth)
+    public void DecreaseUIHealthBy(int incomingDamage)
     {
-        UIControlLink.SetHealthTo(currentHealth);
+        UIControlLink.DecreaseHealthBy(incomingDamage);
     }
-    public void sendEnegyPercentageTotalToUI(double incomingPercentage)
+    public void SendEnegyPercentageTotalToUI(double incomingPercentage)
     {
         UIControlLink.SetEnergyPercentageTo(incomingPercentage);
     }
-    public void setPlayerSpawnPosition(Vector2 incomingPosition)
+    public void SetPlayerSpawnPosition(Vector2 incomingPosition)
     {
         playerMessagerLink.SetSpawnPosition(incomingPosition);
     }
-    public void resetPlayerToSpawnPosition()
+    public void ResetPlayerToSpawnPosition()
     {
         playerMessagerLink.ResetPlayerToSpawnPosition();
     }
-    public void increasePlayerStealthLayerCount()
+    public void IncreasePlayerStealthLayerCount()
     {
         playerMessagerLink.IncreaseStealthLayerCount();
     }
-    public void decreasePlayerStealthLayerCount()
+    public void DecreasePlayerStealthLayerCount()
     {
         playerMessagerLink.DecreaseStealthLayerCount();
     }
     ////////////////////////////////////////////////////////////////////////////
     ///////////////////// MESSAGES TO NPSs /////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
-    public void stunEnemyWithID(ulong ID)
+    public void StunEnemyWithID(ulong ID)
     {
         enemies[ID].SwitchToStunState();
     }
     ///////////////////////////////////////////////////////////////////////////
     //// MESSAGES TO INTERACTABLE ELEMENTS ////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
-    public void activateInteractableWithID(ulong ID)
+    public void ActivateInteractableWithID(ulong ID)
     {
         interactables[ID].Activate();
     }
@@ -223,7 +217,7 @@ public partial class MessageManager : Node2D
     ////////////////////////////////////////////////////////////////////////////
 
     //camera will smoothly follow target.
-    public void setPlayerAsCameraTarget()
+    public void SetPlayerAsCameraTarget()
     {
         if (playerMessagerLink != null)
             cameraLink.SetCameraTarget(playerMessagerLink);
@@ -231,11 +225,11 @@ public partial class MessageManager : Node2D
             GD.Print("No player character to link camera to!");
     }
     //useful for zooming the camera to a point of interest
-    public void setCameraTarget(Node2D target = null)
+    public void SetCameraTarget(Node2D target = null)
     {
         if (target == null)
         {
-            setPlayerAsCameraTarget();
+            SetPlayerAsCameraTarget();
             GD.Print("No target to set camera to! Setting camera to player!");
         }
         else
@@ -262,7 +256,7 @@ public partial class MessageManager : Node2D
     ///////////////////////////////////////////////////////////////////////////
     ///////////////// SHADER UPDATES //////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
-    public void updateViewportWholePixelOnlyMovement(Vector2 incomingPosition)
+    public void UpdateViewportWholePixelOnlyMovement(Vector2 incomingPosition)
     {
         viewportLink.ViewportWholePixelOnlyMovement(incomingPosition);
     }
@@ -302,7 +296,7 @@ public partial class MessageManager : Node2D
         GetTree().Paused = true;
         
         GD.Print("Freeing message manager lists & identifiers");
-        flushLevelData();
+        FlushLevelData();
         GD.Print("LEVEL TO LOAD = "+levelPath);
         viewportLink.SetNextLevelPath(levelPath);
         viewportLink.LoadLevel();
@@ -319,7 +313,7 @@ public partial class MessageManager : Node2D
     /// //////////// MESSAGES TO WHOLE SYSTEM //////////////////////////////////
     /// ////////////////////////////////////////////////////////////////////////
 
-    public void sendStealthStatusToSystem(bool isStealthed)
+    public void SendStealthStatusToSystem(bool isStealthed)
     {
         if (isStealthed)
         {

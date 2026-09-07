@@ -7,7 +7,7 @@ public partial class PixelPerfectCamera : Camera2D
     private Vector2 cameraOffsetPossition;
     public override void _Ready()
     {
-        MessageManager.instance.addCameraToMessager(this);
+        MessageManager.instance.AddCameraToMessager(this);
     }
     public void SetCameraTarget(Node2D incomingTarget)
     {
@@ -31,7 +31,7 @@ public partial class PixelPerfectCamera : Camera2D
         actualCameraPosition = actualCameraPosition.Lerp(actualCameraTargetPosition, (float)delta * 3.0f);
         cameraOffsetPossition = actualCameraPosition.Round() - actualCameraPosition;
 
-        MessageManager.instance.updateViewportWholePixelOnlyMovement(cameraOffsetPossition);
+        MessageManager.instance.UpdateViewportWholePixelOnlyMovement(cameraOffsetPossition);
 
         this.GlobalPosition = actualCameraPosition.Round();
     }

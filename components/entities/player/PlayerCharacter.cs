@@ -128,7 +128,7 @@ public partial class PlayerCharacter : CharacterBody2D
         cyoteTimer = CyoteTime;
         teleportTimer = teleportTimerReset;
         clingTimer = clingTimerReset;
-        MessageManager.instance.addPlayerToMessageManager(this);
+        MessageManager.instance.AddPlayerToMessageManager(this);
     }
     public override void _ExitTree()
     {
@@ -205,7 +205,7 @@ public partial class PlayerCharacter : CharacterBody2D
         if (percentage != previousPercentage)
         {
             previousPercentage = percentage;
-            MessageManager.instance.sendEnegyPercentageTotalToUI(percentage);
+            MessageManager.instance.SendEnegyPercentageTotalToUI(percentage);
         }
         MoveAndSlide();
     }
@@ -634,7 +634,7 @@ public partial class PlayerCharacter : CharacterBody2D
         PlayerState = playerStates.crouching;
         if (StealthLayerCount > 0)
         {
-            MessageManager.instance.sendStealthStatusToSystem(true);
+            MessageManager.instance.SendStealthStatusToSystem(true);
             this.SetCollisionMaskValue(NPCCollisionLayer, false);
             this.CollisionMask = NPCCollisiondisabled;
             this.CollisionLayer = RemoveAllLayers;
@@ -645,7 +645,7 @@ public partial class PlayerCharacter : CharacterBody2D
         StealthLayerCount++;
         if (StealthLayerCount > 0 && PlayerState == playerStates.crouching)
         {
-            MessageManager.instance.sendStealthStatusToSystem(true);
+            MessageManager.instance.SendStealthStatusToSystem(true);
         }
     }
     public void DecreaseStealthLayerCount()
@@ -653,7 +653,7 @@ public partial class PlayerCharacter : CharacterBody2D
         StealthLayerCount--;
         if (StealthLayerCount <= 0)
         {
-            MessageManager.instance.sendStealthStatusToSystem(false);
+            MessageManager.instance.SendStealthStatusToSystem(false);
             this.SetCollisionMaskValue(NPCCollisionLayer, true);
             this.CollisionMask = NPCCollisionenabled;
             this.CollisionLayer = PlayerLayer;
@@ -683,7 +683,7 @@ public partial class PlayerCharacter : CharacterBody2D
         if (damagable)
         {
             //Health -= damage;
-            MessageManager.instance.sendNewHealthTotalToUI(damage);
+            MessageManager.instance.DecreaseUIHealthBy(damage);
             damagable = false;
             damageTimer = DamageRecoveryReset;
             /*if (Health <= 0)
@@ -718,7 +718,7 @@ public partial class PlayerCharacter : CharacterBody2D
         //GD.Print("Player killed by KillZone / instant kill mechanic");
         //Health = 0;
         //TODO health stored in UI rather than in player. rather than shared responsibility.
-        MessageManager.instance.sendNewHealthTotalToUI(3);
+        MessageManager.instance.DecreaseUIHealthBy(3);
         ResetPlayerToSpawnPosition();
         //Health = MaxHealth;
         //MessageManager.instance.sendNewHealthTotalToUI(Health);
@@ -731,7 +731,7 @@ public partial class PlayerCharacter : CharacterBody2D
         //    Health = MaxHealth;
         //}
         //TODO health stored in UI rather than in player. rather than shared responsibility.
-        MessageManager.instance.sendNewHealthTotalToUI(3);
+        MessageManager.instance.DecreaseUIHealthBy(3);
     }
     private void FlashPlayer()
     {
