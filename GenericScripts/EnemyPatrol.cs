@@ -85,13 +85,6 @@ public partial class EnemyPatrol : CharacterBody2D
 
     public CurrentState CurrentState;
 
-    private bool playerIsDetectable = false;
-    private int playerColissionLayer = 6;
-
-    private const int playerCollisionEnabled = 8|32|64;
-    private const int playerCollisionDisabled = 8|64;
-    private const int RemoveAllLayers = 0;
-    private const int NPCLayer = 64;
     public override void _Ready()
     {
 
@@ -282,8 +275,7 @@ public partial class EnemyPatrol : CharacterBody2D
     private void PlayerEnteredHurtbox(Node2D body)
     {
         if (body.Name.ToString() == "Player")
-        if(canHurtPlayer && playerIsDetectable)
-        {
+
             if (canInstantKill)
             {
                 MessageManager.instance.KillPlayer();
@@ -291,9 +283,7 @@ public partial class EnemyPatrol : CharacterBody2D
             else
             {
                 MessageManager.instance.DamagePlayer(this.Position);
-            }
-        }
-        
+            }        
     }
 
     private void FlipEntity()
@@ -359,27 +349,5 @@ public partial class EnemyPatrol : CharacterBody2D
         flashTimer = stunTimer / 8;
         sprite_2d.Visible = false;
         CurrentState = CurrentState.stunned;
-    }
-
-    internal void SetPlayerDetection(bool v)
-    {
-        playerIsDetectable = v;
-        if (!playerIsDetectable)
-        {
-            this.CollisionMask = playerCollisionDisabled;
-            this.CollisionLayer = 0;
-            AreaDetectionLeft.SetCollisionMaskValue(playerColissionLayer, false);
-            AreaDetectionRight.SetCollisionMaskValue(playerColissionLayer, false);
-            HurtBox.SetCollisionMaskValue(playerColissionLayer, false); 
-        }
-        else
-        {
-            this.CollisionMask = playerCollisionEnabled;
-            this.CollisionLayer = NPCLayer;
-            AreaDetectionLeft.SetCollisionMaskValue(playerColissionLayer, true); 
-            AreaDetectionRight.SetCollisionMaskValue(playerColissionLayer, true);
-            HurtBox.SetCollisionMaskValue(playerColissionLayer, true);
-        }
-        //throw new NotImplementedException();
     }
 }

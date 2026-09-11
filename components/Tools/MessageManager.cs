@@ -317,23 +317,6 @@ public partial class MessageManager : Node2D
     /// //////////// MESSAGES TO WHOLE SYSTEM //////////////////////////////////
     /// ////////////////////////////////////////////////////////////////////////
 
-    public void SendStealthStatusToSystem(bool isStealthed)
-    {
-        if (isStealthed)
-        {
-            foreach (var x in enemies.Values)
-            {
-                x.SetPlayerDetection(false);
-            }
-        }
-        else
-        {
-            foreach (var x in enemies.Values)
-            {
-                x.SetPlayerDetection(true);
-            }
-        }
-    }
  
     ///////////////////////////////////////////////////////////////////////////
     ///////// DEBUGGING AND CRASH HANDLERS ////////////////////////////////////

@@ -219,7 +219,7 @@ size = Vector2(19, 24)
 size = Vector2(194.5, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g5khf"]
-size = Vector2(21, 24)
+size = Vector2(17, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2e2n"]
 
@@ -230,8 +230,8 @@ size = Vector2(21, 24)
 [node name="Enemy" type="CharacterBody2D" unique_id=1172901401]
 texture_filter = 1
 texture_repeat = 1
-collision_layer = 104
-collision_mask = 328
+collision_layer = 64
+collision_mask = 72
 floor_stop_on_slope = false
 script = ExtResource("1_2ofwc")
 Speed = 150.0
@@ -249,7 +249,7 @@ shape = SubResource("RectangleShape2D_qhpou")
 
 [node name="DetectionAreaRight" type="Area2D" parent="." unique_id=570073131]
 collision_layer = 0
-collision_mask = 32
+collision_mask = 256
 
 [node name="CollisionShapeSight" type="CollisionShape2D" parent="DetectionAreaRight" unique_id=1928272135]
 light_mask = 0
@@ -258,7 +258,7 @@ shape = SubResource("RectangleShape2D_j2p43")
 
 [node name="DetectionAreaLeft" type="Area2D" parent="." unique_id=1539388555]
 collision_layer = 0
-collision_mask = 32
+collision_mask = 256
 monitoring = false
 
 [node name="CollisionShapeSight" type="CollisionShape2D" parent="DetectionAreaLeft" unique_id=140371340]
@@ -269,10 +269,10 @@ shape = SubResource("RectangleShape2D_j2p43")
 [node name="HurtBox2D" type="Area2D" parent="." unique_id=1346467019]
 position = Vector2(0, -1)
 collision_layer = 0
-collision_mask = 32
+collision_mask = 256
 
 [node name="HurtBoxCollisionShape" type="CollisionShape2D" parent="HurtBox2D" unique_id=593704955]
-position = Vector2(-0.5, 4)
+position = Vector2(-0.5, 5)
 shape = SubResource("RectangleShape2D_g5khf")
 
 [node name="EdgeDetectionShapeCast2DRight" type="ShapeCast2D" parent="." unique_id=1455965491]

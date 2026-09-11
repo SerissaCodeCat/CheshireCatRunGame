@@ -638,63 +638,19 @@ public partial class PlayerCharacter : CharacterBody2D
         PlayerState = PlayerStates.grounded;
         RefreshStealth();
     }
-    /*private void EnterCrouchingState()
-    {
-        CrouchingCollision.Disabled = false;
-        StandingCollision.Disabled = true;
-        PlayerState = PlayerStates.crouching;
-        if (StealthLayerCount > 0)
-        {
-            MessageManager.instance.SendStealthStatusToSystem(true);
-            this.SetCollisionMaskValue(NPCCollisionLayer, false);
-            this.CollisionMask = NPCCollisiondisabled;
-            this.CollisionLayer = RemoveAllLayers;
-        }
-    }
-    public void IncreaseStealthLayerCount()
-    {
-        StealthLayerCount++;
-        if (StealthLayerCount > 0 && PlayerState == PlayerStates.crouching)
-        {
-            MessageManager.instance.SendStealthStatusToSystem(true);
-        }
-    }
-    public void DecreaseStealthLayerCount()
-    {
-        StealthLayerCount--;
-        if (StealthLayerCount <= 0)
-        {
-            MessageManager.instance.SendStealthStatusToSystem(false);
-            this.SetCollisionMaskValue(NPCCollisionLayer, true);
-            this.CollisionMask = NPCCollisionenabled;
-            this.CollisionLayer = PlayerLayer;
-            StealthLayerCount = 0;
-        }
-    }*/
-
-    ///////
-    /// EXPERIMENTAL
-    /// 
     private void RefreshStealth()
     {
-        GD.Print($"PlayerStealth conditins. Player state = {PlayerState}, Stealth layer count = {StealthLayerCount}");
         if (PlayerState == PlayerStates.crouching && StealthLayerCount > 0)
             ShouldBeHidden = true;
         else
             ShouldBeHidden = false;
-        GD.Print($"ShouldBeHidden = {ShouldBeHidden}, layer={CollisionLayer}, mask={CollisionMask}");
         
     
         if (ShouldBeHidden) 
             sprite_2d.Modulate = semiTransparent;
         else 
             sprite_2d.Modulate = solid;
-        // Player stops colliding into NPCs
-        //SetCollisionMaskValue(NPCLayer, !ShouldBeHidden);
-        // NPCs stop colliding into the player (this is the half you were missing)
-        SetCollisionLayerValue(PlayerStealthDetectionLayer, !ShouldBeHidden);
-        MessageManager.instance.SendStealthStatusToSystem(ShouldBeHidden);
-    }
+        SetCollisionLayerValue(PlayerStealthDetectionLayer, !ShouldBeHidden);    }
     private void EnterCrouchingState()
     {
         CrouchingCollision.Disabled = false;
