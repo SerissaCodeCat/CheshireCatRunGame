@@ -16,6 +16,7 @@ public partial class StealthItemDefault : Node2D
 	{
 		if (body.Name.ToString() == "Player")
 		{
+			GD.Print ("Player entered Stealth zone");
 			MessageManager.instance.IncreasePlayerStealthLayerCount();
 		}
 	}
@@ -23,6 +24,7 @@ public partial class StealthItemDefault : Node2D
     {
 		if (body.Name.ToString() == "Player")
 		{
+			GD.Print("Player Left Stealth Zone");
 			MessageManager.instance.DecreasePlayerStealthLayerCount();
 		}
     }

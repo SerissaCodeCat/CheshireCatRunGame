@@ -231,10 +231,10 @@ size = Vector2(21, 24)
 texture_filter = 1
 texture_repeat = 1
 collision_layer = 104
-collision_mask = 104
+collision_mask = 328
 floor_stop_on_slope = false
 script = ExtResource("1_2ofwc")
-Speed = 175.0
+Speed = 150.0
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1572095314]
 z_index = 6

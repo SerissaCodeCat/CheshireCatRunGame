@@ -282,7 +282,7 @@ public partial class EnemyPatrol : CharacterBody2D
     private void PlayerEnteredHurtbox(Node2D body)
     {
         if (body.Name.ToString() == "Player")
-        if(canHurtPlayer)
+        if(canHurtPlayer && playerIsDetectable)
         {
             if (canInstantKill)
             {

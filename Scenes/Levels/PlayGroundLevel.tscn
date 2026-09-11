@@ -57,6 +57,7 @@ position = Vector2(1281, -176)
 
 [node name="Enemy" parent="." unique_id=1172901401 instance=ExtResource("8_2f6ep")]
 position = Vector2(521, -519)
+Speed = 150.0
 canJump = true
 jumpForce = 310.0
 

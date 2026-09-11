@@ -93,11 +93,10 @@ public partial class PlayerCharacter : CharacterBody2D
     /// ////////////////////////////////////////////////////////////////////////////////
     /// </Intergers>
 
-    private const int NPCCollisionLayer = 7;
-    private const int NPCCollisionenabled = 8|16|64|128;
-    private const int NPCCollisiondisabled = 8|16|128;
-    private const int PlayerLayer = 32;
-    private const int RemoveAllLayers = 0;
+    private const int NPCLayer    = 7;   // bit value 64
+    private const int PlayerStealthDetectionLayer = 9; //bit Value 256 
+    private int _stealthLayerCount;
+    private bool _isHidden;
     /// <Bools>
     /// ////////////////////////////////////////////////////////////////////////////////
     /// </Bools>
@@ -108,6 +107,8 @@ public partial class PlayerCharacter : CharacterBody2D
 
     private Vector2 spawnPosition = new(0, 0);
     private double previousPercentage;
+    private bool ShouldBeHidden;
+
 
     public override void _Ready()
     {
@@ -635,8 +636,9 @@ public partial class PlayerCharacter : CharacterBody2D
         CrouchingCollision.Disabled = true;
         StandingCollision.Disabled = false;
         PlayerState = PlayerStates.grounded;
+        RefreshStealth();
     }
-    private void EnterCrouchingState()
+    /*private void EnterCrouchingState()
     {
         CrouchingCollision.Disabled = false;
         StandingCollision.Disabled = true;
@@ -668,17 +670,63 @@ public partial class PlayerCharacter : CharacterBody2D
             this.CollisionLayer = PlayerLayer;
             StealthLayerCount = 0;
         }
+    }*/
+
+    ///////
+    /// EXPERIMENTAL
+    /// 
+    private void RefreshStealth()
+    {
+        GD.Print($"PlayerStealth conditins. Player state = {PlayerState}, Stealth layer count = {StealthLayerCount}");
+        if (PlayerState == PlayerStates.crouching && StealthLayerCount > 0)
+            ShouldBeHidden = true;
+        else
+            ShouldBeHidden = false;
+        GD.Print($"ShouldBeHidden = {ShouldBeHidden}, layer={CollisionLayer}, mask={CollisionMask}");
+        
+    
+        if (ShouldBeHidden) 
+            sprite_2d.Modulate = semiTransparent;
+        else 
+            sprite_2d.Modulate = solid;
+        // Player stops colliding into NPCs
+        //SetCollisionMaskValue(NPCLayer, !ShouldBeHidden);
+        // NPCs stop colliding into the player (this is the half you were missing)
+        SetCollisionLayerValue(PlayerStealthDetectionLayer, !ShouldBeHidden);
+        MessageManager.instance.SendStealthStatusToSystem(ShouldBeHidden);
+    }
+    private void EnterCrouchingState()
+    {
+        CrouchingCollision.Disabled = false;
+        StandingCollision.Disabled = true;
+        PlayerState = PlayerStates.crouching;
+        RefreshStealth();
+    }
+    public void IncreaseStealthLayerCount()
+    {
+        StealthLayerCount++;
+        RefreshStealth();
+    }
+    public void DecreaseStealthLayerCount()
+    {
+        StealthLayerCount--;
+        if (StealthLayerCount < 0)
+            StealthLayerCount = 0; 
+        RefreshStealth();
     }
     private void EnterClingingState()
     {
         DetermineDirrectionOfWall();
         finalVelocity = Stop;
         PlayerState = PlayerStates.clinging;
+        RefreshStealth();
+
     }
     private void EnterAirbornState()
     {
         JumpHangingTimeTimer = JumpHangingTime;    
         PlayerState = PlayerStates.airborn;
+        RefreshStealth();
     }
     public void DamagePLayer(float DamageOriginX = 0.0f, float DamageOriginY = 0.0f, int damage = 1)
     {
@@ -707,7 +755,8 @@ public partial class PlayerCharacter : CharacterBody2D
     }
     private void FlashPlayer()
     {
-        if (sprite_2d.Modulate.A == 0.5f)
+        // .A value is the alpha chanel of the RGBA
+        if (sprite_2d.Modulate.A == semiTransparent.A)
         {
             sprite_2d.Modulate = solid;
         }
@@ -754,6 +803,7 @@ public partial class PlayerCharacter : CharacterBody2D
         damageTimer = 0.0f; //not damaged.
         PlayerState = PlayerStates.grounded;
         Velocity = Stop;
+        RefreshStealth();
     }
     public void SetSpawnPosition(Vector2 incomingPosition)
     {
