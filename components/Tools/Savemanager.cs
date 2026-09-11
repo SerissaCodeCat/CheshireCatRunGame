@@ -20,14 +20,18 @@ public partial class Savemanager : Node
 		//Taken an modified from Godot documentation ////////////////////////////
 		// https://docs.godotengine.org/en/4.4/tutorials/io/saving_games.html ///
 		///////////////////////////////////////////////////////////////////////// 
-		/// "user://savegame.save"
-		//using var saveFile = FileAccess.Open(GetFullSavePath(slot), FileAccess.ModeFlags.Write);
-		using var saveFile = FileAccess.Open("user://savegame.save", FileAccess.ModeFlags.Write);
 
+		Error saveDirectoryError = DirAccess.MakeDirRecursiveAbsolute(GetSaveDirectory(slot));
+		if (saveDirectoryError != Error.Ok)
+		{
+			GD.PrintErr($"unable to locate or create save Dirrectory {GetSaveDirectory(slot)}");
+			return;
+		} 
+		using var saveFile = FileAccess.Open(GetFullSavePath(slot), FileAccess.ModeFlags.Write);
 		//if save file cannot be opened or created. return error.
 		if (saveFile == null)
 		{
-			GD.Print($"Cannot find or create {GetFullSavePath(slot)}, with the error {FileAccess.GetOpenError()}");
+			GD.PrintErr($"Cannot find or create save file {GetFullSavePath(slot)}, with the error {FileAccess.GetOpenError()}");
 			return;
 		}
 
