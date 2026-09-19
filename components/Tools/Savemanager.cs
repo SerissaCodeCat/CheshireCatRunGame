@@ -62,6 +62,7 @@ public partial class Savemanager : Node
 			// Store the save dictionary as a new line in the save file.
 			saveFile.StoreLine(jsonString);
 		}
+		GD.Print(OS.GetDataDir());
 	}
 	public void LoadGame (int slot = 1)
 	{

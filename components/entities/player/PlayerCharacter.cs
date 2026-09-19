@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class PlayerCharacter : CharacterBody2D
@@ -36,7 +37,7 @@ public partial class PlayerCharacter : CharacterBody2D
     private CollisionShape2D CrouchingCollision;
     private ShapeCast2D ShapeCastCeilingCheck;
     private ShapeCast2D ShapeCastWallCheck;
-    private byte StealthLayerCount = 0;
+    private int StealthLayerCount = 0;
 
 
     /// <Floats>
@@ -108,7 +109,34 @@ public partial class PlayerCharacter : CharacterBody2D
     private Vector2 spawnPosition = new(0, 0);
     private double previousPercentage;
     private bool ShouldBeHidden;
+    
+    /////////////////////////////////////////////////////////////
+    /////////////////// SAVING VALUES ///////////////////////////
+    /////////////////////////////////////////////////////////////
 
+
+    //Save Version is to be incremented if the save function values change, so that a conversion method can be designed.public const string SaveId = "player";
+    public const string SaveId = "player";
+    private const int SaveVersion = 1;
+    private static class SaveKeys
+    {
+        public const string Id = "saveId";
+        public const string Version = "saveVersion";
+        public const string ScenePath = "scenePath";
+        public const string NodeName = "nodeName";      // debugging only, never used for lookup
+        public const string PosX = "posX";
+        public const string PosY = "posY";
+        public const string VelX = "velX";
+        public const string VelY = "velY";
+        public const string State = "state";
+        public const string FacingLeft = "facingLeft";
+        public const string DoubleJump = "doubleJumpAvailable";
+        public const string Teleport = "teleportAvailable";
+        public const string SpawnX = "spawnX";
+        public const string SpawnY = "spawnY";
+        public const string BulletTimer = "bulletTimer";
+    }
+    private Godot.Collections.Dictionary<string, Variant> pendingLoadData;
 
     public override void _Ready()
     {
@@ -128,18 +156,117 @@ public partial class PlayerCharacter : CharacterBody2D
         teleportTimer = teleportTimerReset;
         clingTimer = clingTimerReset;
         MessageManager.instance.AddPlayerToMessageManager(this);
+        AddToGroup("PersistThroughSave");   // lets SaveManager find saveables without knowing names
+        if (pendingLoadData != null)
+        {
+            ApplyLoad(pendingLoadData);
+            pendingLoadData = null;
+        }
     }
     public Godot.Collections.Dictionary<string, Variant> Save()
     {
-        //turn values to dictionary, SaveManager will turn this to Json
-        return new Godot.Collections.Dictionary<string, Variant>()
+        return new Godot.Collections.Dictionary<string, Variant>
         {
-                { "componentName", this.Name },
-                { "currentXLocation", this.Position.X},
-                { "currentYLocation", this.Position.Y},
-                { "curentState", this.PlayerState.ToString()}
+            { SaveKeys.Id, SaveId },
+            { SaveKeys.Version, SaveVersion },
+            { SaveKeys.ScenePath, SceneFilePath },
+            { SaveKeys.NodeName, Name.ToString() },
+            { SaveKeys.PosX, GlobalPosition.X },
+            { SaveKeys.PosY, GlobalPosition.Y },
+            { SaveKeys.VelX, Velocity.X },
+            { SaveKeys.VelY, Velocity.Y },
+            { SaveKeys.State, PlayerState.ToString() },
+            { SaveKeys.FacingLeft, sprite_2d.FlipH },
+            { SaveKeys.DoubleJump, doubleJumpAvailiable },
+            { SaveKeys.Teleport, teleportAvailiable },
+            { SaveKeys.SpawnX, spawnPosition.X },
+            { SaveKeys.SpawnY, spawnPosition.Y },
+            { SaveKeys.BulletTimer, bulletTimer },
         };
-    } 
+    }
+    /// Returns false if the data isn't for this object or is unusable.
+    public bool Load(Godot.Collections.Dictionary<string, Variant> data)
+    {
+        if (data == null
+            || !data.TryGetValue(SaveKeys.Id, out Variant id)
+            || id.VariantType != Variant.Type.String
+            || id.AsString() != SaveId)
+        {
+            GD.PushWarning("PlayerCharacter.Load: data is missing or not player data.");
+            return false;
+        }
+        int version = (int)ReadDouble(data, SaveKeys.Version, 0);
+        if (version > SaveVersion)
+        {
+            GD.PushWarning($"PlayerCharacter.Load: save version {version} is newer than supported {SaveVersion}.");
+            return false;
+        }
+        // if (version < SaveVersion) { migrate here }
+        // Child node references don't exist before _Ready. If the SaveManager calls
+        // us before AddChild, defer until _Ready.
+        if (!IsNodeReady())
+        {
+            pendingLoadData = data;
+            return true;
+        }
+        ApplyLoad(data);
+        return true;
+    }
+    private void ApplyLoad(Godot.Collections.Dictionary<string, Variant> data)
+    {
+        // --- transform ---
+        GlobalPosition = new Vector2(
+            ReadFloat(data, SaveKeys.PosX, GlobalPosition.X),
+            ReadFloat(data, SaveKeys.PosY, GlobalPosition.Y));
+        Velocity = new Vector2(
+            ReadFloat(data, SaveKeys.VelX, 0f),
+            ReadFloat(data, SaveKeys.VelY, 0f));
+        spawnPosition = new Vector2(
+            ReadFloat(data, SaveKeys.SpawnX, spawnPosition.X),
+            ReadFloat(data, SaveKeys.SpawnY, spawnPosition.Y));
+        // --- facing / aiming ---
+        sprite_2d.FlipH = ReadBool(data, SaveKeys.FacingLeft, false);
+        aimingLynchpin.RotationDegrees = sprite_2d.FlipH ? 180.0f : 0.0f;
+        aimingSprite.Visible = false;
+        aimingRise = true;
+        // --- abilities / timers ---
+        doubleJumpAvailiable = ReadBool(data, SaveKeys.DoubleJump, true);
+        teleportAvailiable = ReadBool(data, SaveKeys.Teleport, true);
+        bulletTimer = Mathf.Clamp(ReadDouble(data, SaveKeys.BulletTimer, 0.0d), 0.0d, BulletResetTime);
+        previousPercentage = -1.0d;          // forces the UI to be re-sent next physics frame
+        // --- transient stuff is always reset, never restored ---
+        damagable = true;
+        damageTimer = 0.0d;
+        flashTimer = 0.0d;
+        cyoteTimer = CyoteTime;
+        clingTimer = clingTimerReset;
+        teleportTimer = teleportTimerReset;
+        firstClingTimer = 0.0d;
+        JumpHangingTimeTimer = 0.0f;         // don't hover for a second after loading
+        // --- state ---
+        PlayerStates saved = PlayerStates.airborn;
+        if (data.TryGetValue(SaveKeys.State, out Variant s) && s.VariantType == Variant.Type.String)
+        {
+            if (!System.Enum.TryParse(s.AsString(), out saved) || !System.Enum.IsDefined(typeof(PlayerStates), saved))
+                saved = PlayerStates.airborn;
+        }
+        // Only crouching is restored literally. If we stood the player up under a
+        // low ceiling they'd be embedded in it. Everything else (grounded, clinging,
+        // teleporting, damaged) becomes airborn and the state machine sorts itself
+        // out within a frame or two.
+        if (saved == PlayerStates.crouching)
+        {
+            EnterCrouchingState();
+        }
+        else
+        {
+            CrouchingCollision.Disabled = true;
+            StandingCollision.Disabled = false;
+            PlayerState = PlayerStates.airborn;
+            RefreshStealth();
+        }
+        ResetPhysicsInterpolation();         // harmless if interpolation is off; prevents a visible "slide" if on
+    }
     public override void _ExitTree()
     {
         base._ExitTree();
@@ -224,8 +351,8 @@ public partial class PlayerCharacter : CharacterBody2D
         //add gravity
         //incomingVelocity.Y += gravity * (float)incomingDelta;
 
-        //if touching ground, refresh cyote timer, if not, decrease it
-        cyoteTimer = IsOnFloor() ? CyoteTime : -incomingDelta;
+        //if touching ground, refresh cyote timer, if not, decrease it by delta
+        cyoteTimer = IsOnFloor() ? CyoteTime : cyoteTimer -= incomingDelta;
         if (cyoteTimer <= 0.00d)
         {
             teleportAvailiable = true;
@@ -364,10 +491,10 @@ public partial class PlayerCharacter : CharacterBody2D
         }
         else if (Input.IsActionJustPressed("crouch"))
         {
-
-            StandingCollision.Disabled = true;
-            CrouchingCollision.Disabled = false;
-            PlayerState = PlayerStates.crouching;
+            EnterCrouchingState();
+            //StandingCollision.Disabled = true;
+            //CrouchingCollision.Disabled = false;
+            //PlayerState = PlayerStates.crouching;
         }
 
         if (incomingVelocity.X != 0.0f)
@@ -381,7 +508,7 @@ public partial class PlayerCharacter : CharacterBody2D
         //add gravity
         incomingVelocity.Y += gravity * PlayerGravityMultiplier *  (float)incomingDelta;
         //if touching ground, refresh cyote timer, if not, decrease it
-        cyoteTimer = IsOnFloor() ? CyoteTime : -incomingDelta;
+        cyoteTimer = IsOnFloor() ? CyoteTime : cyoteTimer -= incomingDelta;
 
         if (cyoteTimer <= 0.0d)
         {
@@ -755,7 +882,7 @@ public partial class PlayerCharacter : CharacterBody2D
     }
     public void ResetPlayerToSpawnPosition()
     {
-        this.Position = spawnPosition;
+        this.GlobalPosition = spawnPosition;
         damageTimer = 0.0f; //not damaged.
         PlayerState = PlayerStates.grounded;
         Velocity = Stop;
@@ -786,4 +913,21 @@ public partial class PlayerCharacter : CharacterBody2D
             Lerp(firstPoint.Y, secondPoint.Y, percentageBetweenTheTwoPoints));
         return result;
     }
+    // ---------- helpers ----------
+    // JSON gives every number back as a double, and a hand-edited or corrupt file can
+// give you anything. Never index the dictionary directly.
+    private static double ReadDouble(Godot.Collections.Dictionary<string, Variant> d, string key, double fallback)
+    {
+        if (d.TryGetValue(key, out Variant v)
+            && (v.VariantType == Variant.Type.Float || v.VariantType == Variant.Type.Int))
+        {
+            double value = v.AsDouble();
+            if (double.IsFinite(value)) return value;
+        }
+        return fallback;
+    }
+    private static float ReadFloat(Godot.Collections.Dictionary<string, Variant> d, string key, float fallback)
+        => (float)ReadDouble(d, key, fallback);
+    private static bool ReadBool(Godot.Collections.Dictionary<string, Variant> d, string key, bool fallback)
+        => d.TryGetValue(key, out Variant v) && v.VariantType == Variant.Type.Bool ? v.AsBool() : fallback;
 }

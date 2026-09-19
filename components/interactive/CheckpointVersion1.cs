@@ -13,6 +13,6 @@ public partial class CheckpointVersion1 : Node2D
 	private void PlayerEnteredDetectionBox(Node2D body)
     {
 		GD.Print("Player entered checkpoint detection box");
-        MessageManager.instance.SetPlayerSpawnPosition(this.Position);
+        MessageManager.instance.SetPlayerSpawnPosition(this.GlobalPosition);
     }
 }
