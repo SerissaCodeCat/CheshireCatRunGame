@@ -32,11 +32,7 @@ public partial class PauseMenu : Control
 		QuitButton.Pressed += QuitButtonPressed;
 		MainMenuButton.Pressed += MainMenuButtonPressed;
 
-		ResumeButton.Disabled = true;
-		SaveButton.Disabled = true;
-		OptionsButton.Disabled = true;
-		QuitButton.Disabled = true;
-		MainMenuButton.Disabled = true;
+		DisableButtons();
 	}
 
     //////////////////////////////////
@@ -51,39 +47,23 @@ public partial class PauseMenu : Control
 	public void Resume()
 	{
 		AnimationPlayer.PlayBackwards("PauseAnimation");
-		ResumeButton.Disabled = true;
-		SaveButton.Disabled = true;
-		OptionsButton.Disabled = true;
-		QuitButton.Disabled = true;
-		MainMenuButton.Disabled = true;
+		DisableButtons();
 	}
 	public void Pause()
 	{
 		ResumeButton.GrabFocus(); // makes the resume button be the default highlighted button
 		AnimationPlayer.Play("PauseAnimation");
-		ResumeButton.Disabled = false;
-		SaveButton.Disabled = false;
-		OptionsButton.Disabled = false;
-		QuitButton.Disabled = false;
-		MainMenuButton.Disabled = false;
+		EnableButtons();
 	}
 	public void HidePauseMenu()
 	{
-		ResumeButton.Disabled = true;
-		SaveButton.Disabled = true;
-		OptionsButton.Disabled = true;
-		QuitButton.Disabled = true;
-		MainMenuButton.Disabled = true;
+		DisableButtons();
 		this.Visible = false;
 	}
 	public void ShowPauseMenu()
 	{
 		ResumeButton.GrabFocus(); // makes the resume button be the default highlighted button
-		ResumeButton.Disabled = false;
-		SaveButton.Disabled = false;
-		OptionsButton.Disabled = false;
-		QuitButton.Disabled = false;
-		MainMenuButton.Disabled = false;
+		EnableButtons();
 		this.Visible = true;
 	}
 	public void SaveButtonPressed()
@@ -106,5 +86,23 @@ public partial class PauseMenu : Control
 	public void MainMenuButtonPressed()
 	{
 		//INSERT RETURN TO MAIN MENU HERE
+	}
+	private void DisableButtons()
+	{
+		ResumeButton.Disabled = true;
+		SaveButton.Disabled = true;
+		LoadButton.Disabled = true;
+		OptionsButton.Disabled = true;
+		QuitButton.Disabled = true;
+		MainMenuButton.Disabled = true;
+	}
+	private void EnableButtons()
+	{
+		ResumeButton.Disabled = false;
+		SaveButton.Disabled = false;
+		LoadButton.Disabled = false;
+		OptionsButton.Disabled = false;
+		QuitButton.Disabled = false;
+		MainMenuButton.Disabled = false;
 	}
 }
