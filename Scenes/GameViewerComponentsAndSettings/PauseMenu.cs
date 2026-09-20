@@ -27,6 +27,7 @@ public partial class PauseMenu : Control
 		ResumeButton.Pressed += ResumePressed;
 		ResumeButton.GrabFocus(); // makes the resume button be the default highlighted button
 		SaveButton.Pressed += SaveButtonPressed;
+		LoadButton.Pressed += LoadButtonPressed;
 		OptionsButton.Pressed += OptionsButtonPressed;
 		QuitButton.Pressed += QuitButtonPressed;
 		MainMenuButton.Pressed += MainMenuButtonPressed;
@@ -38,11 +39,11 @@ public partial class PauseMenu : Control
 		MainMenuButton.Disabled = true;
 	}
 
-	//////////////////////////////////
-	/// BUTTON FUNCTIONS /////////////
-	//////////////////////////////////
-	
-	private void ResumePressed()
+    //////////////////////////////////
+    /// BUTTON FUNCTIONS /////////////
+    //////////////////////////////////
+
+    private void ResumePressed()
 	{
 		MessageManager.instance.MenuNavigationOnEscapeOrBack();
 	}
@@ -88,6 +89,10 @@ public partial class PauseMenu : Control
 	public void SaveButtonPressed()
 	{
 		Savemanager.instance.SaveGame();
+	}
+	private void LoadButtonPressed()
+    {
+		Savemanager.instance.LoadGame();
 	}
 	public void OptionsButtonPressed()
 	{

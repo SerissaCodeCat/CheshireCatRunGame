@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 public partial class Savemanager : Node
@@ -8,6 +9,11 @@ public partial class Savemanager : Node
 	private string savePath = "user://"; //do not save to Res:// as it is read only after compile.
 	private string saveFileName = "save.json"; //individual save game name. each slot will contain only 1 file.
 	private int saveSlot = 1; //default save slot. multiple saaves result in a folder for each slot. 
+	[Export]
+	private string savableNodeGroup = "persistThroughSave";
+	private const string SaveIdKey = "saveId";      // must match the key the nodes write in Save()
+    private System.Collections.Generic.Dictionary<string, Node> SavedNodes = [];
+
 	public override void _Ready()
 	{
 		instance = this;
@@ -66,7 +72,69 @@ public partial class Savemanager : Node
 	}
 	public void LoadGame (int slot = 1)
 	{
-		//todo
+		string saveLocation = GetFullSavePath(slot);
+		//check that file exists in the specified slot.
+		if(!FileAccess.FileExists(saveLocation))
+		{
+			GD.PrintErr($"no save file found at {GetFullSavePath(slot)}");
+			return;
+		}
+		
+		//itterate through the nodes in the save group, 
+		foreach (Node node in GetTree().GetNodesInGroup(savableNodeGroup))
+		{
+			// Stringly-typed check: we're asking the node at runtime whether it has these members.
+			Variant idVariant = node.Get("SaveId");              // returns a Nil Variant if there's no such property
+			if (idVariant.VariantType != Variant.Type.String) //break if there is no Load method
+			{
+				GD.PrintErr($"{node.GetPath()} needs a string 'SaveId' property");
+				if(!node.HasMethod("Load"))
+				{
+									GD.PrintErr($"{node.GetPath()} needs a 'Load' method.");
+				}
+				continue;
+			}
+			string nodeId = idVariant.AsString();
+			if (!SavedNodes.TryAdd(nodeId, node))//add the Godot node to a standard System.Collections.Generic.Dictionary to make use of System functions.
+				GD.PrintErr($"Duplicate SaveId '{nodeId}' on {node.GetPath()}; ignoring.");
+		}
+
+
+		using var saveFile = FileAccess.Open(saveLocation, FileAccess.ModeFlags.Read);
+		int lineNumber = 0;
+		while(saveFile.GetPosition() < saveFile.GetLength())
+		{
+			string jsonString = saveFile.GetLine();
+			lineNumber++;
+			if (string.IsNullOrWhiteSpace(jsonString))
+				continue;
+			var json = new Json();
+			if (json.Parse(jsonString) != Error.Ok)
+			{
+				GD.PrintErr($"Save line {lineNumber}: JSON parse error: {json.GetErrorMessage()}");
+				continue;
+			}
+			if (json.Data.VariantType != Variant.Type.Dictionary)
+			{
+				GD.PrintErr($"Save line {lineNumber}: expected a JSON object, got {json.Data.VariantType}.");
+				continue;
+			}
+			var nodeData = json.Data.AsGodotDictionary<string, Variant>();
+			if (!nodeData.TryGetValue(SaveIdKey, out Variant idVariant)
+				|| idVariant.VariantType != Variant.Type.String)
+			{
+				GD.PrintErr($"Save line {lineNumber}: missing or invalid '{SaveIdKey}'.");
+				continue;
+			}
+			string id = idVariant.AsString();
+			if (!SavedNodes.Remove(id, out Node target))
+			{
+				GD.PushWarning($"Save line {lineNumber}: no node with SaveId '{id}' in the current scene.");
+				continue;
+			}
+			if (!target.Call("Load", nodeData).AsBool())
+				GD.PrintErr($"Save line {lineNumber}: node '{id}' rejected its data.");
+		}
 	}
 	public void DeleteGame (int slot =1)
 	{

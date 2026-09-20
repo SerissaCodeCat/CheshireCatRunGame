@@ -116,7 +116,9 @@ public partial class PlayerCharacter : CharacterBody2D
 
 
     //Save Version is to be incremented if the save function values change, so that a conversion method can be designed.public const string SaveId = "player";
-    public const string SaveId = "player";
+
+    //SaveID is a programming controled variable to be able to identify the node type for the loading functionality. 
+    public string SaveId => "player";    
     private const int SaveVersion = 1;
     private static class SaveKeys
     {
