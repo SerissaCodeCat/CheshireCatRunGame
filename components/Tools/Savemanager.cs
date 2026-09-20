@@ -23,7 +23,7 @@ public partial class Savemanager : Node
 	public void SaveGame (int slot = 1)
 	{
 		/////////////////////////////////////////////////////////////////////////
-		//Taken an modified from Godot documentation ////////////////////////////
+		// Taken an modified from Godot documentation ///////////////////////////
 		// https://docs.godotengine.org/en/4.4/tutorials/io/saving_games.html ///
 		///////////////////////////////////////////////////////////////////////// 
 
@@ -142,7 +142,6 @@ public partial class Savemanager : Node
 	}
 	private string GetFullSavePath (int slot = 1)
 	{
-		//todo
 		return $"{savePath}slot{slot}/{saveFileName}";
 	}
 	private string GetSaveDirectory (int slot = 1)
