@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://3lilkk4qeaub" path="res://Images/Animated/Run (32x32).png" id="5_wjw48"]
 [ext_resource type="Texture2D" uid="uid://coa8eqin646m3" path="res://Images/Animated/Desappearing (96x96).png" id="7_kuqpw"]
 [ext_resource type="Texture2D" uid="uid://clxid87x65b57" path="res://Images/Static/GameInteractions/DirrectionalArrow.png" id="9_c5ha8"]
+[ext_resource type="Script" uid="uid://di4xkpb4dl3eb" path="res://components/entities/player/TrajectoryPreview.cs" id="10_mfnvq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w4qx4"]
 atlas = ExtResource("2_gfsuy")
@@ -462,6 +463,7 @@ JumpVelocity = -420.0
 JumpHangingTime = 0.05
 dashSpeed = 500.0
 CyoteTime = 0.1
+BulletSpeed = 300.0
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1446792829]
 z_index = 5
@@ -507,3 +509,6 @@ target_position = Vector2(15, 0)
 max_results = 2
 collision_mask = 8
 collide_with_areas = true
+
+[node name="TrajectoryPreview" type="Node2D" parent="." unique_id=883516029]
+script = ExtResource("10_mfnvq")

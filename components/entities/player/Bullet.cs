@@ -6,11 +6,9 @@ public partial class Bullet : CharacterBody2D
     private Godot.Vector2 currentVelocity = new Godot.Vector2(0.0f, 0.0f);
     private Godot.Vector2 previousLocation = new Godot.Vector2(0.0f, 0.0f);
     [Export]
-    public float speed = 200.0f;
-    [Export]
     public short maxBounces = 3;
     [Export]
-    public float deceleration = 3.0f;
+    public float deceleration = 1.0f;
     [Export]
     public float groundDecelerationMultiplier = 2.0f;
     [Export]
@@ -42,10 +40,10 @@ public partial class Bullet : CharacterBody2D
         GlobalPosition = spawn;
     }
 
-    public void setup(Godot.Vector2 incomingSpawn, Godot.Vector2 incomingDirectionalVelocity, bulletTypes incomingType)
+    public void Setup(Godot.Vector2 incomingSpawn, Godot.Vector2 incomingDirectionalVelocity, bulletTypes incomingType, float incomingBulletSpeed = 200.0f)
     {
         spawn = incomingSpawn;
-        currentVelocity = incomingDirectionalVelocity.Normalized() * speed;
+        currentVelocity = incomingDirectionalVelocity.Normalized() * incomingBulletSpeed;
         timeAlive = 0.0d;
         if (incomingType == bulletTypes.basic)
         {
@@ -68,12 +66,7 @@ public partial class Bullet : CharacterBody2D
             //calculate standard deceleration on ground
             if (IsOnFloor())
             {
-                currentVelocity.X = Mathf.MoveToward(currentVelocity.X, 0, deceleration * groundDecelerationMultiplier);
-            }
-            //calculate air deceleration
-            else
-            {   
-                currentVelocity.X = Mathf.MoveToward(currentVelocity.X, 0, deceleration);
+                currentVelocity.X = Mathf.MoveToward(currentVelocity.X, 0, deceleration * groundDecelerationMultiplier * 60f * (float)delta);
             }
 
             Velocity = currentVelocity;
@@ -94,7 +87,7 @@ public partial class Bullet : CharacterBody2D
                     }
                 }
 
-                if (Math.Abs((Math.Abs(previousLocation.X) - Math.Abs(GlobalPosition.X) + (Math.Abs(previousLocation.Y) - Math.Abs(GlobalPosition.Y)))) <= 0.2f)
+                if (previousLocation.DistanceTo(GlobalPosition) <= 0.2f)                
                 {
                     //QueueFree();
                     //ball has come to a complete stop. disable further movement and collisions

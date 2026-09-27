@@ -33,6 +33,8 @@ public partial class PlayerCharacter : CharacterBody2D
     private Sprite2D aimingSprite;
     private Node2D aimingLynchpin;
     private Node2D aimingDirrection;
+    private TrajectoryPreview trajectory; //Experimental replacement for aiming
+
     private bool aimingRise = true;
     private CollisionShape2D StandingCollision;
     private CollisionShape2D CrouchingCollision;
@@ -62,6 +64,7 @@ public partial class PlayerCharacter : CharacterBody2D
     [Export(PropertyHint.Range, "0,10.0")] private double clingTimerReset = 1.0d;
     [Export(PropertyHint.Range, "0,10.0")] private double BulletResetTime = 2.5d;
     [Export(PropertyHint.Range, "0,1.0")] private double FirstClingReset = 0.5d;
+    [Export (PropertyHint.Range, "200.0f, 400.0f")] public float BulletSpeed = 200.0f;
     private double damageTimer = 0.0d;
     private double flashTimer = 0.0d;
     private double cyoteTimer;
@@ -120,6 +123,8 @@ public partial class PlayerCharacter : CharacterBody2D
         aimingLynchpin = GetNode<Node2D>("aimingLynchpin");
         aimingDirrection = GetNode<Node2D>("aimingLynchpin/aimingDirection");
         aimingSprite = GetNode<Sprite2D>("aimingLynchpin/aimingSprite");
+        trajectory = GetNode<TrajectoryPreview>("TrajectoryPreview");
+        trajectory.Visible = false;
         aimingSprite.Visible = false;
         damagable = true;
         cyoteTimer = CyoteTime;
@@ -378,8 +383,9 @@ public partial class PlayerCharacter : CharacterBody2D
             if (bulletTimer <= 0.0d)
             {
                 direction = Godot.Vector2.Zero;
-                aimingSprite.Visible = true;
+                aimingSprite.Visible = true;      // optional: remove if the dots replace the arrow
                 UpdateAimSweep(incomingDelta);
+                UpdateTrajectory();               // new
             }
         }
         else if (Input.IsActionJustReleased("fire"))
@@ -693,7 +699,7 @@ public partial class PlayerCharacter : CharacterBody2D
         Bullet shot = Bullet.Instantiate<Bullet>();
         Godot.Vector2 spawnPoint = aimingLynchpin.GlobalPosition.Lerp(aimingDirrection.GlobalPosition, 0.5f);
         Godot.Vector2 aimVector = aimingDirrection.GlobalPosition - aimingLynchpin.GlobalPosition;
-        shot.setup(spawnPoint, aimVector, global::Bullet.bulletTypes.basic);
+        shot.Setup(spawnPoint, aimVector, global::Bullet.bulletTypes.basic, BulletSpeed);
         Owner.AddChild(shot);
         bulletTimer = BulletResetTime;
         aimingLynchpin.RotationDegrees = sprite_2d.FlipH ? 180.0f : 0.0f;
@@ -810,6 +816,15 @@ public partial class PlayerCharacter : CharacterBody2D
             }
         }
     }
+        /// <summary>Computes the launch velocity the bullet will use and redraws the predicted arc.</summary>
+        private void UpdateTrajectory()
+        {
+            Vector2 spawn = aimingLynchpin.GlobalPosition.Lerp(aimingDirrection.GlobalPosition, 0.5f);
+            Vector2 aimDir = (aimingDirrection.GlobalPosition - aimingLynchpin.GlobalPosition).Normalized();
+            Vector2 launchVelocity = aimDir * BulletSpeed;
+            trajectory.Visible = true;
+            trajectory.UpdateArc(spawn, launchVelocity, gravity);
+        }
     // ---------- save-data readers ----------
     // JSON returns every number as a double and a hand-edited or corrupt file can contain
     // anything, so never index the dictionary directly - always go through these.
