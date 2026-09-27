@@ -512,3 +512,4 @@ collide_with_areas = true
 
 [node name="TrajectoryPreview" type="Node2D" parent="." unique_id=883516029]
 script = ExtResource("10_mfnvq")
+ObstacleCollisionMask = 200
