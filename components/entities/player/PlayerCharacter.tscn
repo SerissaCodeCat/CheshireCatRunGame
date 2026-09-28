@@ -462,8 +462,9 @@ AirDeceleration = 1.1
 JumpVelocity = -420.0
 JumpHangingTime = 0.05
 dashSpeed = 500.0
+aimingRotationSpeed = 75.0
 CyoteTime = 0.1
-BulletSpeed = 300.0
+BulletSpeed = 325.0
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1446792829]
 z_index = 5

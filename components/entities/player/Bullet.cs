@@ -3,18 +3,15 @@ using Godot;
 
 public partial class Bullet : CharacterBody2D
 {
-    private Godot.Vector2 currentVelocity = new Godot.Vector2(0.0f, 0.0f);
-    private Godot.Vector2 previousLocation = new Godot.Vector2(0.0f, 0.0f);
+    private Godot.Vector2 currentVelocity = new(0.0f, 0.0f);
+    private Godot.Vector2 previousLocation = new(0.0f, 0.0f);
     [Export]
     public short maxBounces = 3;
     [Export]
     public float deceleration = 1.0f;
     [Export]
     public float groundDecelerationMultiplier = 2.0f;
-    [Export]
-    public float standardBounceDamping = 0.4f;
-    [Export]
-    public float bounceyBallBounceDamping = 0.8f;
+    public float BounceDamping; 
     private float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
     private Godot.Vector2 spawn;
     private bool goRight = true;
@@ -27,12 +24,6 @@ public partial class Bullet : CharacterBody2D
     //play impact sound when bullet hits something while moving at this or greater pixel per second speed
     private float impactSoundSpeedThreshold = 10.0f;
 
-    public enum bulletTypes
-    {
-        basic,
-        bouncing,
-    }
-
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -40,19 +31,12 @@ public partial class Bullet : CharacterBody2D
         GlobalPosition = spawn;
     }
 
-    public void Setup(Godot.Vector2 incomingSpawn, Godot.Vector2 incomingDirectionalVelocity, bulletTypes incomingType, float incomingBulletSpeed = 200.0f)
+    public void Setup(Godot.Vector2 incomingSpawn, Godot.Vector2 incomingDirectionalVelocity, float incomingBulletSpeed = 200.0f, float incomingBounceDamping = 0.4f)
     {
         spawn = incomingSpawn;
         currentVelocity = incomingDirectionalVelocity.Normalized() * incomingBulletSpeed;
+        BounceDamping = incomingBounceDamping;
         timeAlive = 0.0d;
-        if (incomingType == bulletTypes.basic)
-        {
-            maxBounces = 0;
-        }
-        else if (incomingType == bulletTypes.bouncing)
-        {
-            maxBounces = 2;
-        }
         previousLocation = spawn;
     }
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -89,30 +73,17 @@ public partial class Bullet : CharacterBody2D
 
                 if (previousLocation.DistanceTo(GlobalPosition) <= 0.2f)                
                 {
-                    //QueueFree();
                     //ball has come to a complete stop. disable further movement and collisions
                     currentVelocity = new Godot.Vector2(0.0f, 0.0f);
-                    //GetNode<CollisionShape2D>($"CollisionShape2D").Disabled = true;
                     canActivateThings = false;
                 }
-                else if (previousLocation != GlobalPosition && maxBounces > 0)
+                else
                 {
-                    //GD.Print("Bouncey ball bounce!");
-                    //reflect velocity based on collision normal
                     Godot.Vector2 normal = GetSlideCollision(0).GetNormal();
-                    currentVelocity = currentVelocity.Bounce(normal) * bounceyBallBounceDamping;
-                    maxBounces--;
-                }
-                else if (previousLocation != GlobalPosition && maxBounces == 0)
-                {
-                    //GD.Print("Standard bounce!");
-                    Godot.Vector2 normal = GetSlideCollision(0).GetNormal();
-                    currentVelocity = currentVelocity.Bounce(normal) * standardBounceDamping;
+                    currentVelocity = currentVelocity.Bounce(normal) * BounceDamping;
                     SoundManager.instance.playPossitionalAudio("bulletImpact", GlobalPosition.X, GlobalPosition.Y);
                 }
                 
-                //GD.Print("Current Velocity after bounce: " + currentVelocity.ToString());
-                //GD.Print("calculated Velocity = " + Math.Abs((Math.Abs(previousLocation.X) - Math.Abs(GlobalPosition.X) + (Math.Abs(previousLocation.Y) - Math.Abs(GlobalPosition.Y)))));
             }
             previousLocation = GlobalPosition;
 
