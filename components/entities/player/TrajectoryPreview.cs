@@ -31,7 +31,7 @@ public partial class TrajectoryPreview : Node2D
     /// <param name="startGlobal">Where the bullet is launched from, in global coordinates.</param>
     /// <param name="launchVelocity">Initial velocity of the bullet.</param>
     /// <param name="gravity">Gravity applied each physics tick.</param>
-    /// <param name="incomingType">The bullet type, which determines how it bounces.</param>
+    /// <param name="incomingBounceDamping">The amount that the momentum is lost on a bounce. 1.0f carry ALL momentum on a bounce, 0.0f stop dead.</param>
     /// <param name="showAfterBounce">If true, the arc continues through the first bounce.</param>
     public void UpdateArc(
         Vector2 startGlobal,
