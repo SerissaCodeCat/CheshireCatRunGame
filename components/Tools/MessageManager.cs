@@ -244,12 +244,12 @@ public partial class MessageManager : Node2D
     //move camera instantly to location. no smoothing.
     public void SetCameraPosition(Vector2 incomingPosition)
     {
-        cameraLink.moveToPosition(incomingPosition);
+        cameraLink.MoveToPosition(incomingPosition);
     }
     //set player as follow target, and set starting possition to player's location.
     public void SetCameraStartPosition()
     {
-        cameraLink.moveToPosition(playerMessagerLink.Position);
+        cameraLink.MoveToPosition(playerMessagerLink.Position);
         cameraLink.SetCameraTarget(playerMessagerLink);
     }
     public Vector2 GetCameraCurrentPosition()
