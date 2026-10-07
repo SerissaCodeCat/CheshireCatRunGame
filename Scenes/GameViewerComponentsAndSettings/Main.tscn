@@ -12,7 +12,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pbw6q"]
 shader = ExtResource("1_wl6jr")
-shader_parameter/camera_offset = Vector2(0, 0)
+shader_parameter/subpixel_offset = Vector2(0, 0)
 
 [node name="Main" type="Control" unique_id=1109056652]
 process_mode = 3
@@ -25,7 +25,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1238419890 node_paths=PackedStringArray("viewportLink")]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1238419890 node_paths=PackedStringArray("ViewportLink")]
 process_mode = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_pbw6q")
@@ -38,8 +38,8 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("2_qtlik")
-viewportLink = NodePath("SubViewport")
-startingLevelPath = "res://Scenes/Levels/PlayGroundLevel.tscn"
+ViewportLink = NodePath("SubViewport")
+StartingLevelPath = "res://Scenes/Levels/PlayGroundLevel.tscn"
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1110212667]
 disable_3d = true

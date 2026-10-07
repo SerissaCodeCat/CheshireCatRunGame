@@ -16,7 +16,8 @@ public partial class PixelPerfectCamera : Camera2D
     }
     public void moveToPosition(Vector2 incomingPosition)
     {
-        this.Position = incomingPosition;
+        var TmpPosition = incomingPosition;
+        this.GlobalPosition = TmpPosition.Round();
     }
     public override void _Process(double delta)
     {
