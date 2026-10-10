@@ -5,3 +5,4 @@
 [node name="Camera2D" type="Camera2D" unique_id=2006701593]
 script = ExtResource("1_vfi8i")
 FollowSpeed = 20.0
+FallDeadzone = 200.0

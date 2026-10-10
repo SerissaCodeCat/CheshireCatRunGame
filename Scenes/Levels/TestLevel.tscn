@@ -42,6 +42,7 @@ tile_set = ExtResource("6_tqwjp")
 
 [node name="PixelPerfectCamera" parent="." unique_id=1334939066 instance=ExtResource("7_t7rg1")]
 position = Vector2(1095, -174)
+FallDeadzone = 200.0
 
 [node name="Enemy" parent="." unique_id=1093834458 instance=ExtResource("8_fk1me")]
 position = Vector2(416, -153)
